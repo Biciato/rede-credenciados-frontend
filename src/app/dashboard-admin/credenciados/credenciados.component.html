@@ -1,0 +1,66 @@
+<!-- Card Credenciados -->
+<div class="card-dash">
+    <!-- Card  Header -->
+    <div class="card-header-dash">
+        <h3>Credenciados Cadastrados</h3>
+    </div>
+    <!-- Card  Header -->
+    <!-- Card  Body -->
+    <div class="card-body-dash">
+        <div class="group">
+            <input [(ngModel)]="searchText" placeholder="Procurar..." style="width: 10rem">
+        </div>
+        <!-- Card  Table -->
+        <div id="table">
+            <div id="tableBody">
+                <table>
+                    <tr>
+                        <th class="td-start">Situação</th>
+                        <th class="td-start">Tipo Pessoa</th>
+                        <th class="td-start">Razão Social/Nome </th>
+                        <th class="td-start">Nome Fantasia</th>
+                        <th class="td-start">Município</th>
+                        <th class="td-start">telefone 1</th>
+                        <th class="td-start">Telefone 2</th>
+                        <th class="td-start">Celular</th>
+                        <th class="td-start">E-mail</th>
+                        <th>Excluir</th>
+                    </tr>
+                    <tr *ngFor="let credenciado of credenciados | searchBox: {
+                                situacao: searchText, email: searchText,  tipo_pessoa: searchText,
+                                razao_social: searchText, nome_fantasia: searchText,  nome: searchText,
+                                cidade: searchText, tel1: searchText,  cel: searchText
+                            } | paginate: { itemsPerPage: 10, currentPage: p }">
+                        <td class="td-start">{{ credenciado.situacao || 'Ativo' }}</td>
+                        <td class="td-start">{{ credenciado.tipo_pessoa | tipoPessoa}}</td>
+                        <td class="td-start">{{ credenciado.razao_social || credenciado.nome }}</td>
+                        <td class="td-start">{{ credenciado.nome_fantasia }}</td>
+                        <td class="td-start">{{ credenciado.cidade }}</td>
+                        <td class="td-start">{{ credenciado.tel1 }}</td>
+                        <td class="td-start">{{ credenciado.tel2 }}</td>
+                        <td class="td-start">{{ credenciado.cel }}</td>
+                        <td class="td-start">{{ credenciado.email }}</td>
+                        <td class="td-center"><i (click)="deleteCredenciado(credenciado)" class="fas fa-trash-alt"></i></td>
+                    </tr>
+                </table>
+            </div>
+            <pagination-controls class="my-pagination"
+                    (pageChange)="p = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Próximo"></pagination-controls>
+        </div>
+        <!-- Card  Table -->
+    </div>
+    <!-- Card  Body -->
+</div>
+<!-- Card Credenciados -->
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

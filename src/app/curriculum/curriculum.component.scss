@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    margin: auto;
+    min-height: 40rem;
+
+    #contato {
+        height: fit-content;
+        width: 20rem;
+        .card-body-dash {
+            flex-direction: column;
+            form {
+                display: flex;
+                flex-direction: column;
+                padding: 0.5rem;
+                width: 96%;
+                .group {
+                    margin-right: 0;
+                }
+                h6 {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+#modal-aviso-pdf {
+    div {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        button {
+            background-color: steelblue;
+        }
+    }
+}
+

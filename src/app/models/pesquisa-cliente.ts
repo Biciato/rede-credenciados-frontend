@@ -1,0 +1,31 @@
+export interface PesquisaCliente {
+    id?: string;
+    atividades?: string;
+    bairro?: string;
+    cel?: string;
+    cel2?: string;
+    tel?: string;
+    tel2?: string;
+    cep?: string;
+    cidade?: string;
+    estado?: string;
+    rua?: string;
+    complemento?: string;
+    numero?: string;
+    nome?: string;
+    nome_contato?: string;
+    cnpj?: string;
+    cpf?: string;
+    rg?: string;
+    nome_fantasia?: string;
+    razao_social?: string;
+    sexo?: string;
+    nascimento?: string;
+    email?: string;
+    email2?: string;
+    pessoa_fisica_id?: string;
+    pessoa_juridica_id?: string;
+    unidade_id?: string;
+    user_id?: string;
+    avatar?: string;
+}

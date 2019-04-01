@@ -1,0 +1,38 @@
+:host {
+    min-height: 40rem;
+    display: flex;
+
+    section {
+        width: 60rem;
+        height: fit-content;
+        margin: 2rem auto;
+        border-radius: 10px;  
+        display: flex;  
+
+        img {
+            width: 30%;
+            height: 30%;
+        }
+
+        div {
+
+            border-top: 10px solid rgba(255,121,0,1); 
+            border-bottom: 10px solid rgba(255,121,0,1); 
+            border-right: 10px solid rgba(255,121,0,1); 
+            margin: 0.3rem 0;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding: 1rem;
+
+            h1 {
+                color: rgba(255,121,0,1); 
+            }
+
+            p {
+                padding: 1rem;
+                text-align: justify;
+                text-justify: auto;
+            }
+        }    
+    }
+}

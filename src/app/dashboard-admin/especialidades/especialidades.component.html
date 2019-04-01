@@ -1,0 +1,71 @@
+<section>
+    <!-- Ad Info Card -->
+    <div id="cardTab" class="card-dash">
+        <!-- Card  Header -->
+        <div id="cardTabHeader" class="card-header-dash"><h3>Especialidades</h3></div>
+        <!-- Card  Header -->
+        <!-- Card  Body -->
+        <div id="cardTabBody" class="card-body-dash">
+            <div class="group">
+                <input [(ngModel)]="searchText" placeholder="Procurar..." style="width: 10rem">
+            </div>
+            <!-- Card  Table -->
+            <div id="table">
+                <div id="tableBody">
+                    <table>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Excluir</th>
+                        </tr>
+                        <tr *ngFor="let atividade of atividades 
+                            | searchBox: {atividade: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td>{{ atividade.atividade }}</td>
+                            <td (click)="deleteAtividade(atividade)"><i class="fas fa-trash-alt"></i></td>
+                        </tr>
+                    </table>
+                </div>
+                <pagination-controls class="my-pagination"
+                    (pageChange)="p = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Próximo"></pagination-controls>
+            </div>
+            <!-- Card  Table -->
+            <button class="rd-button-dash" style="background-color: green" (click)="openModal()">
+                <i class="fas fa-plus-square" style="margin: 0.5rem"></i>ESPECIALIDADE
+            </button>
+        </div>
+        <!-- Card  Body -->
+    </div>
+    <!-- Ad Info Card -->
+</section>
+
+<!-- Modal Especialidades -->
+<app-modal id="modal-especialidade">
+    <div id="modalHeader">
+        <h2>Nova Especialidade</h2>
+    </div>
+    <div id="modalBody">
+        <div class="group">
+            <input type="text" [formControl]="nome">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Especialidade</label>
+        </div>
+        
+    </div>
+    <div id="modalFooter">
+        <button (click)="closeModal()">FECHAR</button>
+        <button (click)="saveEspecialidade()">SALVAR</button>
+    </div>
+</app-modal>
+<!-- Modal Especialidades -->
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

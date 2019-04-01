@@ -1,0 +1,20 @@
+:host {
+    min-height: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    section {
+        width: 50rem;
+        margin: auto;
+        text-align: center;
+
+        p {
+            text-justify: auto;
+        }
+
+        button {
+            background-color: orange;
+        }
+    }
+}

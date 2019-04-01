@@ -1,0 +1,27 @@
+:host {
+    width: 890px;
+
+    #modalHeader {
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid silver;
+    }
+
+    #modalBody {
+
+        display: flex;
+        flex-wrap: wrap;
+
+        div {
+            padding: 0.5rem;
+            margin: auto;
+            width: 25rem;
+        }
+
+        button {
+            background-color: seagreen;
+            margin: 1rem auto;
+        }
+    }
+}

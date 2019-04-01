@@ -1,0 +1,143 @@
+:host {
+    width: calc(100% - 281.64px);
+    max-height: 50rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: baseline;
+    margin-bottom: 2em;
+
+    #cardTitle {
+
+        width: 76%;
+
+        #cardTitleBody {
+            p {
+                text-align: center;
+                width: 70%;
+                margin: auto;
+                padding: 2em;
+            }
+        }
+    }
+
+    #cardViaEmail {
+
+        #cardViaEmailBody {
+
+            padding: 2em;
+
+            form {
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    }
+
+    #cardViaWhat {
+
+        #cardViaWhatBody {
+
+            padding: 2em;
+
+            form {
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    }
+
+    #cardViaSMS {
+
+        #cardViaSMSBody {
+
+            padding: 2em;
+
+            form {
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+#modal-validator {
+
+    #modalHeader {
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        span {
+            padding: 1rem;
+        }
+    }
+
+    #modalBody {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        div { 
+            p {
+                width: 38rem;
+            }
+
+            h3 {
+                color: #111111;
+            }
+
+            ul {
+                list-style: none;
+                text-align: justify;
+                width: 25rem;
+                margin: auto;
+            }
+
+            #simFooter {
+
+                border-top: 1px solid #e5e5e5;
+                margin: 0.8em;
+
+                a {
+                    color: #fff;
+                    background-color: #5cb85c;
+                    border: none;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    margin-top: 1em;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    user-select: none;
+                    background-image: none;
+                    border-radius: 4px;
+
+                    i {
+                        padding-right: 0.5em;
+                    }
+                }
+
+                a:hover {
+                    background-color: #449d44;
+                    border-color: #398439;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

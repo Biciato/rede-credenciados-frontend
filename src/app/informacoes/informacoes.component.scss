@@ -1,0 +1,343 @@
+:host {
+
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5em;
+
+    #dados {
+
+        margin: 1em;
+        width: 38%;
+
+        #pesquisa {
+
+            display: flex;
+            margin: auto;
+            flex-wrap: wrap;
+
+            .pesquisa {
+
+                display: flex;
+
+                .pesquisa-img {
+
+                    display: flex;
+                    flex-direction: column;
+                    margin: 1em;
+                    border-right: 8px solid silver;
+                    padding: 1em;
+
+                    img {
+                        border-radius: 50%;
+                        width: 150px;
+                        height: 150px;
+                        border: 2px solid #eee;
+                        margin: auto;
+                    }
+
+                    a {
+                        padding: 0.5em 0.3em;
+                        color: white;
+                        background-color: rgb(231,122,21);
+                        border-radius: 20px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        margin-top: 1em;
+                        font-family: inherit;
+                        font-size: 14px;
+                        border: none;
+                        text-align: center;
+                        line-height: 25px;
+                    }
+                }
+
+                .pesquisa-dados {
+                    display: flex;
+                    flex-direction: column;
+
+                    h3 {
+                        color: rgb(231,122,21);
+                        font-weight: normal;
+                        background: none;
+                        text-align: start;
+                        margin-block-end: 0;
+                    }
+
+                    span {
+                        font-size: small;
+                        color: silver;
+                    }
+
+                    label {
+                        font-weight: 600;
+                        color: silver;
+                        padding-top: 0.5rem;
+                        margin-top: 0.5rem;
+                    }
+
+                    p {
+                        margin-block-start: 0;
+                        margin-block-end: 0;
+                        font-size: small;
+                        font-weight: normal;
+                        color: silver;
+                    }
+                }
+            }
+        }
+
+        #resumo {
+            margin-top: 2rem;
+
+            h3 {
+                text-align: center;
+                background-color: rgb(231,122,21);
+                line-height: 2px;
+                border-radius: 15px;
+
+                span {
+                    border: 2px solid rgb(231,122,21);
+                    border-radius: 25px;
+                    background-color: white;
+                    padding: 0.5em 1.7em;
+                    font-weight: 500;
+                    color: rgb(231,122,21);
+                    border-radius: 25px;
+                    font-weight: 500;    
+                    font-size: 18px;  
+                }
+            }
+
+            p {
+                margin-top: 3em;
+            }
+        }
+
+        #empresaImgs {
+            img {
+                height: 100px;
+                width: 100px;
+                margin: 0.5em;
+                border: 1px solid silver;
+            }
+
+            img:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    #contato {
+
+        width: 20%;
+        margin: 1em;
+
+        form {
+
+            display: flex;
+            flex-direction: column;
+            margin: 1em; 
+            border-radius: 10px;
+            padding: 1em 0;
+
+            h3 {
+                font-weight: normal;
+                text-align: center;
+                color: black;
+            }
+
+            #personalData {
+
+                padding: 0 1em;
+                display: flex;
+                flex-direction: column;
+
+                p {
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                button {
+                    margin-top: 2rem;
+                    background-color: seagreen;
+                }
+            }
+        }
+    }
+}
+
+#modal-validator {
+
+    #modalHeader {
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        span {
+            padding: 1rem;
+        }
+    }
+
+    #modalBody {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        div { 
+            p {
+                width: 38rem;
+            }
+
+            h3 {
+                color: #111111;
+            }
+
+            ul {
+                list-style: none;
+                text-align: justify;
+                width: 25rem;
+                margin: auto;
+            }
+
+            #simFooter {
+
+                border-top: 1px solid #e5e5e5;
+                margin: 0.8em;
+
+                a {
+                    color: #fff;
+                    background-color: #5cb85c;
+                    border: none;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    margin-top: 1em;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    user-select: none;
+                    background-image: none;
+                    border-radius: 4px;
+
+                    i {
+                        padding-right: 0.5em;
+                    }
+                }
+
+                a:hover {
+                    background-color: #449d44;
+                    border-color: #398439;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+#modal-sem-arquivo {
+    .confirm-modal {
+        display: block;
+        pointer-events: none;
+        transition: opacity 0.5s;
+        .btn {
+            width: auto;
+            max-width: auto;
+            margin: auto;
+        }
+        
+        &::before {
+            /*
+            The shadow/backdrop which also is clickable to close the modal.
+            */
+            content: "";
+            display: block;
+            background-color: rgba(0,0,0,0.4);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 261%;
+            z-index: 99;
+            opacity: 1;
+            pointer-events: all;
+        }
+        #modal {
+            /*
+            The actual modal.
+
+            Note: to not have clicks inside the modal
+            bleed through to the label (which would uncheck the checkbox),
+            pointer-events are set to none on the modal.
+            */
+            text-align: center;
+            position: fixed;
+            z-index: 99;
+            top: 50px;
+            transition: transform 0.75s;
+            max-width: 90%;
+            width: 450px;
+            background-color: #fafafa;
+            padding: 20px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
+            color: #080808;
+            border-radius: 5px;
+            pointer-events: none;
+
+            p {
+                text-align: center;
+            }
+
+            button {
+                color: #fff;
+                background-color: #d9534f;
+                border: none;
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 0;
+                margin-top: 1em;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                touch-action: manipulation;
+                cursor: pointer;
+                user-select: none;
+                background-image: none;
+                border-radius: 4px;
+
+                i {
+                    padding-right: 0.5em;
+                }
+            }
+
+            button:hover {
+                background-color: #c9302c;
+                border-color: #761c19;
+            }
+        }
+        }
+
+        /* For that cute little fly down effect */
+        input:not(:checked) + .confirm-modal form {
+            transform: translate(-50%, -100px);
+        }
+
+        /* Allow buttons to be clickable. */
+        .confirm-modal button {
+            pointer-events: all;
+        }
+}
+
+

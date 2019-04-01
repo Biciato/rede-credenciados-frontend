@@ -1,0 +1,85 @@
+<!-- Card Cotations -->
+<div id="cardCotations">
+    <!-- Card Header -->
+    <div id="cardCotationsHeader"><h3>Cotações Recebidas</h3></div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardCotationsBody">
+        <!-- Cotations qty read and marking buttons -->
+        <div>
+            <h3 style="color: grey">Você tem <b>{{cotacoesLidaStatusFalse.length}}</b> cotações não lidas</h3>
+            <button (click)="setAsReadCol()">Marcar como lido</button>
+            <button (click)="setAsUnreadCol()">Marcar como não lido</button>
+        </div>
+        <!-- Cotations qty read and marking buttons -->
+        <!-- Cotations table -->
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        <label class="container">
+                            <input type="checkbox" name="cotacao_checkbox" (click)="selectAll()">
+                            <span class="checkmark"></span>
+                        </label>
+                    </th>
+                    <th style="color: black" (click)="selectAll()"><strong>Selecionar Todos</strong></th>
+                    <th><strong>Data</strong></th>
+                </tr>
+                <ng-container *ngIf="cotacoes.length > 0">
+                    <tr *ngFor="let cotacao of cotacoes | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                        <th>
+                            <label class="container">
+                                <input type="checkbox" name="cotacao_checkbox" (click)="checkBoxesSelected(cotacao)">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th (click)="openCotacao(i)"
+                            [style.color]="cotacao.cotacaoLida === false || cotacao.cotacaoLida === '0' ? 'blue' : 'gray'">
+                            Cotação de {{ cotacao.nome }}</th>
+                        <th>{{ cotacao.created_at }}</th                      >
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+        <!-- Cotations table -->
+        <pagination-controls class="my-pagination" (pageChange)="p = $event"
+                    previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Card Cotations -->
+<!-- Modal -->
+<app-modal id="custom-modal-6">
+    <!-- Modal Header -->
+    <div id="modalHeader">
+        <h2>DETALHES DA SOLICITAÇÃO</h2>
+    </div>
+    <!-- Modal Header -->
+    <!-- Modal Body -->
+    <div id="modalBody" *ngIf="cotacaoSelected">
+        <label><strong>Nome do solicitante: </strong>{{ cotacaoSelected.nome }}</label>
+        <label><strong>E-mail do solicitante: </strong>{{ cotacaoSelected.email }}</label>
+        <label><strong>Telefone do solicitante: </strong>{{ cotacaoSelected.tel }}</label>
+        <label><strong>Celular do solicitante: </strong>{{ cotacaoSelected.cel }}</label>
+        <label><strong>Mensagem:</strong></label>
+        <p>{{ cotacaoSelected.mensagem }}</p>
+    </div>
+    <!-- Modal Body -->
+    <!-- Modal Footer -->
+    <div id="modalFooter">
+        <button (click)="setAsRead('custom-modal-6')">MARCAR COMO LIDO</button>
+        <button (click)="closeModal('custom-modal-6')"><i class="fas fa-times"></i>FECHAR</button>
+    </div>
+    <!-- Modal Footer -->
+</app-modal>
+<!-- Modal -->
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

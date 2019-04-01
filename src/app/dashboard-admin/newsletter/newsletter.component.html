@@ -1,0 +1,53 @@
+<section>
+    <!-- Ad Info Card -->
+    <div id="cardTab" class="card-dash">
+        <!-- Card  Header -->
+        <div id="cardTabHeader" class="card-header-dash"><h3>Newsletter</h3></div>
+        <!-- Card  Header -->
+        <!-- Card  Body -->
+        <div id="cardTabBody" class="card-body-dash">
+            <div class="group">
+                <input [(ngModel)]="searchText" placeholder="Procurar..." style="width: 10rem">
+            </div>
+            <!-- Card  Table -->
+            <div id="table">
+                <div id="tableBody">
+                    <table>
+                        <tr>
+                            <th class="td-start">Nome</th>
+                            <th class="td-start">E-mail</th>
+                            <th class="td-start">Data Cadastro</th>
+                            <th class="td-center">Excluir</th>
+                        </tr>
+                        <tr *ngFor="let newsletter of newsletters 
+                            | searchBox: {nome: searchText, email:searchText,  blog: searchText} 
+                            | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td class="td-start">{{ newsletter.nome }}</td>
+                            <td class="td-start">{{ newsletter.email }}</td>
+                            <td class="td-start">{{ newsletter.created_at }}</td>
+                            <td class="td-center" (click)="deleteNewsletter(newsletter)">
+                                <i class="fas fa-trash-alt"></i></td>
+                        </tr>
+                    </table>
+                </div>
+                <pagination-controls class="my-pagination" 
+                    (pageChange)="p = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Próximo"></pagination-controls>
+            </div>
+            <!-- Card  Table -->
+        </div>
+        <!-- Card  Body -->
+    </div>
+    <!-- Ad Info Card -->
+</section>
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

@@ -1,0 +1,76 @@
+<!-- Card Messages -->
+<div id="cardMessages">
+    <!-- Card Header -->
+    <div id="cardMessagesHeader"><h3>Avisos</h3></div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardMessagesBody">
+        <div>
+            <h3 style="color: black" *ngIf="mensagensLida">Você tem <b>{{mensagensLida.length}}</b> avisos não lidos</h3>
+            <button (click)="setAsReadCol()">Marcar como lido</button>
+            <button (click)="setAsUnreadCol()">Marcar como não lido</button>
+        </div>
+        <!-- Table of Messages -->
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        <label class="container">
+                            <input type="checkbox" name="mensagem_checkbox" (click)="selectAll()">
+                            <span class="checkmark"></span>
+                        </label>
+                    </th>
+                    <th style="color: black" (click)="selectAll()"><strong>Selecionar Todos</strong></th>
+                    <th><strong>Data</strong></th>
+                </tr>
+                <ng-container *ngIf="mensagens.length > 0">
+                    <tr *ngFor="let mensagem of mensagens | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                        <th>
+                            <label class="container">
+                                <input type="checkbox" name="mensagem_checkbox" (click)="checkMsg(mensagem)" value={{i}}>
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th [style.color]="mensagem.mensagem_lida === '0' || mensagem.mensagem_lida === 0 ? 'blue': 'gray'" (click)="openMensagem(i)"
+                            *ngIf="mensagem.titulo"
+                            ><strong>{{ mensagem.titulo ? mensagem.titulo : ''}}</strong></th>
+                        <th><strong>{{ mensagem.created_at }}</strong></th>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+        <!-- Table of Messages -->
+        <!-- Table pagination -->
+        <pagination-controls class="my-pagination" (pageChange)="p = $event"
+                    previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+        <!-- Table pagination -->
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Card Messages -->
+<!-- Modal -->
+<app-modal id="custom-modal-5">
+    <ng-container *ngIf="mensagemSelected">
+        <div id="modalHeader" *ngIf="mensagemSelected">
+            <h2>{{ mensagemSelected.titulo }}</h2>
+        </div>
+        <div id="modalBody">
+            <p>{{ mensagemSelected.mensagem }}</p>
+        </div>
+    </ng-container>
+    <div id="modalFooter">
+        <button (click)="setAsRead()">MARCAR COMO LIDO</button>
+        <button (click)="closeModal('custom-modal-5')"><i class="fas fa-times"></i>FECHAR</button>
+    </div>
+</app-modal>
+<!-- Modal -->
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

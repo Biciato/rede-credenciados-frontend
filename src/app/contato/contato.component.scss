@@ -1,0 +1,129 @@
+:host {
+    section {
+        display: flex;
+        justify-content: center;
+        height: -webkit-fill-available;
+        height: 45rem;
+
+        .col-1 {
+            width: 29.2%;
+            display: flex;
+            flex-direction: column;
+
+            p {
+                color: rgb(231,122,21);
+                font-size: 28px;
+                font-weight: 700;
+                font-family: 'Montserrat';
+                width: 60%;
+                margin: auto;
+
+            }
+
+            img {
+                width: 35%;
+                margin: auto;
+            }
+        }
+
+        .col-2 {
+            width: 29.2%;
+            display: flex;
+            flex-direction: column;
+
+            #contato {
+                height: fit-content;
+                width: 80%;
+                margin: auto;
+
+                .card-body-dash {
+                    flex-direction: row;
+                    form {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 0.5rem;
+                        width: 100%;
+                        .group {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#modal-validator {
+
+    #modalHeader {
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        span {
+            padding: 1rem;
+        }
+    }
+
+    #modalBody {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        ul {
+            list-style: none;
+            text-align: justify;
+            width: 25rem;
+            margin: auto;
+        }
+
+        div { 
+            p {
+                width: 38rem;
+            }
+
+            h3 {
+                color: #111111;
+            }
+
+            #simFooter {
+
+                border-top: 1px solid #e5e5e5;
+                margin: 0.8em;
+
+                a {
+                    color: #fff;
+                    background-color: #5cb85c;
+                    border: none;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    margin-top: 1em;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    user-select: none;
+                    background-image: none;
+                    border-radius: 4px;
+
+                    i {
+                        padding-right: 0.5em;
+                    }
+                }
+
+                a:hover {
+                    background-color: #449d44;
+                    border-color: #398439;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

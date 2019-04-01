@@ -1,0 +1,51 @@
+:host {
+    width: calc(100% - 281.64px);
+    display: flex;
+    margin-bottom: 2em;
+
+    section { 
+        max-height: 55rem;
+        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        #cardTab {
+
+            height: fit-content;
+
+            #cardTabBody {
+
+                padding: 2em;
+
+                .group {
+                    margin-bottom: 0;
+                }
+
+                #table {
+                #tableBody {
+                    table {
+
+                        border-collapse: collapse;
+                        font-size: 0.9em;
+
+                        tr {
+
+                            padding: 0.5rem;
+                            border-bottom: 2px solid #e5e5e5;
+                        }
+                    }
+                }
+                .my-pagination /deep/ .ngx-pagination  {
+                    padding-inline-start: 0px;
+                    .current {
+                        background: rgb(231,122,21);
+                    }
+                }
+            }
+
+            }
+
+        }
+    }
+}

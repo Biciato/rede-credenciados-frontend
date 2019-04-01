@@ -1,0 +1,303 @@
+<!-- Info Card -->
+<div id="cardTitle" class="card-dash">
+    <div id="cardTitleHeader" class="card-header-dash"><h3>Indicação de amigo</h3></div>
+    <div id="cardTitleBody" class="card-body-dash">
+        <p><b>Indique um amigo</b> para que ele possa conhecer nosso sistema.
+            Para indicar o Rede Credenciados à um amigo ou conhecido é 
+            muito simples, preencha os dados abaixo e clique em enviar convite</p>
+    </div>
+</div>
+<!-- Info Card -->
+<!-- Card Via Email -->
+<div id="cardViaEmail" class="friend-indication-card">
+    <!-- Card Header -->
+    <div id="cardViaEmailHeader" class="card-header-dash">
+        <h3><i class="far fa-envelope" style="margin-right: 0.5em"></i>Via Email</h3>
+    </div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardViaEmailBody" class="card-body-dash">
+        <form [formGroup]="viaEmailForm" (ngSubmit)="onViaEmailSubmit()">
+    
+            <div class="group">      
+                <input type="text" formControlName="nome">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="nome.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome do amigo(a) ou conhecido(a)
+                </label>
+                <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!nome.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="group">      
+                <input type="text" formControlName="email">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">
+                    E-mail do destinatário
+                </label>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!email.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                    <div *ngIf="!!email.errors.email" style="color: red">
+                        *formato de e-mail inválido. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="mensagem">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="message.value === null ? 'input-empty' : 'input-not-empty'">
+                    Descreva uma mensagem à ser enviada
+                </label>
+                <div *ngIf="message.invalid && (message.dirty || message.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!message.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="nome_indicado">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="nome_indicado.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome completo de quem está indicando
+                </label>
+                <div *ngIf="nome_indicado.invalid && (nome_indicado.dirty || nome_indicado.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!nome_indicado.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <button class="rd-button-dash" style="background-color: #5cb85c">ENVIAR</button>
+
+        </form>
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Card Via Email -->
+<!-- Card Via Whatsapp -->
+<div id="cardViaWhat" class="friend-indication-card">
+    <!-- Card Header -->
+    <div id="cardViaWhatHeader" class="card-header-dash">
+        <h3><i class="fab fa-whatsapp" style="margin-right: 0.5em"></i>Via Whatsapp</h3>
+    </div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardViaWhatBody" class="card-body-dash">
+        <form [formGroup]="viaWhatForm" (ngSubmit)="onViaWhatSubmit()">
+    
+            <div class="group">      
+                <input type="text" formControlName="indicatedName">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="nomeWS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome do amigo(a) ou conhecido(a)
+                </label>
+                <div *ngIf="nomeWS.invalid && (nomeWS.dirty || nomeWS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!nomeWS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="group">      
+                <input type="text" formControlName="whatsapp" (keyup)="onKeyCel($event)" maxlength="15">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="whatsapp.value === null ? 'input-empty' : 'input-not-empty'">
+                    Número do Whatsapp do destinatário(a)
+                </label>
+                <div *ngIf="whatsapp.invalid && (whatsapp.dirty || whatsapp.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!whatsapp.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                    <div *ngIf="!!whatsapp.errors.minlength" style="color: red">
+                        *Formato de telefone inválido. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="message">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="messageWS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Descreva uma mensagem à ser enviada
+                </label>
+                <div *ngIf="messageWS.invalid && (messageWS.dirty || messageWS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!messageWS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="indicator">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="indicatorWS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome completo de quem está indicando
+                </label>
+                <div *ngIf="indicatorWS.invalid && (indicatorWS.dirty || indicatorWS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!indicatorWS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <button class="rd-button-dash" style="background-color: #5cb85c">ENVIAR</button>
+
+        </form>
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Card Via Whatsapp -->
+<!-- Card Via SMS -->
+<div id="cardViaSMS" class="friend-indication-card">
+    <!-- Card Header -->
+    <div id="cardViaSMSHeader" class="card-header-dash">
+        <h3><i class="fas fa-phone" style="margin-right: 0.5em"></i>Via SMS</h3>
+    </div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardViaSMSBody" class="card-body-dash">
+        <form [formGroup]="viaSMSForm" (ngSubmit)="onViaSMSSubmit()">
+    
+            <div class="group">      
+                <input type="text" formControlName="indicatedName">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="nomeSMS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome do amigo(a) ou conhecido(a)
+                </label>
+                <div *ngIf="nomeSMS.invalid && (nomeSMS.dirty || nomeSMS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!nomeSMS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="group">      
+                <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">
+                    Número do Celular do destinatário(a)
+                </label>
+                <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!cel.errors.minlength" style="color: red">
+                        *Formato de telefone inválido. 
+                    </div>
+                    <div *ngIf="!!cel.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="message">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="messageSMS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Descreva uma mensagem à ser enviada
+                </label>
+                <div *ngIf="messageSMS.invalid && (messageSMS.dirty || messageSMS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!messageSMS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">      
+                <input type="text" formControlName="indicator">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="indicatorSMS.value === null ? 'input-empty' : 'input-not-empty'">
+                    Nome completo de quem está indicando
+                </label>
+                <div *ngIf="indicatorSMS.invalid && (indicatorSMS.dirty || indicatorSMS.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="!!indicatorSMS.errors.required" style="color: red">
+                        *campo obrigatório. 
+                    </div>
+                </div>
+            </div>
+
+            <button class="rd-button-dash" style="background-color: #5cb85c">ENVIAR</button>
+
+        </form>
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Card Via SMS -->
+<app-modal id="modal-validator">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Campos pendentes:</h3>
+            <ul>
+                <li *ngIf="!!email.errors && !!email.errors.required && emailFormFlag"><strong>E-mail:</strong> campo obrigatório</li>
+                <li *ngIf="!!email.errors && !!email.errors.email && emailFormFlag"><strong>E-mail:</strong> formato inválido</li>
+                <li *ngIf="!!nome.errors && !!nome.errors.required && emailFormFlag"><strong>Nome do amigo:</strong> campo obrigatório</li>
+                <li *ngIf="!!cel.errors && !!cel.errors.required && smsFormFlag"><strong>Celular:</strong> campo obrigatório</li>
+                <li *ngIf="!!cel.errors && !!cel.errors.minlength && smsFormFlag">
+                    <strong>Celular:</strong> formato de telefone inválido
+                </li>
+                <li *ngIf="!!whatsapp.errors && !!whatsapp.errors.required && whatFormFlag"><strong>Whatsapp:</strong> campo obrigatório</li>
+                <li *ngIf="!!whatsapp.errors && !!whatsapp.errors.minlength && whatFormFlag">
+                    <strong>Whatsapp:</strong> formato de telefone inválido
+                </li>
+                <li *ngIf="!!nome_indicado.errors && !!nome_indicado.errors.required && emailFormFlag">
+                    <strong>Nome de quem está indicando:</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!nomeSMS.errors && !!nomeSMS.errors.required && smsFormFlag"><strong>Nome do amigo:</strong> campo obrigatório</li>
+                <li *ngIf="!!nomeWS.errors && !!nomeWS.errors.required && whatFormFlag"><strong>Nome do amigo:</strong> campo obrigatório</li>
+                <li *ngIf="!!indicatorSMS.errors && !!indicatorSMS.errors.required && smsFormFlag">
+                    <strong>Nome de quem está indicando:</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!indicatorWS.errors && !!indicatorWS.errors.required && whatFormFlag">
+                    <strong>Nome de quem está indicando::</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!message.errors && !!message.errors.required && emailFormFlag"><strong>Mensagem:</strong> campo obrigatório</li>
+                <li *ngIf="!!messageSMS.errors && !!messageSMS.errors.required && smsFormFlag"><strong>Mensagem:</strong> campo obrigatório</li>
+                <li *ngIf="!!messageWS.errors && !!messageWS.errors.required && whatFormFlag"><strong>Mensagem:</strong> campo obrigatório</li>
+            </ul>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

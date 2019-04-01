@@ -1,0 +1,77 @@
+:host {
+
+    width: 890px;
+
+    #modalHeader {
+        display: flex;
+        justify-content: center;
+        background-color: #e77a1c;
+        border-radius: 15px 15px 0 0;
+
+        h2 {
+            padding: 0.5em;
+            margin: 0.5em;
+            color: white;
+        }
+    }
+
+    #modalBody {
+        form {
+            margin: 3em 0 1em 1.5em;
+            display: flex;
+            flex-wrap: wrap;
+
+            ul {
+                list-style: none;
+                padding-inline-start: 0;
+                width: 100%;
+
+                li {
+                    padding: 0.5em;
+                    border-radius: 5px;
+                    margin: 0.5em;
+                    font-family: Montserrat;
+                    background-color: white;
+                    cursor: pointer;
+                }
+                #tags {
+                    width: 97%;
+                    margin: 0.1em 0.5em;
+                    background-color: white;
+                    border-radius: 5px;
+
+                    span {
+                        border: 1px solid black;
+                        padding: 0.2em;
+                        margin: 0.2em;
+                        border-radius: 5px;
+                        background-color: #c5c5c5;
+                        display: inline-block;
+                        
+                        i {
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                #jobList {
+                    background-color: white;
+                    display: flex;
+                    flex-direction: column;
+                    overflow: auto;
+                    height: 100px;
+                    position: absolute;
+                    width: 473px;
+                    margin-left: 8px;
+                    border: 1px solid black;
+
+                    span {
+                        
+                        cursor: pointer;
+                        
+                    }
+                }
+            }
+        }
+    }
+}

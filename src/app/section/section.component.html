@@ -1,0 +1,125 @@
+<section>
+    <!-- Slider Component -->
+    <app-slider></app-slider>
+    <!-- Slider Component -->
+    <!-- Banners Div -->
+    <div id="banner">
+        <img [src]="bannerImgTop1" alt="Banner" height="98">
+        <img [src]="bannerImgTop2" alt="Banner" height="98">
+        <img [src]="bannerImgTop3" alt="Banner" height="98">
+    </div>
+    <!-- Banners Div -->
+    <img src="../../assets/images/detalhe-home-esquerda.jpg">
+    <!-- Central Div -->
+    <div id="central">
+        <div id="stateSection">
+            <h1>Bem vindo ao<br>Portal Rede Credenciados</h1>
+            <p>Encontre profissionais e empresas que atuam na área de Medicina e segurança do Trabalho.</p>
+            <!-- Search Services Card -->
+            <div id="stateFormCard">
+                <!-- Search Services Form -->
+                <form>
+                    <label>{{ resized ? '1 – Selecione o Estado' : '1 - Selecione o Estado no Mapa' }}</label>
+                    <span>{{ stateSelected }}</span>
+                    <ul>
+                        <li *ngIf="resized" (click)="showStates()">{{ stateClicked }}<i class="fas fa-caret-down"></i></li>
+                        <div *ngIf="statesShow">
+                            <span *ngFor="let brState of brStates" (click)="selectState(brState)">{{ brState }}</span>
+                        </div>
+                    </ul>
+                    <label>2 – O que Você Procura ?</label>
+                    <input [(ngModel)]="searchJob" [value]="jobClicked ? jobClicked.atividade : 'Selecione a atividade'"
+                        (click)="jobListShow = true" name="job" autocomplete="off">
+                    <div *ngIf="jobListShow" (mouseleave)="clearJobDiv()">
+                        <span *ngFor="let job of jobsFull | searchBox: {atividade: searchJob}" (click)="selectJob(job)">
+                            {{job.atividade}}
+                        </span>
+                    </div>
+                    <label>3 – Selecione a cidade</label>
+                    <input [(ngModel)]="searchCity" [value]="cityClicked ? cityClicked : 'Selecione uma cidade'"
+                        (click)="showCities()" name="job" autocomplete="off">
+                    <div *ngIf="citiesShow" (mouseleave)="clearCityDiv()">
+                        <span *ngFor="let city of cities| searchBox: { nome: searchCity}"
+                            (click)="selectCity(city.nome)">{{ city.nome }}</span>
+                    </div>
+                    <button type="submit" (click)="searchServices()" class="rd-button-home">VAMOS LÁ</button>
+                </form>
+                <!-- Search Services Form -->
+            </div>
+            <!-- Search Services Card -->
+            <h1 style="margin-top: 2em;">Solicite cotações grátis</h1>
+            <p style="margin-top: 2em;">Receba cotações de diversas fornecedores,
+                    para que possa comparar e encontrar o melhor negócio
+                    Isso tudo de forma gratuita</p>
+            <div id="cotations">
+                <span (click)="openModal('modal-cotacao')">Solicitar cotações</span>
+            </div>
+            <!-- Login Card -->
+            <div id="loginCard">
+                <!-- Login Form -->
+                <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+                    <label>Login</label>
+                    <input type="text" formControlName="email">
+                    <label>Senha</label>
+                    <input type="password" formControlName="password">
+                    <button type="submit" class="rd-button-home">Entrar</button>
+                    <div>
+                        <a [routerLink]="['/register']" routerLinkActive="router-link-active">Não possui cadastro?</a> ou
+                        <a [routerLink]="['/forget-password-email']" routerLinkActive="router-link-active">Esqueceu a senha?</a>
+                    </div>
+                </form>
+                <!-- Login Form -->
+            </div>
+            <!-- Login Card -->
+        </div>
+        <div id="map">
+            <app-map *ngIf="!resized" (stateName)="onGetStateName($event)"></app-map>
+            <!-- Search Results Div  -->
+            <div id="pesquisa" *ngIf="pesquisaFlag">
+                <button (click)="newSearch()" class="rd-button-home">NOVA CONSULTA</button>
+                <h1>{{ jobClicked.atividade | uppercase }}</h1>
+                <div *ngFor="let pesquisa of searchResults" class="pesquisa">
+                    <div class="pesquisa-img">
+                        <img [src]="pesquisa.avatar || '../../../assets/images/sem-foto.jpg'">
+                    </div>
+                    <div class="pesquisa-dados">
+                        <h3>{{ pesquisa.nome || pesquisa.nome_fantasia }}</h3>
+                        <span >{{ pesquisa.atividades | nomeAtividade }}  </span>
+                        <p>
+                            {{ pesquisa.rua }},
+                            {{ pesquisa.numero }},
+                            {{ pesquisa.complemento }} <br>
+                            {{ pesquisa.cidade | uppercase }} -
+                            {{ pesquisa.bairro }} <br><br>
+                            {{ pesquisa.tel }} |
+                            {{ pesquisa.tel2 }}
+                        </p>
+                        <a (click)="maisInformacoesLink(pesquisa)">MAIS INFORMAÇÕES</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Search Results Div  -->
+        </div>
+        <app-buscados></app-buscados>
+    </div>
+    <div id="sideBanner">
+        <img src="../../assets/images/Banner-Promocional.gif" alt="Anuncie Aqui">
+        <img src="../../assets/images/Banner-Promocional.gif" alt="Anuncie Aqui">
+        <img src="../../assets/images/Banner-Promocional.gif" alt="Anuncie Aqui">
+        <img src="../../assets/images/Banner-Promocional.gif" alt="Anuncie Aqui">
+        <img src="../../assets/images/Banner-Promocional.gif" alt="Anuncie Aqui">
+    </div>
+</section>
+
+<router-outlet name="popup"></router-outlet>
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

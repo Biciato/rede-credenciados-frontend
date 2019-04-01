@@ -1,0 +1,219 @@
+:host {
+    section {
+        display: flex;
+        justify-content: center;
+
+        div {
+            width: 29.2%;
+            display: flex;
+            flex-direction: column;
+
+            p {
+                color: rgb(231,122,21);
+                font-size: 28px;
+                font-weight: 700;
+                font-family: 'Montserrat';
+                width: 60%;
+                margin: 2em 5em 4em 1em;
+
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+
+        #register {
+            background-color: #e5e5e5;
+            border-radius: 5px;
+            margin: 3em 2em;
+            width: 29.2%;
+
+            h2 {
+                font-size: 22px;
+                font-weight: 500;
+                font-family: 'Montserrat';
+                padding: 0 1.5em;
+            }
+
+            div {
+                display: block;
+                width: 100%;
+                padding: 1em 2em;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                padding: 0 2em;
+
+                input {
+                    padding: 0.5em;
+                    border: none;
+                    border-radius: 5px;
+                    margin: 0.5em;
+                    font-family: Montserrat;
+                }
+
+                .alert {
+                    padding: 0;
+                    div {
+                        padding: 0;
+                        font-size: 0.8rem;
+                        color: red;
+                        margin-left: 0.5rem;
+                    }
+                }
+
+                ul {
+                    list-style: none;
+                    padding-inline-start: 0;
+
+                    li {
+                        padding: 0.5em;
+                        border-radius: 5px;
+                        margin: 0.5em;
+                        font-family: Montserrat;
+                        background-color: white;
+                        cursor: pointer;
+                    }
+                    #tags {
+                        width: 97%;
+                        margin: 0.1em 0.5em;
+                        background-color: white;
+                        border-radius: 5px;
+
+                        span {
+                            padding: 0.5em;
+                            margin: 0.2em;
+                            border-radius: 25px;
+                            background-color: #e77a1c;
+                            display: inline-block;
+                            color: white;
+
+                            i {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    #jobList {
+                        background-color: white;
+                        display: flex;
+                        flex-direction: column;
+                        overflow: auto;
+                        height: 100px;
+                        position: absolute;
+                        width: 473px;
+                        margin-left: 8px;
+                        border: 1px solid black;
+                        bottom: 300px;
+
+                        span {
+
+                            cursor: pointer;
+
+                        }
+                    }
+                }
+
+                div {
+                    padding: 1em 0;
+                }
+
+                button {
+                    border: none;
+                    border-radius: 5px;
+                    padding: 1em;
+                    margin: 0.5em;
+                    background-color: rgb(231,122,21);
+                    color: white;
+                    cursor: pointer;
+                }
+
+                p {
+                    color: black;
+                    font-size: 15px;
+                    font-weight: 500;
+                    line-height: 17px;
+                }
+            }
+        }
+    }
+}
+
+#modal-registro, #modal-validator, #modal-validator-cpf-cnpj, #modal-validator-email,
+#modal-empty-activities, #modal-email-validation {
+
+    #modalHeader {
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        span {
+            padding: 1rem;
+        }
+    }
+
+    #modalBody {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        ul {
+            list-style: none;
+            text-align: justify;
+            width: 25rem;
+            margin: auto;
+        }
+
+        div {
+            p {
+                width: 38rem;
+            }
+
+            h3 {
+                color: #111111;
+            }
+
+            #simFooter {
+
+                border-top: 1px solid #e5e5e5;
+                margin: 0.8em;
+
+                a {
+                    color: #fff;
+                    background-color: #5cb85c;
+                    border: none;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    margin-top: 1em;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    user-select: none;
+                    background-image: none;
+                    border-radius: 4px;
+
+                    i {
+                        padding-right: 0.5em;
+                    }
+                }
+
+                a:hover {
+                    background-color: #449d44;
+                    border-color: #398439;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+:host {
+
+    div {
+        width: 94%;
+        margin: 4em 0 0 3.5em;
+
+        h3 {
+            text-align: center;
+            background-color: #0780c6;;
+            line-height: 3px;
+            border-radius: 15px;
+
+            span {
+                color: white;
+                background-color: #0780c6;;
+                border-radius: 25px;
+                padding: 0.3em 1em;
+                font-weight: 500;      
+            }
+        }
+
+        p {
+
+            text-align: justify;
+            
+            span {
+                padding: 0.1em;
+                color: #0780c6;
+            }
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    :host {
+        width: 70%;
+    }
+}

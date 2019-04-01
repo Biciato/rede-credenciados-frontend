@@ -1,0 +1,237 @@
+<section>
+    <div>
+        <p>Simples, Prático e Fácil. Faça seu cadastro Grátis e seja
+            encontrado por quem precisa dos seus Serviços.
+        </p>
+        <img src="../../assets/images/medico.png" alt="Medicos">
+    </div>
+    <!-- Register Div -->
+    <div id="register">
+        <h2>Cadastre-se gratuitamente</h2>
+        <div>
+            <input #tf type="radio" name="tipoPessoa" value="pessoa_juridica" checked="checked"
+                (click)="tipoPessoaSelected(tf.value)"> Pessoa Jurídica
+            <input #tp type="radio" name="tipoPessoa" value="pessoa_fisica"
+                (click)="tipoPessoaSelected(tp.value)"> Pessoa Física
+        </div>
+        <!-- Register Form -->
+        <form [formGroup]="pessoaJuridicaForm">
+
+            <input type="text" name="razaoSocial" placeholder="Razão Social:" id="razaoSocial"
+                *ngIf="tipoPessoa == 'pessoa_juridica'" formControlName="razao_social">
+            <div
+                *ngIf="razao_social.invalid && (razao_social.dirty || razao_social.touched) && tipoPessoa == 'pessoa_juridica'"
+                class="alert alert-danger">
+                <div *ngIf="!!razao_social.errors.required">
+                    *Preenchimento da Razão Social é obrigatório.
+                </div>
+            </div>
+            <input type="text" name="nomeFantasia" placeholder="Nome Fantasia:" id="nomeFantasia"
+                *ngIf="tipoPessoa == 'pessoa_juridica'" formControlName="nome_fantasia">
+            <div
+                *ngIf="nome_fantasia.invalid && (nome_fantasia.dirty || nome_fantasia.touched) && tipoPessoa == 'pessoa_juridica'"
+                class="alert alert-danger">
+                <div *ngIf="!!nome_fantasia.errors.required">
+                    *Preenchimento do Nome Fantasia é obrigatório.
+                </div>
+            </div>
+            <input type="text" name="nomeContato" placeholder="Nome para Contato:" id="nomeContato"
+                *ngIf="tipoPessoa == 'pessoa_juridica'" formControlName="nome_contato">
+            <div
+                *ngIf="nome_contato.invalid && (nome_contato.dirty || nome_contato.touched) && tipoPessoa == 'pessoa_juridica'"
+                class="alert alert-danger">
+                <div *ngIf="!!nome_contato.errors.required">
+                    *Preenchimento do Nome para Contato é obrigatório.
+                </div>
+            </div>
+            <input type="text" name="cnpj" placeholder="CNPJ:" (keyup)="onKeyCNPJ($event)"
+                maxlength="18" id="cnpj" *ngIf="tipoPessoa == 'pessoa_juridica'" formControlName="cnpj">
+            <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched) && tipoPessoa == 'pessoa_juridica'"
+                class="alert alert-danger">
+                <div *ngIf="!!cnpj.errors.required">
+                    *Preenchimento do CNPJ é obrigatório.
+                </div>
+                <div *ngIf="!!cnpj.errors.minlength">
+                    *CNPJ inválido.
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="pessoaFisicaForm">
+            <input type="text" name="name" placeholder="Nome:" id="name" *ngIf="tipoPessoa == 'pessoa_fisica'"
+                formControlName="name">
+            <div *ngIf="name.invalid && (name.dirty || name.touched) && tipoPessoa == 'pessoa_fisica'"
+                class="alert alert-danger">
+                <div *ngIf="!!name.errors.required">
+                    *Preenchimento do Nome é obrigatório.
+                </div>
+            </div>
+            <input type="text" name="cpf" placeholder="CPF:" (keyup)="onKeyCPF($event)" maxlength="14"
+                id="cpf" *ngIf="tipoPessoa == 'pessoa_fisica'" formControlName="cpf">
+            <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched) && tipoPessoa == 'pessoa_fisica'"
+                class="alert alert-danger">
+                <div *ngIf="!!cpf.errors.required">
+                    *Preenchimento do CPF é obrigatório.
+                </div>
+                <div *ngIf="!!cpf.errors.minlength">
+                    *CPF inválido.
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="registerForm">
+            <input type="text" name="email" placeholder="E-mail:" formControlName="email">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!email.errors.required">
+                    *Preenchimento do E-mail é obrigatório.
+                </div>
+                <div *ngIf="!!email.errors.email">
+                    *formato de e-mail inválido.
+                </div>
+            </div>
+            <input type="password" name="senha" placeholder="Senha:" id="senha" formControlName="password">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!password.errors.required">
+                    *Preenchimento da Senha é obrigatório.
+                </div>
+                <div *ngIf="!!password.errors.minlength">
+                    *A senha precisa ter no mínimo 6 caracteres.
+                </div>
+            </div>
+            <ul>
+                <li (click)="openModal('modal-atividades')">Selecione suas especialidades:</li>
+                <div id="tags" *ngIf="jobTags.length > 0">
+                    <span *ngFor="let jobTag of jobTags; let i = index">
+                        {{ jobTag }}
+                        <i class="fas fa-times" (click)="removeJob(i)"></i>
+                    </span>
+                </div>
+            </ul>
+
+            <div *ngIf="tipoPessoa == 'pessoa_fisica'">
+                <input type="radio" name="sexo" value="feminino" checked="checked"> Feminino
+                <input type="radio" name="sexo" value="masculino"> Masculino
+            </div>
+
+            <button type="submit" (click)="register()">REGISTRAR GRATUITAMENTE</button>
+            <p><small>* Cadastro totalmente seguro.</small></p>
+        </form>
+        <!-- Register Form -->
+    </div>
+    <!-- Register Div -->
+</section>
+<app-modal id="modal-atividades">
+    <app-atividades></app-atividades>
+</app-modal>
+
+<app-modal id="modal-registro">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <p>
+                Caro usuário, enviamos para o seu e-mail, um link para confirmar o cadastro. Por favor, verifique-o
+                para podermos finalizar teu cadastro.
+            </p>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-registro')"><i class="fas fa-times"></i>OK</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-validator">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Campos pendentes:</h3>
+            <ul>
+                <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail:</strong> campo obrigatório</li>
+                <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail:</strong> formato inválido</li>
+                <li *ngIf="!!cpf.errors && !!cpf.errors.required && tipoPessoa === 'pessoa_fisica'"><strong>CPF:</strong> campo obrigatório</li>
+                <li *ngIf="!!cpf.errors && !!cpf.errors.minlength && tipoPessoa === 'pessoa_fisica'"><strong>CPF:</strong> formato inválido</li>
+                <li *ngIf="!!cnpj.errors && !!cnpj.errors.required && tipoPessoa === 'pessoa_juridica'"><strong>CNPJ:</strong> campo obrigatório</li>
+                <li *ngIf="!!cnpj.errors && !!cnpj.errors.minlength && tipoPessoa === 'pessoa_juridica'"><strong>CNPJ:</strong> formato inválido</li>
+                <li *ngIf="!!razao_social.errors && !!razao_social.errors.required && tipoPessoa === 'pessoa_juridica'">
+                    <strong>Razão Social:</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!name.errors && !!name.errors.required && tipoPessoa === 'pessoa_fisica'"><strong>Nome:</strong> campo obrigatório</li>
+                <li *ngIf="!!nome_contato.errors && !!nome_contato.errors.required && tipoPessoa === 'pessoa_juridica'">
+                    <strong>Nome Contato:</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!nome_fantasia.errors && !!nome_fantasia.errors.required && tipoPessoa === 'pessoa_juridica'">
+                    <strong>Nome Fantasia:</strong> campo obrigatório
+                </li>
+                <li *ngIf="!!password.errors && !!password.errors.required"><strong>Senha:</strong> campo obrigatório</li>
+                <li *ngIf="!!password.errors && !!password.errors.minlength"><strong>Senha:</strong> deve conter no mínimo 6 caracteres</li>
+            </ul>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-validator-email">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Esse e-mail já existe em nossos cadastros</h3>
+            <a [routerLink]="['/forget-password-email']" routerLinkActive="router-link-active" >Esqueceu a senha ?</a>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator-email')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-validator-cpf-cnpj">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Esse {{ cpfCnpj }} já existe em nossos cadastros</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator-cpf-cnpj')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-empty-activities">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Favor selecionar pelo menos uma especialidade</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-empty-activities')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-email-validation">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>E-mail inválido</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-email-validation')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>

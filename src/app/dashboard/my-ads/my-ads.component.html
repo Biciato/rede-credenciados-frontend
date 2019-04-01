@@ -1,0 +1,238 @@
+<!-- Ad Info Card -->
+<div id="cardPriceTab">
+    <!-- Card  Header -->
+    <div id="cardPriceTabHeader"><h3>Tabela Preços</h3></div>
+    <!-- Card  Header -->
+    <!-- Card  Body -->
+    <div id="cardPriceTabBody">
+        <!-- Card  Table -->
+        <div id="table">
+            <div id="tableHeader"><h3>Preços</h3></div>
+            <div id="tableBody">
+                <table>
+                    <tr>
+                        <th>Mensalidade</th>
+                        <th>Local (bannner)</th>
+                        <th>Qtd Estados</th>
+                        <th>Qtd Cidades</th>
+                    </tr>
+                    <tr (click)="createPropagnada(1, 10, 'lateral')">
+                        <td>R$ 25,00</td>
+                        <td>Lateral</td>
+                        <td>1</td>
+                        <td>10</td>
+                    </tr>
+                    <tr (click)="createPropagnada(1, 10, 'topo')">
+                        <td>R$ 75,00</td>
+                        <td>Topo</td>
+                        <td>1</td>
+                        <td>10</td>
+                    </tr>
+                    <tr (click)="createPropagnada(2, 20, 'lateral')">
+                        <td>R$ 50,00</td>
+                        <td>Lateral</td>
+                        <td>2</td>
+                        <td>20</td>
+                    </tr>
+                    <tr (click)="createPropagnada(2, 20, 'topo')">
+                        <td>R$ 100,00</td>
+                        <td>Topo</td>
+                        <td>2</td>
+                        <td>20</td>
+                    </tr>
+                    <tr (click)="createPropagnada(4, 30, 'lateral')">
+                        <td>R$ 75,00</td>
+                        <td>Lateral</td>
+                        <td>4</td>
+                        <td>30</td>
+                    </tr>
+                    <tr (click)="createPropagnada(4, 30, 'topo')">
+                        <td>R$ 120,00</td>
+                        <td>Topo</td>
+                        <td>4</td>
+                        <td>30</td>
+                    </tr>
+                    <tr (click)="createPropagnada('todos')">
+                        <td>R$ 100,00</td>
+                        <td>Lateral</td>
+                        <td>Todos</td>
+                        <td>Todas</td>
+                    </tr>
+                    <tr (click)="createPropagnada('todos')">
+                        <td>R$ 150,00</td>
+                        <td>Topo</td>
+                        <td>Todos</td>
+                        <td>Todas</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- Card  Table -->
+    </div>
+    <!-- Card  Body -->
+</div>
+<!-- Ad Info Card -->
+<!-- Manage Ad Card -->
+<div id="cardManag">
+    <!-- Card Header -->
+    <div id="cardManagHeader"><h3>Gerenciamento dos Anúncios</h3></div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardManagBody">
+        <div *ngIf="propagandaPj && !propagandaPj.id">
+            <p>
+                Anuncie sua empresa em nosso site.
+                É simples. Basta escolher um plano (pode ser mais de um) clicando em uma opção na tabela ao lado.
+                Depois é só escolher os anuncios e pronto.
+            </p>
+        </div>
+        <div *ngIf="propagandaPj && propagandaPj.id" id="details">
+            <h3>Veja aqui os detalhes dos seus anúncios:</h3>
+            <h5 *ngIf="estadosTopo.length > 0">Estados topo:</h5>
+            <div *ngIf="estadosTopo.length > 0">
+                <span *ngFor="let estado of estadosTopo">{{estado}}</span>
+            </div>
+            <h5 *ngIf="cidadesTopo.length > 0">Cidades topo:</h5>
+            <div *ngIf="cidadesTopo.length > 0">
+                <span class="cities-span" *ngFor="let cidade of cidadesTopo">{{cidade}}</span>
+            </div>
+            <h5 *ngIf="estadosLateral.length > 0">Estados Lateral:</h5>
+            <div *ngIf="estadosLateral.length > 0">
+                <span *ngFor="let estado of estadosLateral">{{estado}}</span>
+            </div>
+            <h5 *ngIf="cidadesLateral.length > 0">Cidades lateral:</h5>
+            <div *ngIf="cidadesLateral.length > 0">
+                <span class="cities-span" *ngFor="let cidade of cidadesLateral">{{cidade}}</span>
+            </div>
+            <ng-container *ngIf="bannerImageTop !== undefined">
+                <h5>Imagem do banner topo:</h5>
+                <img [src]="bannerImageTop" alt="" height="100" width="400">
+                <button class="rd-button-dash" (click)="chooseBannerFromUpdate('topo')">ALTERAR</button>
+            </ng-container>
+            <ng-container *ngIf="bannerImageSide !== undefined">
+                <h5>Imagem do banner lateral:</h5>
+                <img [src]="bannerImageSide" alt="" style="width: 30%">
+                <button class="rd-button-dash" (click)="chooseBannerFromUpdate('lateral')">ALTERAR</button>
+            </ng-container>
+            <input id="bannerUpdate" name="bannerUpdate" style="display: none" type="file" (change)="updateBanner()">
+            <h6>*Para editar os anúncios, basta clicar na tabela</h6>
+        </div>
+    </div>
+    <!-- Card Body -->
+</div>
+<!-- Manage Ad Card -->
+<!-- Modal -->
+<app-modal id="modal-propaganda-estados">
+    <!-- Modal Header -->
+    <div id="modalHeader">
+        <h2>Detalhes dos Anúncios</h2>
+    </div>
+    <!-- Modal Header -->
+    <!-- Modal Body -->
+    <div id="modalBody">
+        <div>
+            <label *ngIf="stateTags.length < stateQty" (click)="showStatesModal()">Selecione {{ stateQty }} Estado(s)<i class="fas fa-caret-down"></i></label>
+            <div class="tags">
+                <span *ngFor="let state of stateTags" >
+                    {{ state }}
+                    <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
+                </span>
+            </div>
+            <div *ngIf="statesShowModal" class="dropdown" (mouseleave)="statesShowModal = false">
+                <span *ngFor="let brState of brStates" (click)="selectStateModal(brState)">{{ brState }}</span>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div id="simFooter">
+            <button type="submit" (click)="nextModalCidades('modal-propaganda-estados')"><i class="fas fa-check"></i>CONCLUIR</button>
+            <a (click)="closeModal('modal-propaganda-estados')"><i class="fas fa-times"></i>FECHAR</a>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+    <!-- Modal Body -->
+
+</app-modal>
+<!-- Modal -->
+<!-- Modal -->
+<app-modal id="modal-propaganda-cidades">
+    <!-- Modal Header -->
+    <div id="modalHeader">
+        <h2>Detalhes dos Anúncios</h2>
+    </div>
+    <!-- Modal Header -->
+    <!-- Modal Body -->
+    <div id="modalBody">
+        <div>
+            <div class="city-input">
+                <input type="text" [(ngModel)]="searchText" (click)="citiesShowModal = true" [value]="cityClickedModal" name="city">
+                <button (click)="includeCity()" class="rd-button-home">INCLUIR</button>
+            </div>
+            <div class="tags">
+                <span *ngFor="let city of cityTags">
+                    {{ city }}
+                    <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
+                </span>
+            </div>
+            <div *ngIf="citiesShowModal" class="dropdown">
+                <span *ngFor="let city of cities | searchBox: { nome: searchText }" (click)="selectCityModal(city)">{{ city.nome }}</span>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div id="simFooter">
+            <button type="submit" (click)="nextModalBanner('modal-propaganda-cidades')"><i class="fas fa-check"></i>CONCLUIR</button>
+            <button type="submit" (click)="backward('modal-propaganda-cidades', 'modal-propaganda-estados')"><i class="fas fa-check"></i>VOLTAR</button>
+            <a (click)="closeModal('modal-propaganda-cidades')"><i class="fas fa-times"></i>FECHAR</a>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+    <!-- Modal Body -->
+
+</app-modal>
+
+<app-modal id="modal-propaganda-banner">
+    <!-- Modal Header -->
+    <div id="modalHeader">
+        <h2>Detalhes dos Anúncios</h2>
+    </div>
+    <!-- Modal Header -->
+    <!-- Modal Body -->
+    <div id="modalBody">
+        <div>
+            <input id="banner" name="banner" style="display: none" type="file" (change)="fileEvent($event)">
+            <span>{{ imageName }}</span>
+            <button class="rd-button-home" (click)="chooseBanner()">UPLOAD IMAGEM</button>
+        </div>
+
+        <!-- Modal Footer -->
+        <div id="simFooter">
+            <button type="submit" (click)="save()"><i class="fas fa-check"></i>CONCLUIR</button>
+            <button type="submit" (click)="backward('modal-propaganda-banner', 'modal-propaganda-cidades')"><i class="fas fa-check"></i>VOLTAR</button>
+            <a (click)="closeModal('modal-propaganda-banner')"><i class="fas fa-times"></i>FECHAR</a>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+    <!-- Modal Body -->
+
+</app-modal>
+<!-- Modal -->
+<!-- Modal -->
+<app-modal id="modal-aviso-imagem">
+    <div class="confirm-modal">
+      <div id="modal">
+        <p>O formato de arquivo deve ser jpg.</p>
+        <button (click)="closeModal('modal-aviso-imagem')"><i class="fas fa-times"></i>Fechar</button>
+      </div>
+    </div>
+</app-modal>
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

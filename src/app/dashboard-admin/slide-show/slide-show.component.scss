@@ -1,0 +1,114 @@
+:host {
+    width: calc(100% - 281.64px);
+    display: flex;
+    margin-bottom: 2em;
+
+    section { 
+        max-height: 55rem;
+        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        #cardTab {
+
+            height: fit-content;
+
+            #cardTabHeader {
+                width: 98%;
+                margin-left: 1%;
+            }
+
+            #cardTabBody {
+                #newImg {
+                    display: flex;
+                    flex-direction: column;
+
+                    input:nth-child(4) {
+                        width: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#modal-slide-image {
+
+    #modalHeader {
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+        background-color: rgba(255,121,0,1); 
+
+        h2 {
+            padding: 0.5em;
+            margin: 0.5em;
+            color: white;
+            text-align: center;
+        }
+    }
+
+    #modalBody {
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        padding: 2em 1em 1em 1em;
+
+        .group {
+            label {
+                top:-20px;
+                font-size:12px;
+                color: #999;
+            }
+        }
+    }
+
+    #modalFooter {
+        display: flex;
+        justify-content: center;
+        border-radius: 0 0 15px 15px; 
+        padding: 0.5em;
+
+        button {
+            color: #fff;
+            background-color: #5cb85c;
+            border: none;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            background-image: none;
+            border-radius: 4px;
+
+            i {
+                padding-right: 0.5em;
+            }
+        }
+
+        button:hover {
+            background-color: #449d44;
+            border-color: #398439;
+        }
+
+        button:nth-child(2) {
+            background-color: #d9534f;
+            margin-left: 0.5em;
+        }
+
+        button:nth-child(2):hover {
+            background-color: #c9302c;
+            border-color: #761c19;
+            margin-left: 0.5em;
+        }
+    }
+}

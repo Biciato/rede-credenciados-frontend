@@ -1,0 +1,163 @@
+<div id="modalHeader">
+    <h2>Cadastro de Unidade</h2>
+</div>
+<div id="modalBody">
+    <form [formGroup]="unidadeForm" (ngSubmit)="onSubmit()">
+        <div class="group" style="width: 47%;">      
+            <input type="text" formControlName="razaoSocial">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Razão Social</label>
+        </div>
+        
+        <div class="group" style="width: 45%;">      
+            <input type="text" formControlName="nomeFantasia">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Nome Fantasia</label>
+        </div>
+
+        <div class="group" style="width: 24%;">      
+            <input type="text" formControlName="cnpj" (keyup)="onKeyCNPJ($event)" maxlength="18">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>CNPJ</label>
+        </div>
+
+        <div class="group" style="width: 47%;">      
+            <input type="text" formControlName="nomeContato">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Nome para Contato</label>
+        </div>
+
+        <div class="group" style="width: 47%;">      
+            <input type="text" formControlName="email">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Email Principal</label>
+        </div>
+
+        <div class="group" style="width: 45%;">      
+            <input type="text" formControlName="email2">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Email Secundário</label>
+        </div>
+
+        <div class="group">      
+            <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Telefone 1</label>
+        </div>
+
+        <div class="group" style="width: 21%;">      
+            <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Telefone 2</label>
+        </div>
+
+        <div class="group" style="width: 20%">      
+            <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Celular 1</label>
+        </div>
+
+        <div class="group" style="width: 21%">      
+            <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Celular 2</label>
+        </div>
+        
+        <div class="group">      
+            <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>CEP</label>
+        </div>
+        
+        <div class="group" style="width: 35%">      
+            <input type="text" formControlName="rua">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Logradouro</label>
+        </div>
+
+        <div class="group" style="width: 6%">      
+            <input type="text" formControlName="numero">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Número</label>
+        </div>
+        
+        <div class="group" style="width: 21%">      
+            <input type="text" formControlName="complemento">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Complemento</label>
+        </div>
+
+        <div class="group" style="width: 29%">      
+            <input type="text" formControlName="bairro">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Bairro</label>
+        </div>
+        
+        <div class="group" style="width: 29%">      
+            <input type="text" formControlName="cidade">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Cidade</label>
+        </div>
+
+        <div class="group" style="width: 5%">      
+            <input type="text" formControlName="estado">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Estado</label>
+        </div>
+        <br>
+        <div class="group" style="width: 100%">    
+            <textarea formControlName="apresentacao"></textarea>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Resumo, Informações Gerais, Apresentação, Descrição</label>
+        </div>
+
+        <!-- Services list to choose -->  
+        <ul>
+            <li (click)="showJobs()">Selecione suas especialidades:</li>
+            <div id="tags" *ngIf="jobTags.length > 0">
+                <span *ngFor="let jobTag of jobTags; let i = index">
+                    {{ jobTag }}
+                    <i class="fas fa-times" (click)="removeJob(i)"></i>
+                </span>
+            </div>
+            <div *ngIf="jobListShow" id="jobList">
+                <span *ngIf="loading">Processando...</span>
+                <span *ngFor="let job of jobsFull; let i = index" #jobSelected (click)="selectJob(job)">{{ job.atividade }}</span>
+            </div>
+        </ul>
+        <!-- Services list to choose -->  
+        <button class="rd-button-dash" style="background-color: #5cb85c">SALVAR</button>
+    </form>
+    
+</div>
+<!-- Loading Status -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+            <h3>
+                Loading...
+            </h3>
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

@@ -1,0 +1,51 @@
+<div id="contato" class="card-dash">
+    <div class="card-header-dash"><h3>Currículo</h3></div>
+    <div class="card-body-dash" style="margin-top: 1rem">
+        <!-- Curriculo form -->
+        <form [formGroup]="curriculoForm" (ngSubmit)="onCurriculoFormSubmit()">
+            <div class="group">
+                <input type="text" formControlName="nome">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Nome</label>
+            </div>
+
+            <div class="group">
+                <input type="text" formControlName="email">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>E-mail</label>
+            </div>
+
+            <div class="group">
+                <input type="text" formControlName="tel" (keyup)="onKeyCel($event)" maxlength="15">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Telefone</label>
+            </div>
+
+            <button type="submit" class="rd-button-dash" style="background-color: #5cb85c" *ngIf="saveFlag">SALVAR</button>
+            <h6>{{ nomeArquivo }}</h6>
+        </form>
+        <!-- Curriculo form -->
+        <input type="file" name="arquivo" id="arquivo" style="display: none" (change)="fileEvent($event)">
+        <button (click)="chooseArquivo()" class="rd-button-dash" style="background-color: #33b5e5">UPLOAD ARQUIVO</button>
+    </div>
+</div>
+<app-modal id="modal-aviso-pdf">
+    <div>
+        <h4>O formato de arquivo deve ser pdf</h4>
+        <button (click)="closeModal('modal-aviso-pdf')" class="rd-button-dash">OK</button>
+    </div>
+</app-modal>
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+            <h3>
+                Loading...
+            </h3>
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>

@@ -1,0 +1,56 @@
+<footer>
+    <!-- links -->
+    <ul>
+        <li *ngFor="let link of links"><a (click)="linkRoutes(link)"> {{ link }}</a></li>
+    </ul>
+    <!-- links -->
+    <!-- newsletter form -->
+    <div id="formNovidades">
+        <p style="font-size:14px;"><strong>RECEBA NOSSAS NOVIDADES</strong></p>
+        <form style="display:flex;flex-direction:column;" [formGroup]="newsForm" (ngSubmit)="newNewsletter()">
+            <input type="text" placeholder="Nome: " formControlName="nome">
+            <input type="text" placeholder="E-mail: " formControlName="email">
+            <button type="submit">ENVIAR</button>
+        </form>
+    </div>
+    <!-- newsletter form -->
+    <div>
+        <p id="textCenter">
+            Faça parte do <b>maior portal de Medicina<br>
+            e Segurança do Trabalho do Brasil</b>
+        </p>
+    </div>
+    <div>
+        <ul>
+            <li><strong>ACESSE</strong></li>
+            <li><a (click)="openModal('modal-login')">Minha Conta</a></li>
+            <li><a href="/register">Cadastre-se grátis</a></li>
+            <hr>
+            <li><strong>CONTATOS</strong></li>
+            <li><address>contato@redecredenciados.com.br</address></li>
+        </ul>
+        <p>© REDE CREDENCIADOS. TODOS OS DIREITOS RESERVADOS.</p>
+    </div>
+</footer>
+<app-modal id="modal-validator-news">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Formato de e-mail inválido</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator-news')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" 
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>

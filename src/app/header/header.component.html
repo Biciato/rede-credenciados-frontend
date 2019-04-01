@@ -1,0 +1,286 @@
+<header>
+    <!-- links that are shown accordingly to app page location -->
+    <div id="top">
+        <img src="../assets/images/logo-rede.png" alt="Logo Rede Credenciados"
+            (click)="home()">
+        <span>Totalmente Grátis</span>
+        <a *ngIf="!dashboardMode" routerLink="/register" routerLinkActive="active">Cadastre-se Grátis</a>
+        <a *ngIf="!dashboardMode" style="margin-left: 0.5em; cursor:pointer;" (click)="openModal('modal-login')">
+            Minha Conta
+        </a>
+        <a *ngIf="dashboardMode" (click)="openModal('modal-reset-password')">Alterar Senha</a>
+        <a *ngIf="dashboardMode && !verPerfilMode && !adminMode" (click)="minhasInformacoes()">Ver Perfil</a>
+        <a *ngIf="dashboardMode && verPerfilMode && !adminMode" (click)="backToDash()">Dashboard</a>
+        <a *ngIf="dashboardMode && verPerfilMode && adminMode" (click)="backToDashAdmin()">Dashboard</a>
+        <a *ngIf="dashboardMode" (click)="exit()" id="exit"><i class="fas fa-sign-out-alt"></i>Sair</a>
+    </div>
+    <!-- links that are shown accordingly to app page location -->
+    <!-- Links Menu Div -->
+    <div id="menu" *ngIf="!dashboardMode">
+        <ul>
+            <li *ngFor="let link of links"><a (click)="linkRoutes(link)">{{ link }}</a></li>
+        </ul>
+    </div>
+    <!-- Links Menu Div -->
+</header>
+<!-- login modal -->
+<app-modal id="modal-login">
+    <div id="modalHeader">
+        <img src="../assets/images/logo-rede.png" alt="Logo Rede Credenciados">
+        <span>MINHA CONTA</span>
+    </div>
+    <div id="modalBody">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit('modal-login')">
+            <div>
+                <label>E-mail:</label>
+                <input type="text" formControlName="email" name="email">
+            </div>
+            <div>
+                <label>Senha:</label>
+                <input type="password" formControlName="password" name="password">
+            </div>
+            <a (click)="forgetPassword('modal-login')">Esqueci minha senha</a>
+            <div id="simFooter">
+                <button type="submit"><i class="fas fa-check"></i>ENTRAR</button>
+                <a (click)="closeModal('modal-login')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </form>
+    </div>
+</app-modal>
+<!-- login modal -->
+<!-- Reset Password modal -->
+<app-modal id="modal-reset-password">
+    <div id="modalHeader">
+        <img src="../assets/images/logo-rede.png" alt="Logo Rede Credenciados">
+        <span>ALTERAR SENHA</span>
+    </div>
+    <div id="modalBody">
+        <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPasswordSubmit('modal-reset-password')">
+            <div>
+                <label>Senha Atual:</label>
+                <input type="password" formControlName="password" id="password" name="password"
+                style="margin-left: 5.5rem">
+            </div>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!password.errors.minlength" style="color: red">
+                    *senha precisa ter no mínimo 6 caracteres.
+                </div>
+            </div>
+            <div>
+                <label>Nova Senha:</label>
+                <input type="password" formControlName="newPassword" id="newPassword" name="newPassword"
+                 style="margin-left: 5.5rem">
+            </div>
+            <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!newPassword.errors.minlength" style="color: red">
+                    *senha precisa ter no mínimo 6 caracteres.
+                </div>
+            </div>
+            <div>
+                <label>Confirmar Nova Senha:</label>
+                <input type="password" formControlName="newPasswordConfirmation" id="newPasswordConfirmation"
+                    name="newPasswordConfirmation">
+            </div>
+            <div *ngIf="newPasswordConfirmation.invalid && (newPasswordConfirmation.dirty ||
+                newPasswordConfirmation.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!newPasswordConfirmation.errors.minlength" style="color: red">
+                    *senha precisa ter no mínimo 6 caracteres.
+                </div>
+            </div>
+            <div id="simFooter">
+                <button type="submit"><i class="fas fa-check"></i>SALVAR</button>
+                <a (click)="closeModal('modal-reset-password')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </form>
+    </div>
+</app-modal>
+<!-- Reset Password modal -->
+<router-outlet name="popup"></router-outlet>
+<!-- Contact Modal -->
+<app-modal id="modal-cotacao">
+    <div class="card-dash">
+        <div class="card-header-dash"><h3>Solicite uma cotação</h3></div>
+        <div class="card-body-dash" (mouseleave)="citiesShowModal = false">
+            <!-- Contact Form -->
+            <form [formGroup]="cotacaoForm">
+                <div id="stateCity">
+                    <div class="form-group">
+                        <label>Selecione o(s) Estado(s)</label>
+                        <ul>
+                            <li (click)="showStatesModal()">{{ stateClickedModal || 'Selecione o estado' }}
+                                <i class="fas fa-caret-down"></i></li>
+                            <span *ngFor="let state of stateTags">
+                                {{ state }}
+                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
+                            </span>
+                            <div *ngIf="statesShowModal">
+                                <span *ngFor="let brState of brStates" (click)="selectStateModal(brState)">
+                                    {{ brState }}
+                                </span>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label>Selecione a(s) cidade(s)</label>
+                        <div class="group">
+                            <input [(ngModel)]="searchCity" (click)="showCities()" name="city"
+                                [ngModelOptions]="{standalone: true}" #searchCityVar
+                                (keydown.enter)="selectCityModal(searchCityVar.value)"
+                                autocomplete="off">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label [className]="searchCityVar.value === null ? 'input-empty' : 'input-not-empty'">
+                                Cidade
+                            </label>
+                        </div>
+                        <div class="tags">
+                            <span *ngFor="let city of cityTags">
+                                {{ city }}
+                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
+                            </span>
+                        </div>
+                        <div *ngIf="citiesShowModal" class="dropdown">
+                            <span *ngFor="let city of cities| searchBox: { nome: searchCity}"
+                                (click)="selectCityModal(city.nome)">{{ city.nome }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="personalData">
+                    <div class="group">
+                        <input type="text" formControlName="nome">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="nome.value === null ? 'input-empty' : 'input-not-empty'">Nome</label>
+                        <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!nome.errors.required" style="color: red">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <input type="text" formControlName="email">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">E-mail</label>
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!email.errors.required" style="color: red">
+                                *campo obrigatório.
+                            </div>
+                            <div *ngIf="!!email.errors.email" style="color: red">
+                                *formato de e-mail inválido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="tel.value === null ? 'input-empty' : 'input-not-empty'">Telefone</label>
+                        <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!tel.errors.required" style="color: red">
+                                *campo obrigatório.
+                            </div>
+                            <div *ngIf="!!tel.errors.minlength && !telValid" style="color: red">
+                                *número de telefone inválido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <input type="text" formControlName="cel" (keyup)="onKeyCel($event)">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">Celular</label>
+                        <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!cel.errors.minlength" style="color: red">
+                                *número de telefone inválido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <textarea type="text" formControlName="mensagem"></textarea>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="mensagem.value === null ? 'input-empty' : 'input-not-empty'">Mensagem</label>
+                        <div *ngIf="mensagem.invalid && (mensagem.dirty || mensagem.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!mensagem.errors.required" style="color: red">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+                    <p>Declaro que li e aceito os termos de uso</p>
+                    <button class="rd-button-dash" (click)="onCotacaoFormSubmit()" type="button">ENVIAR COTAÇÃO</button>
+                </div>
+            </form>
+            <!-- Contact Form -->
+        </div>
+    </div>
+
+</app-modal>
+<app-modal id="modal-validator-header">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Campos pendentes:</h3>
+            <ul>
+                <ng-container *ngIf="cotacaoFlag">
+                    <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail:</strong> campo obrigatório</li>
+                    <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail:</strong> formato inválido</li>
+                    <li *ngIf="!!tel.errors && !!tel.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
+                    <li *ngIf="!!tel.errors && !!tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
+                    <li *ngIf="!!cel.errors && !!cel.errors.minlength"><strong>Celular:</strong> formato inválido</li>
+                    <li *ngIf="!!mensagem.errors && !!mensagem.errors.required"><strong>Mensagem:</strong> campo obrigatório</li>
+                    <li *ngIf="!!nome.errors && !!nome.errors.required"><strong>Nome:</strong> campo obrigatório</li>
+                    <li *ngIf="cityTags.length === 0"><strong>Estado:</strong> selecione pelo menos 1 estado</li>
+                    <li *ngIf="stateTags.length === 0"><strong>Cidade:</strong> selecione pelo menos 1 cidade</li>
+                </ng-container>
+                <ng-container *ngIf="passwordResetFlag">
+                    <li *ngIf="!!password.errors && !!password.errors.required">
+                        <strong>Senha Atual:</strong> campo obrigatório
+                    </li>
+                    <li *ngIf="!!newPassword.errors && !!newPassword.errors.required">
+                        <strong>Nova Senha:</strong> campo obrigatório
+                    </li>
+                    <li *ngIf="!!newPasswordConfirmation.errors && !!newPasswordConfirmation.errors.required">
+                        <strong>Confirmação da Nova Senha:</strong> campo obrigatório
+                    </li>
+                    <li *ngIf="!!password.errors && !!password.errors.minlength">
+                        <strong>Senha Atual:</strong> mínimo de 6 caracteres
+                    </li>
+                    <li *ngIf="!!newPassword.errors && !!newPassword.errors.minlength">
+                        <strong>Nova Senha:</strong> mínimo de 6 caracteres
+                    </li>
+                    <li *ngIf="!!newPasswordConfirmation.errors && !!newPasswordConfirmation.errors.minlength">
+                        <strong>Confirmação da Nova Senha:</strong> mínimo de 6 caracteres
+                    </li>
+                </ng-container>
+            </ul>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator-header')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<!-- Contact Modal -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>
