@@ -14,7 +14,7 @@ export class BannerService {
 
     store(banner, id, filename, local, token) {
         const httpOptions = { headers: new HttpHeaders({
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
 
         return this.http.post(this.baseUrl + `/banner/${id}/${local}/${filename}`, banner, httpOptions);

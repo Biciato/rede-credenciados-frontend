@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { ActivityService } from '../services/activity/activity.service';
 import { CitiesService } from '../services/cities/cities.service';
-import { CotacaoService } from '../services/cotacao/cotacao.service';
 import { LoginService } from '../services/login/login.service';
 import { ModalService } from '../services/modal/modal.service';
 import { PesquisaClientesService } from '../services/pesquisa-clientes/pesquisa-clientes.service';
@@ -19,6 +18,8 @@ import { PesquisaCliente } from '../models/pesquisa-cliente';
 import { environment } from '../../environments/environment';
 import { AvatarService } from '../services/avatar/avatar.service';
 import { PropagandaService } from '../services/propaganda/propaganda.service';
+import { interval } from 'rxjs';
+import { map, retryWhen } from 'rxjs/operators';
 
 @Component({
     selector: 'app-section',
@@ -40,6 +41,8 @@ export class SectionComponent {
     bannerImgTop1 = '../../assets/images/banner-top.jpg';
     bannerImgTop2 = '../../assets/images/banner-top.jpg';
     bannerImgTop3 = '../../assets/images/banner-top.jpg';
+    bannersTop = [];
+    bannersSide = [];
     baseUrlArquivos = environment.baseUrlArquivos;
     brStates: string[];
 
@@ -219,74 +222,32 @@ export class SectionComponent {
     }
 
     getPropIdx(cidade, estado) {
-        this.propService.index(cidade, estado).subscribe(data => this.getUserPropIds(data));
+        this.propService.index(cidade, estado).subscribe(data => this.getBanners(data));
     }
 
-    getUserPropIds(data) {
-        if (data[0].length === 1) {
-            this.bannerService.showTop(data[0][0].user_id).subscribe(
-                (img) => img.length > 0 ? this.bannerImgTop1 = this.baseUrlArquivos + img :
-                    this.bannerImgTop1 = undefined,
-                () => this.bannerImgTop1 = '../../assets/images/banner-top.jpg'
-            );
-        }
-        if (data[0].length === 2) {
-            data[0].forEach(el => this.userIdsTop.push(el.user_id));
-            this.userIdsTop.forEach(el => {
-                this.bannerService.showTop(el).subscribe(
-                    (img) => {
-                        if (this.userIdsTop.indexOf(el) === 0) {
-                            img.length > 0 ? this.bannerImgTop1 = this.baseUrlArquivos + img :
-                            this.bannerImgTop1 = undefined;
-                        }
-                        if (this.userIdsTop.indexOf(el) === 1) {
-                            img.length > 0 ? this.bannerImgTop2 = this.baseUrlArquivos + img :
-                            this.bannerImgTop2 = undefined;
-                        }
-
-                    },
-                    () => this.bannerImgTop1 = '../../assets/images/banner-top.jpg'
-                );
+    getBanners(data) {
+        data[0].forEach(el => {
+            this.bannerService.showTop(el.user_id).subscribe(img => {
+                this.bannersTop.push(this.baseUrlArquivos + img);
+                if (data[0].indexOf(el) === 0) { this.bannerImgTop1 = this.baseUrlArquivos + img; }
+                if (data[0].indexOf(el) === 1) { this.bannerImgTop2 = this.baseUrlArquivos + img; }
+                if (data[0].indexOf(el) === 2) { this.bannerImgTop3 = this.baseUrlArquivos + img; }
             });
-        }
-        if (data[0].length === 3) {
-            data[0].forEach(el => this.userIdsTop.push(el.user_id));
-            this.userIdsTop.forEach(el => {
-                this.bannerService.showTop(el).subscribe(
-                    (img) => {
-                        if (this.userIdsTop.indexOf(el) === 0) {
-                            img.length > 0 ? this.bannerImgTop1 = this.baseUrlArquivos + img :
-                            this.bannerImgTop1 = undefined;
-                        }
-                        if (this.userIdsTop.indexOf(el) === 1) {
-                            img.length > 0 ? this.bannerImgTop2 = this.baseUrlArquivos + img :
-                            this.bannerImgTop2 = undefined;
-                        }
-                        if (this.userIdsTop.indexOf(el) === 2) {
-                            img.length > 0 ? this.bannerImgTop3 = this.baseUrlArquivos + img :
-                            this.bannerImgTop3 = undefined;
-                        }
-                    },
-                    () => {
-                        this.bannerImgTop1 = '../../assets/images/banner-top.jpg';
-                        this.bannerImgTop2 = '../../assets/images/banner-top.jpg';
-                        this.bannerImgTop3 = '../../assets/images/banner-top.jpg';
-                    }
-                );
-            });
-        }
-
-        if (data[0].length > 3) {
-            data[0].forEach(el => this.userIdsTop.push(el.user_id));
-        }
-
-        if (data[1].length === 1) {
-            this.bannerService.showSide(data[0][0].user_id).subscribe(
-                (img) => img.length > 0 ? this.bannerImgSide1 = this.baseUrlArquivos + img :
-                    this.bannerImgSide1 = undefined,
-                () => this.bannerImgSide1 = '../../../assets/images/sem-foto.jpg'
-            );
-        }
+        });
+        data[1].forEach(el => {
+            this.bannerService.showSide(el.user_id).subscribe(img => {
+                this.bannersSide.push(this.baseUrlArquivos + img);
+                if (data[1].indexOf(el) === 0) { this.bannerImgSide1 = this.baseUrlArquivos + img; }
+                if (data[1].indexOf(el) === 1) { this.bannerImgSide2 = this.baseUrlArquivos + img; }
+                if (data[1].indexOf(el) === 2) { this.bannerImgSide3 = this.baseUrlArquivos + img; }
+                if (data[1].indexOf(el) === 3) { this.bannerImgSide4 = this.baseUrlArquivos + img; }
+                if (data[1].indexOf(el) === 4) { this.bannerImgSide5 = this.baseUrlArquivos + img; }
+          });
+        });
+        this.bannersTop.push('../../assets/images/banner-top.jpg');
+        this.bannersSide.push('../../assets/images/Banner-Promocional.gif');
+        this.startBannerTopRotations();
+        this.startBannerSideRotations();
     }
 
     // check login data and gets token from api server
@@ -381,6 +342,52 @@ export class SectionComponent {
     removeCityModal(city) {
         const idx = this.cityTags.indexOf(city);
         this.cityTags.splice(idx);
+    }
+
+    startBannerTopRotations() {
+        // Obsevable to rotate image carousel
+        const source = interval(5000);
+        // Handling Observable to reset when it finishes
+        const mySubscribe = source.pipe(
+            map(val => {
+                if (val > (this.bannersTop.length - 1)) {
+                    // error will be picked up by retryWhen
+                    throw val;
+                }
+                return val;
+            }),
+            retryWhen(errors => errors)
+            );
+        // subscribing the Obsevable
+        mySubscribe.subscribe(val => {
+            this.bannerImgTop3 = this.bannerImgTop2;
+            this.bannerImgTop2 = this.bannerImgTop1;
+            this.bannerImgTop1 = this.bannersTop[val];
+        });
+    }
+
+    startBannerSideRotations() {
+        // Obsevable to rotate image carousel
+        const source = interval(5000);
+        // Handling Observable to reset when it finishes
+        const mySubscribe = source.pipe(
+            map(val => {
+                if (val > (this.bannersSide.length - 1)) {
+                    // error will be picked up by retryWhen
+                    throw val;
+                }
+                return val;
+            }),
+            retryWhen(errors => errors)
+            );
+        // subscribing the Obsevable
+        mySubscribe.subscribe(val => {
+            this.bannerImgSide5 = this.bannerImgSide4;
+            this.bannerImgSide4 = this.bannerImgSide3;
+            this.bannerImgSide3 = this.bannerImgSide2;
+            this.bannerImgSide2 = this.bannerImgSide1;
+            this.bannerImgSide1 = this.bannersSide[val];
+        });
     }
 
     // method that select a job
