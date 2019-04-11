@@ -27,4 +27,16 @@ export class BannerService {
     showSide(id) {
         return this.http.get<any>(this.baseUrl + `/banner/${id}/side`);
     }
+
+    storeSimpleUserBanner(banner, id, filename, local) {
+        return this.http.post(this.baseUrl + `/banner/${id}/${local}/${filename}`, banner);
+    }
+
+    showTopSimpleUserBanner(id) {
+        return this.http.get<any>(this.baseUrl + `/banner/${id}/top`);
+    }
+
+    showSideSimpleUserBanner(id) {
+        return this.http.get<any>(this.baseUrl + `/banner/${id}/side`);
+    }
 }

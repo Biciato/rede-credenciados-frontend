@@ -36,8 +36,8 @@
                             <td>Lateral</td>
                             <td>1</td>
                             <td>10</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(10, 'lateral')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('1', 1, 10, 'lateral')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -45,8 +45,8 @@
                             <td>Topo</td>
                             <td>1</td>
                             <td>10</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(10, 'topo')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('2', 1, 10, 'topo')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -54,8 +54,8 @@
                             <td>Lateral</td>
                             <td>2</td>
                             <td>20</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(20, 'lateral')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('3', 2, 20, 'lateral')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -63,8 +63,8 @@
                             <td>Topo</td>
                             <td>2</td>
                             <td>20</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(20, 'topo')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('4', 2, 20, 'topo')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -72,8 +72,8 @@
                             <td>Lateral</td>
                             <td>4</td>
                             <td>30</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(30, 'lateral')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('5', 4, 30, 'lateral')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -81,8 +81,8 @@
                             <td>Topo</td>
                             <td>4</td>
                             <td>30</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(30, 'topo')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('6', 4 , 30, 'topo')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -90,8 +90,8 @@
                             <td>Lateral</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('todos', 'lateral')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('7', 'todos', 'todas', 'lateral')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                         <tr>
@@ -99,8 +99,8 @@
                             <td>Topo</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('todos', 'topo')">
-                                Escolher
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('8', 'todos', 'todas', 'topo')">
+                                ESCOLHER
                             </button></td>
                         </tr>
                     </table>
@@ -275,21 +275,23 @@
                             </div>
                         </div>
                     </div>
-
-                    <button class="rd-button-dash">SALVAR</button>
                 </form>
                 <!-- Pj data form -->
                 <div id="stateCity">
                     <div class="form-group">
-                        <label>Selecione o(s) Estado(s)</label>
+                        <label *ngIf="stateTags.length < stateQty">
+                            {{ stateQty > 1 ? 'Selecione os estados' : 'Selecione o estado' }}
+                        </label>
+                        <label *ngIf="!(stateTags.length < stateQty)">Estado(s) selecionado(s)</label>
                         <ul>
-                            <li (click)="showStatesModal()">{{ stateClickedModal || 'Selecione o estado' }}
+                            <li (click)="showStatesModal()" *ngIf="stateTags.length < stateQty">
+                                {{ stateClickedModal || 'Selecione o estado' }}                                
                                 <i class="fas fa-caret-down"></i></li>
                             <span *ngFor="let state of stateTags">
                                 {{ state }}
                                 <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
                             </span>
-                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false;">
+                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false;" class="dropdown">
                                 <span *ngFor="let brState of brStates" (click)="selectStateTag(brState)">
                                     {{ brState }}
                                 </span>
@@ -297,30 +299,38 @@
                         </ul>
                     </div>
                     <div class="form-group">
-                        <label>Selecione a(s) cidade(s)</label>
-                        <div class="group">
+                        <label>{{ cityTags.length < cityQty ? 'Selecione a(s) cidade(s)' : 'Cidade(s) Selecionada(s)' }}</label>
+                        <div class="group" *ngIf="cityTags.length < cityQty">
                             <input [(ngModel)]="searchCity" (click)="showCities()" name="city"
                                 [ngModelOptions]="{standalone: true}" #searchCityVar
                                 (keydown.enter)="selectCityModal(searchCityVar.value)"
                                 autocomplete="off">
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            <label [className]="searchCityVar.value === null ? 'input-empty' : 'input-not-empty'">
-                                Cidade
-                            </label>
                         </div>
                         <div class="tags">
                             <span *ngFor="let city of cityTags">
                                 {{ city }}
-                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
+                                <i class="fas fa-times" style="margin-left: 0.5em;" 
+                                    (click)="removeCityModal(city)"></i>
                             </span>
                         </div>
                         <div *ngIf="citiesShowModal" class="dropdown" (mouseleave)="citiesShowModal = false">
                             <span *ngFor="let city of cities | searchBox: { nome: searchCity}"
-                                (click)="selectCityModal(city.nome)">{{ city.nome }}</span>
+                                (click)="selectCityModal(city.nome)">
+                                {{ city.nome }}
+                            </span>
                         </div>
                     </div>
+                    <div>
+                        <input id="banner" name="banner" style="display: none" type="file" 
+                            (change)="fileEvent($event)" #banner>
+                        <span>{{ imageName }}</span> 
+                        <button class="rd-button-dash" style="background-color: deepskyblue" 
+                            (click)="chooseBanner()">SELECIONE A IMAGEM</button>
+                    </div>
                 </div>
+                <button class="rd-button-dash" (click)="onSubmit()">SALVAR</button>
             </div>
         </div>
     </div>
@@ -343,6 +353,10 @@
                 <li *ngIf="f.bairro.errors && f.bairro.errors.required"><strong>Bairro:</strong> campo obrigatório</li>
                 <li *ngIf="f.cidade.errors && f.cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
                 <li *ngIf="f.estado.errors && f.estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
+                <li *ngIf="stateTags.length < 1"><strong>Estados:</strong> selecione a quantidade escolhida</li>
+                <li *ngIf="cityTags.length < 1"><strong>Cidades:</strong> selecione a quantidade escolhida</li>
+                <li *ngIf="bannerFlag"><strong>Imagem:</strong> Selecione uma imagem</li>
+                <li *ngIf="bannerTypeFlag"><strong>Imagem:</strong> formato precisa ser jpg</li>
             </ul>
             <div id="simFooter">
                 <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>

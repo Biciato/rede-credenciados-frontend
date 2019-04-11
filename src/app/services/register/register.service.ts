@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/empty';
-import 'rxjs/add/operator/retry';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { User } from '../../models/user';
 
@@ -44,7 +38,7 @@ export class RegisterService {
 
         const date = new Date().toISOString().substr(0, 19).replace('T', ' ');
 
-        return this.http.post(this.baseUrl + '/confirm-email/' + id, {date: date}, httpOptions);
+        return this.http.post(this.baseUrl + '/confirm-email/' + id, {date}, httpOptions);
     }
 
     checkUserEmail(email) {
@@ -52,10 +46,10 @@ export class RegisterService {
     }
 
     checkCpf(cpf) {
-        return this.http.post<any>(this.baseUrl + '/check-cpf', {cpf: cpf}, httpOptions);
+        return this.http.post<any>(this.baseUrl + '/check-cpf', {cpf}, httpOptions);
     }
 
     checkCnpj(cnpj) {
-        return this.http.post(this.baseUrl + '/check-cnpj', {cnpj: cnpj}, httpOptions);
+        return this.http.post(this.baseUrl + '/check-cnpj', {cnpj}, httpOptions);
     }
 }

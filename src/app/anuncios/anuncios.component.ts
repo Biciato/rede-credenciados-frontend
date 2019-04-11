@@ -5,6 +5,12 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CITYCODE } from '../models/city-code';
+import { ABVR_ESTADO } from '../models/abreviacao-estados';
+import { RegisterService } from '../services/register/register.service';
+import { PropagandaService } from '../services/propaganda/propaganda.service';
+import { BannerService } from '../services/banner/banner.service';
+import { PagseguroService } from '../services/pagseguro/pagseguro.service';
 
 declare let PagSeguroLightbox: any;
 
@@ -14,40 +20,21 @@ declare let PagSeguroLightbox: any;
     styleUrls: ['./anuncios.component.scss']
 })
 export class AnunciosComponent implements OnInit {
+    bannerFlag = false;
+    bannerTypeFlag = false;
     brStates = [
-        'RJ',
-        'RO',
-        'AC',
-        'AM',
-        'RR',
-        'PA',
-        'TO',
-        'AP',
-        'MA',
-        'PI',
-        'CE',
-        'RN',
-        'PB',
-        'PE',
-        'AL',
-        'SE',
-        'BA',
-        'MG',
-        'ES',
-        'SP',
-        'PR',
-        'SC',
-        'RS',
-        'MS',
-        'GO',
-        'MT',
-        'DF'
+        'RJ', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO',
+        'AP', 'MA', 'PI', 'CE', 'RN', 'PB', 'PE',
+        'AL', 'SE', 'BA', 'MG', 'ES', 'SP', 'PR',
+        'SC', 'RS', 'MS', 'GO', 'MT', 'DF'
     ].sort();
-    cities: any[];
-    cityTags: string[];
+    cities = [];
+    cityQty: any;
+    cityTags = [];
     citiesShowModal = false;
     loading = false;
-    quantity: number | string;
+    imageName: string;
+    itemId: string;
     registerFlag = false;
     registerForm = this.fb.group({
         nome: ['', Validators.required],
@@ -65,14 +52,19 @@ export class AnunciosComponent implements OnInit {
     showStates = false;
     statesShowModal = false;
     stateClickedModal: string;
-    stateTags: string[];
+    stateQty: any;
+    stateTags = [];
     side: string;
 
     constructor(
+        private bannerService: BannerService,
         private cepService: CEPService,
         private citiesService: CitiesService,
         private fb: FormBuilder,
         private modalService: ModalService,
+        private pagService: PagseguroService,
+        private propService: PropagandaService,
+        private regService: RegisterService,
         private router: Router
     ) { }
 
@@ -83,6 +75,35 @@ export class AnunciosComponent implements OnInit {
 
     closeModal(id: string) {
         this.modalService.close(id);
+    }
+
+    checkout() {
+        const data = {
+            currency: 'BRL',
+            itemId1: this.itemId
+        };
+    }
+
+    chooseBanner() {
+        document.getElementById('banner').click();
+    }
+
+    createProp(user) {
+        let propaganda;
+        this.side === 'topo' ? propaganda = {
+                estados_topo: this.stateTags.toString(), cidades_topo: this.cityTags.toString()
+            } : propaganda = {
+                estados_lateral: this.stateTags.toString(), cidades_lateral: this.cityTags.toString()
+            };
+        this.propService.createPropUser(user.id, propaganda).subscribe(_ => this.uploadBanner(user),
+            () => {
+                this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                this.loading = false;
+        });
+    }
+
+    fileEvent(event) {
+        this.imageName = event.target.files[0].name;
     }
 
     // cel field mask
@@ -114,6 +135,35 @@ export class AnunciosComponent implements OnInit {
         }
     }
 
+    onSubmit() {
+        const banner = document.getElementById('banner') as HTMLInputElement;
+        if (this.registerForm.valid &&
+            (this.cityTags.length > 0) &&
+            (this.stateTags.length > 0) &&
+            !banner.files[0]) {
+            if (banner.files[0].type !== 'image/jpeg') {
+                this.bannerTypeFlag = true;
+                this.openModal('modal-validator');
+            } else {
+                this.loading = true;
+                this.regService.registerUserPropaganda(this.registerForm.value)
+                    .subscribe(user => this.createProp(user),
+                    () => {
+                            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                            this.loading = false;
+                    });
+            }
+        } else {
+            if (!banner.files[0]) {
+                this.bannerFlag = true;
+            } else if (banner.files[0].type !== 'image/jpeg') {
+                this.bannerFlag = false;
+                this.bannerTypeFlag = true;
+            }
+            this.openModal('modal-validator');
+        }
+    }
+
     openModal(id: string) {
         this.modalService.open(id);
     }
@@ -126,35 +176,51 @@ export class AnunciosComponent implements OnInit {
             if (stateCode) {
                 this.loading = true;
                 this.citiesService.getCities(stateCode).subscribe(
-                        cities => {
-                            cities.forEach(element => {
-                                const el = element;
-                                if (this.cities.length === 0) {
-                                    this.cities.push(element);
-                                } else if (this.cities.some(val => val.nome === el.nome)) {
-                                    return;
-                                } else {
-                                    this.cities.push(element);
-                                    this.cities.sort((a, b) => a.nome.localeCompare(b.nome));
-                                }
-                            });
-                            this.loading = false;
-                        },
-                        () => {
-                            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-                            this.loading = false;
-                        }
-                    );
+                    cities => {
+                        cities.forEach(element => {
+                            const el = element;
+                            if (this.cities.length === 0) {
+                                this.cities.push(element);
+                            } else if (this.cities.some(val => val.nome === el.nome)) {
+                                return;
+                            } else {
+                                this.cities.push(element);
+                                this.cities.sort((a, b) => a.nome.localeCompare(b.nome));
+                            }
+                        });
+                        this.loading = false;
+                    },
+                    () => {
+                        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                        this.loading = false;
+                    }
+                );
             }
         }
     }
 
     removeCities(state) {
-
+        const stateCode = CITYCODE[state];
+        if (stateCode) {
+            this.loading = true;
+            this.citiesService.getCities(stateCode).subscribe(
+                cities => {
+                    cities.forEach(element => {
+                        this.cities = this.cities.filter(val => val.nome !== element.nome);
+                        this.cityTags = this.cityTags.filter( val => val !== element.nome);
+                    });
+                    this.loading = false;
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                }
+            );
+        }
     }
 
-    removeCityModal() {
-
+    removeCityModal(city) {
+        this.cityTags = this.cityTags.filter( val => val !== city);
     }
 
     removeStateModal(state) {
@@ -164,9 +230,11 @@ export class AnunciosComponent implements OnInit {
     }
 
     selectCityModal(city) {
-        this.citiesShowModal = false;
-        this.searchCity = city;
-        if (this.cityTags.includes(city) === false) {this.cityTags.push(city); }
+        if (this.cities.filter( el => el.nome === city).length === 1) {
+            this.citiesShowModal = false;
+            this.searchCity = city;
+            if (this.cityTags.includes(city) === false) {this.cityTags.push(city); }
+        }
     }
 
     selectState(state) {
@@ -175,8 +243,10 @@ export class AnunciosComponent implements OnInit {
     }
 
     selectStateTag(state) {
-        this.stateClickedModal = state;
-        if (this.stateTags.includes(state) === false) {this.stateTags.push(state); }
+        this.stateClickedModal = ABVR_ESTADO[state];
+        if (this.stateTags.includes(this.stateClickedModal) === false) {
+            this.stateTags.push(this.stateClickedModal);
+        }
         this.statesShowModal = false;
         this.populateCities();
     }
@@ -190,17 +260,37 @@ export class AnunciosComponent implements OnInit {
         });
     }
 
-    setQtySideAndRegister(qty, side) {
-        this.quantity = qty;
+    setQtySideAndRegister(itemId, stateQty, cityQty, side) {
+        this.itemId = itemId;
+        this.cityQty = cityQty;
+        this.stateQty = stateQty;
         this.side = side;
         this.registerFlag = true;
     }
 
     showCities() {
-
+        if (this.stateClickedModal === undefined) {
+            window.alert('Selecione um Estado');
+        } else {
+            this.citiesShowModal = true;
+            this.searchCity = '';
+        }
     }
 
     showStatesModal() {
+        this.statesShowModal = true;
+    }
 
+    uploadBanner(user) {
+        const banner = document.getElementById('banner') as HTMLInputElement;
+        const formData = new FormData();
+        formData.append('banner', banner.files[0]);
+        this.bannerService.storeSimpleUserBanner(formData, user.id, banner.files[0].name,
+            this.side).subscribe(
+                _ => this.checkout(),
+                () => {
+                this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                this.loading = false;
+        });
     }
 }

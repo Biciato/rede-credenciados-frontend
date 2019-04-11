@@ -21,19 +21,19 @@ export class PessoaJuridicaService {
         this.pjId.next(id);
     }
 
-    register(pessoa_juridica: PessoaJuridica) {
+    register(pessoaJuridica: PessoaJuridica) {
 
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/json'
         })};
 
-        return this.http.post<PessoaJuridica>(this.baseUrl + '/register-pj', pessoa_juridica, httpOptions);
+        return this.http.post<PessoaJuridica>(this.baseUrl + '/register-pj', pessoaJuridica, httpOptions);
     }
 
     getPessoaJuridica(id, token) {
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
 
         return this.http.get<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, httpOptions);
@@ -49,7 +49,7 @@ export class PessoaJuridicaService {
     update(id, dados, token) {
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
 
         return this.http.put<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, dados, httpOptions);

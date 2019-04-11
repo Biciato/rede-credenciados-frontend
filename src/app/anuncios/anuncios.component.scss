@@ -30,7 +30,7 @@
             margin: 2rem auto;
 
             button {
-                background-color: darkgreen;
+                background-color: seagreen;
             }
         }
 
@@ -58,12 +58,181 @@
                                 }
                             }
                         }
+                    }
 
-                        button {
-                            background-color: #33b5e5;
-                            margin: auto;
+                    #stateCity {
+                        margin: 0.5rem 2.5em;
+                        display: flex;
+                        flex-direction: column;
+                        .form-group {
+                            margin: 0.5rem 0;
+                            .group {
+                                margin-bottom: 0;
+                                width: 25rem;
+                            }
+                            ul {
+                                list-style: none;
+                                padding-inline-start: 0;
+                                margin-block-end: 8px;
+                                margin-block-start: 8px;
+                                li {
+                                    margin: 0.5rem 0;
+                                    padding: 0.5rem;
+                                    background-color: bisque;
+                                    border: 1px solid orange;
+                                    border-radius: 25px;
+                                    width: fit-content;
+                                    cursor: pointer;
+                                }
+
+                                span {
+                                    background-color: white;
+                                    border: 2px solid cornflowerblue;
+                                    border-radius: 25px;
+                                    padding: 0.5em;
+                                    margin-top: 0.2em;
+                                    display: inline-block;
+                                }
+
+                                div {
+                                    display: flex;
+                                    flex-direction: column;
+                                    background-color: white;
+                                    border: 1px solid lightblue;
+                                    height: 400px;
+                                    overflow-y: auto;
+                                    position: absolute;
+                                    z-index: 100;
+                                    min-width: 5rem;
+
+                                    span {
+                                        font-family: 'Montserrat';
+                                        font-size: 0.8em;
+                                        cursor: pointer;
+                                        padding: 1%;
+                                        border: none;
+                                        border-radius: none;
+                                    }
+                                }
+                            }
+
+                            .tags {
+
+                                border: none;
+                                min-width: 0;
+                                background-color: white;
+
+                                span {
+                                    background-color: white;
+                                    border: 2px solid cornflowerblue;
+                                    border-radius: 25px;
+                                    padding: 0.5em;
+                                    margin-top: 0.2em;
+                                    display: inline-block;
+                                    width: fit-content;
+                                }
+                            }
+
+                            .dropdown {
+                                display: flex;
+                                flex-direction: column;
+                                background-color: white;
+                                border: 1px solid lightblue;
+                                height: fit-content;
+                                max-height: 400px;
+                                overflow-y: auto;
+                                position: absolute;
+                                z-index: 100;
+
+                                span {
+                                    font-family: 'Montserrat';
+                                    font-size: 0.8em;
+                                    cursor: pointer;
+                                    padding: 1%;
+                                }
+                            }
                         }
                     }
+
+                    button {
+                        background-color: seagreen;
+                        margin: irem auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#modal-validator {
+
+    #modalHeader {
+        width: 600px;
+        display: flex;
+        justify-content: center;
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid #e5e5e5;
+
+        span {
+            padding: 1rem;
+        }
+    }
+
+    #modalBody {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        ul {
+            list-style: none;
+            text-align: justify;
+            width: 25rem;
+            margin: auto;
+        }
+
+        div {
+            p {
+                width: 38rem;
+            }
+
+            h3 {
+                color: #111111;
+            }
+
+            #simFooter {
+
+                border-top: 1px solid #e5e5e5;
+                margin: 0.8em;
+
+                a {
+                    color: #fff;
+                    background-color: #5cb85c;
+                    border: none;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    margin-bottom: 0;
+                    margin-top: 1em;
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 1.42857143;
+                    text-align: center;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    user-select: none;
+                    background-image: none;
+                    border-radius: 4px;
+
+                    i {
+                        padding-right: 0.5em;
+                    }
+                }
+
+                a:hover {
+                    background-color: #449d44;
+                    border-color: #398439;
+                    text-decoration: none;
                 }
             }
         }
