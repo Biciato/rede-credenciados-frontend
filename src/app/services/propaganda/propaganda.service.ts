@@ -38,12 +38,12 @@ export class PropagandaService {
         return this.http.post(this.baseUrl + '/propaganda-pj', propaganda, httpOptions);
     }
 
-    createPropUni(id, propaganda, token) {
+    createPropUser(id, propaganda) {
+        propaganda.id = id;
         const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + token
+            'Content-type': 'application/json'
         })};
-        return this.http.post(this.baseUrl + '/propaganda-unidade', propaganda, httpOptions);
+        return this.http.post(this.baseUrl + '/propaganda-user', propaganda, httpOptions);
     }
 
     updatePropPJ(id, propaganda, token) {

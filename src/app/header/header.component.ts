@@ -72,7 +72,7 @@ export class HeaderComponent {
     stateClickedModal: string;
     stateSelectedModal: string;
     stateTags: string[];
-    cities: string[];
+    cities: any[];
     cityTags: string[];
     resized: boolean;
     stateName: string;
@@ -181,6 +181,7 @@ export class HeaderComponent {
             window.alert('Selecione um Estado');
         } else {
             this.citiesShowModal = true;
+            this.searchCity = '';
         }
     }
 
@@ -210,10 +211,16 @@ export class HeaderComponent {
                 this.citiesService.getCities(stateCode).subscribe(
                         cities => {
                             cities.forEach(element => {
-                                this.cities.push(element),
-                                this.loading = false;
+                                const el = element;
+                                if (this.cities.length === 0) {
+                                    this.cities.push(element);
+                                } else if (this.cities.some(val => val.nome === el.nome)) {
+                                    return;
+                                } else {
+                                    this.cities.push(element);
+                                    this.cities.sort((a, b) => a.nome.localeCompare(b.nome));
+                                }
                             });
-                            this.cities.sort();
                             this.loading = false;
                         },
                         () => {
@@ -233,6 +240,7 @@ export class HeaderComponent {
     selectCityModal(city) {
         this.cityClickedModal = city;
         this.citiesShowModal = false;
+        this.searchCity = city;
         if (this.cityTags.includes(city) === false) {this.cityTags.push(city); }
     }
 
@@ -247,8 +255,8 @@ export class HeaderComponent {
 
     // remove state tag in Modal
     removeStateModal(state) {
-        const idx = this.stateTags.indexOf(state);
-        this.stateTags.splice(idx);
+        this.stateTags = this.stateTags.filter( val => val !== state);
+        if (this.stateTags.length === 0) { this.stateSelectedModal = undefined; }
         this.removeCities(state);
     }
 
@@ -259,9 +267,7 @@ export class HeaderComponent {
             this.citiesService.getCities(stateCode).subscribe(
                     cities => {
                         cities.forEach(element => {
-                            const idx = this.cities.indexOf(element);
-                            this.cities.splice(idx, 1);
-                            this.loading = false;
+                            this.cities = this.cities.filter(val => val.nome !== element.nome);
                         });
                         this.loading = false;
                     },
@@ -275,8 +281,7 @@ export class HeaderComponent {
 
     // remove city tag in Modal
     removeCityModal(city) {
-        const idx = this.cityTags.indexOf(city);
-        this.cityTags.splice(idx);
+        this.cityTags = this.cityTags.filter( val => val !== city);
     }
 
     // sends cotacao data to api server

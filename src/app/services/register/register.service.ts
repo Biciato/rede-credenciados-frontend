@@ -28,6 +28,10 @@ export class RegisterService {
         return this.http.post<User>(this.baseUrl + '/register', user, httpOptions);
     }
 
+    registerUserPropaganda(user) {
+        return this.http.post(this.baseUrl + 'user-propaganda-register', user);
+    }
+
     verifyEmail(user) {
         return this.http.post(this.baseUrl + '/verify-email', user, httpOptions);
     }

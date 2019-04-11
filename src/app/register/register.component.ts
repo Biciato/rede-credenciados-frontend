@@ -95,6 +95,10 @@ export class RegisterComponent implements OnInit {
             );
     }
 
+    closeModal(id: string) {
+        this.modalService.close(id);
+    }
+
     emailValidation() {
         this.loading = true;
         this.registerService.emailValidation({email: this.registerForm.value.email})
@@ -108,10 +112,6 @@ export class RegisterComponent implements OnInit {
                     this.loading = false;
                 }
             );
-    }
-
-    closeModal(id: string) {
-        this.modalService.close(id);
     }
 
     // cnpj field mask
@@ -181,6 +181,10 @@ export class RegisterComponent implements OnInit {
         this.modalService.open(id);
         if (id === 'modal-registro') {
             this.registerForm.reset();
+            this.pessoaFisicaForm.reset();
+            this.pessoaJuridicaForm.reset();
+            this.jobTags = [];
+            this.router.navigate(['/']);
             setTimeout(() => this.loading = false, 2000);
         }
     }

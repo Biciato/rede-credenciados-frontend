@@ -101,9 +101,9 @@
 <router-outlet name="popup"></router-outlet>
 <!-- Contact Modal -->
 <app-modal id="modal-cotacao">
-    <div class="card-dash">
+    <div class="card-dash" (mouseleave)="statesShowModal = false; citiesShowModal = false;">
         <div class="card-header-dash"><h3>Solicite uma cotação</h3></div>
-        <div class="card-body-dash" (mouseleave)="citiesShowModal = false">
+        <div class="card-body-dash">
             <!-- Contact Form -->
             <form [formGroup]="cotacaoForm">
                 <div id="stateCity">
@@ -116,7 +116,7 @@
                                 {{ state }}
                                 <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
                             </span>
-                            <div *ngIf="statesShowModal">
+                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false;">
                                 <span *ngFor="let brState of brStates" (click)="selectStateModal(brState)">
                                     {{ brState }}
                                 </span>
@@ -142,8 +142,8 @@
                                 <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
                             </span>
                         </div>
-                        <div *ngIf="citiesShowModal" class="dropdown">
-                            <span *ngFor="let city of cities| searchBox: { nome: searchCity}"
+                        <div *ngIf="citiesShowModal" class="dropdown" (mouseleave)="citiesShowModal = false">
+                            <span *ngFor="let city of cities | searchBox: { nome: searchCity}"
                                 (click)="selectCityModal(city.nome)">{{ city.nome }}</span>
                         </div>
                     </div>

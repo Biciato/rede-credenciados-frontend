@@ -1,5 +1,5 @@
 <section>
-    <div id="anuncio-details">
+    <div id="anuncio-details" *ngIf="!registerFlag">
         <h1 style="text-align: center">Anuncie no Portal Rede Credenciados</h1>
         <p>
             <b>Divulgue</b> sua marca para quem realmente precisa do seu serviço e aumente o engajamento da sua empresa.
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Ad Info Card -->
-    <div id="cardPriceTab" class="card-dash">
+    <div id="cardPriceTab" class="card-dash" *ngIf="!registerFlag">
         <!-- Card  Header -->
         <div id="cardPriceTabHeader" class="card-header-dash"><h3>Tabela Preços</h3></div>
         <!-- Card  Header -->
@@ -29,54 +29,79 @@
                             <th>Local (bannner)</th>
                             <th>Qtd Estados</th>
                             <th>Qtd Cidades</th>
+                            <th></th>
                         </tr>
                         <tr>
                             <td>R$ 25,00</td>
                             <td>Lateral</td>
                             <td>1</td>
                             <td>10</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(10, 'lateral')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 75,00</td>
                             <td>Topo</td>
                             <td>1</td>
                             <td>10</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(10, 'topo')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 50,00</td>
                             <td>Lateral</td>
                             <td>2</td>
                             <td>20</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(20, 'lateral')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 100,00</td>
                             <td>Topo</td>
                             <td>2</td>
                             <td>20</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(20, 'topo')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 75,00</td>
                             <td>Lateral</td>
                             <td>4</td>
                             <td>30</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(30, 'lateral')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 120,00</td>
                             <td>Topo</td>
                             <td>4</td>
                             <td>30</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister(30, 'topo')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 100,00</td>
                             <td>Lateral</td>
                             <td>Todos</td>
                             <td>Todas</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('todos', 'lateral')">
+                                Escolher
+                            </button></td>
                         </tr>
                         <tr>
                             <td>R$ 150,00</td>
                             <td>Topo</td>
                             <td>Todos</td>
                             <td>Todas</td>
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('todos', 'topo')">
+                                Escolher
+                            </button></td>
                         </tr>
                     </table>
                 </div>
@@ -86,4 +111,253 @@
         <!-- Card  Body -->
     </div>
     <!-- Ad Info Card -->
+    <div id="infoCol" *ngIf="registerFlag">
+        <!-- Card Info -->
+        <div id="cardInfo" class="card-dash">
+            <!-- Card Header -->
+            <div id="cardInfoHeader" class="card-header-dash"><h3>Cadastro</h3></div>
+            <!-- Card Header -->
+            <!-- Card Body -->
+            <div id="cardInfoBody" class="card-body-dash">
+                <form [formGroup]="registerForm">
+
+                    <div class="group" style="width: 36%;">
+                        <input type="text" formControlName="nome">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.nome.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Nome
+                        </label>
+                        <div *ngIf="f.nome.invalid && (f.nome.dirty || f.nome.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.nome.errors.required">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 36%;">
+                        <input type="text" formControlName="email">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.email.value === '' ? 'input-empty' : 'input-not-empty'">
+                            E-mail
+                        </label>
+                        <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.email.errors.required">
+                                *campo obrigatório.
+                            </div>
+                            <div *ngIf="f.email.errors.email">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 16%;">
+                        <input type="text" formControlName="tel" (keyup)="onKeyCel($event)" maxlength="15">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.tel.value === '' ? 'input-empty' : 'input-not-empty'">Telefone</label>
+                        <div *ngIf="f.tel.invalid && (f.tel.dirty || f.tel.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!f.tel.errors.required">
+                                *campo obrigatório.
+                            </div>
+                            <div *ngIf="!!f.tel.errors.minlength">
+                                *CNPJ inválido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 12%;">
+                        <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.cep.value === '' ? 'input-empty' : 'input-not-empty'">
+                            CEP
+                        </label>
+                        <div *ngIf="f.cep.invalid && (f.cep.dirty || f.cep.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="!!f.cep.errors.required">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 47%;">
+                        <input type="text" formControlName="rua">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.rua.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Rua
+                        </label>
+                        <div *ngIf="f.rua.invalid && (f.rua.dirty || f.rua.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.rua.errors.required">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 9%;">
+                        <input type="text" formControlName="numero">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.numero.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Número
+                        </label>
+                        <div *ngIf="f.numero.invalid && (f.numero.dirty || f.numero.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.numero.errors.email">
+                                *campo obrigatório
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <input type="text" formControlName="complemento">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.complemento.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Complemento
+                        </label>
+                    </div>
+
+                    <div class="group" style="width: 21%;">
+                        <input type="text" formControlName="bairro">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.bairro.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Bairro
+                        </label>
+                        <div *ngIf="f.bairro.invalid && (f.bairro.dirty || f.bairro.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.bairro.errors.minlength">
+                                *campo obrigatório
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 20%">
+                        <input type="text" formControlName="cidade">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.cidade.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Cidade
+                        </label>
+                        <div *ngIf="f.cidade.invalid && (f.cidade.dirty || f.cidade.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.cidade.errors.minlength">
+                                *campo obrigatório
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group" style="width: 20%">
+                        <input type="text" formControlName="estado" (click)="showStates = true">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label [className]="f.estado.value === '' ? 'input-empty' : 'input-not-empty'">
+                            Estado
+                        </label>
+                        <div *ngIf="showStates" class="dropdown" style="min-width: 5rem"
+                            (mouseleave)="showStates = false">
+                            <span *ngFor="let state of brStates"
+                                (click)="selectState(state)">
+                                {{state}}
+                            </span>
+                        </div>
+                        <div *ngIf="f.estado.invalid && (f.estado.dirty || f.estado.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="f.estado.errors.minlength">
+                                *campo obrigatório.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="rd-button-dash">SALVAR</button>
+                </form>
+                <!-- Pj data form -->
+                <div id="stateCity">
+                    <div class="form-group">
+                        <label>Selecione o(s) Estado(s)</label>
+                        <ul>
+                            <li (click)="showStatesModal()">{{ stateClickedModal || 'Selecione o estado' }}
+                                <i class="fas fa-caret-down"></i></li>
+                            <span *ngFor="let state of stateTags">
+                                {{ state }}
+                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
+                            </span>
+                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false;">
+                                <span *ngFor="let brState of brStates" (click)="selectStateTag(brState)">
+                                    {{ brState }}
+                                </span>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label>Selecione a(s) cidade(s)</label>
+                        <div class="group">
+                            <input [(ngModel)]="searchCity" (click)="showCities()" name="city"
+                                [ngModelOptions]="{standalone: true}" #searchCityVar
+                                (keydown.enter)="selectCityModal(searchCityVar.value)"
+                                autocomplete="off">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label [className]="searchCityVar.value === null ? 'input-empty' : 'input-not-empty'">
+                                Cidade
+                            </label>
+                        </div>
+                        <div class="tags">
+                            <span *ngFor="let city of cityTags">
+                                {{ city }}
+                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
+                            </span>
+                        </div>
+                        <div *ngIf="citiesShowModal" class="dropdown" (mouseleave)="citiesShowModal = false">
+                            <span *ngFor="let city of cities | searchBox: { nome: searchCity}"
+                                (click)="selectCityModal(city.nome)">{{ city.nome }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+<app-modal id="modal-validator">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Campos pendentes:</h3>
+            <ul>
+                <li *ngIf="f.email.errors && f.email.errors.required"><strong>E-mail:</strong> campo obrigatório</li>
+                <li *ngIf="f.email.errors && f.email.errors.email"><strong>E-mail:</strong> formato inválido</li>
+                <li *ngIf="f.nome.errors && f.nome.errors.required"><strong>Nome:</strong> campo obrigatório</li>
+                <li *ngIf="f.tel.errors && f.tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
+                <li *ngIf="f.cep.errors && f.cep.errors.required"><strong>CEP:</strong> campo obrigatório</li>
+                <li *ngIf="f.rua.errors && f.rua.errors.required"><strong>Rua:</strong> campo obrigatório</li>
+                <li *ngIf="f.numero.errors && f.numero.errors.required"><strong>Numero:</strong> campo obrigatório</li>
+                <li *ngIf="f.bairro.errors && f.bairro.errors.required"><strong>Bairro:</strong> campo obrigatório</li>
+                <li *ngIf="f.cidade.errors && f.cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
+                <li *ngIf="f.estado.errors && f.estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
+            </ul>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<!-- Loading Status  -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->

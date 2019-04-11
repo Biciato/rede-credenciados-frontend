@@ -201,10 +201,10 @@ export class SectionComponent {
         window.localStorage.setItem('user_rede_credenciados', JSON.stringify(user));
         if (data.user.id && data.user.admin === 0 || data.user.admin === '0') {
             this.router.navigate(['dashboard/minhas-informacoes']);
-            event = new UIEvent('reset');
+            const event = new UIEvent('reset');
             window.dispatchEvent(event);
         } else if (data.user.id && data.user.admin === 1 || data.user.admin === '1') {
-            event = new UIEvent('reset');
+            const event = new UIEvent('reset');
             window.dispatchEvent(event);
             this.router.navigate([`dashboard-admin/credenciados`]);
         } else {
