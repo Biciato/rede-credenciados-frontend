@@ -52,6 +52,7 @@ export class InformacoesComponent implements OnInit {
     dadosPesquisa: PesquisaCliente;
     empresaImgs = [];
     fileToShow: any;
+    imageClicked: string;
     loading = false;
     map: google.maps.Map;
     resumo: any;
@@ -289,5 +290,10 @@ export class InformacoesComponent implements OnInit {
                 this.loading = false;
             }
         );
+    }
+
+    zoom(img) {
+        this.imageClicked = img;
+        this.openModal('modal-zoom');
     }
 }

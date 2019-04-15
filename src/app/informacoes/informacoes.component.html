@@ -34,7 +34,7 @@
         </p>
     </div>
     <div id="empresaImgs">
-        <img *ngFor="let img of empresaImgs" [src]="img">
+        <img *ngFor="let img of empresaImgs" [src]="img" (click)="zoom(img)">
     </div>
     <!-- google map div -->
     <div #gmap style='width:100%;height:200px'></div>
@@ -172,6 +172,9 @@
         <button (click)="closeModal('modal-sem-arquivo')"><i class="fas fa-times"></i>Fechar</button>
       </div>
     </div>
+</app-modal>
+<app-modal id="modal-zoom">
+    <img [src]="imageClicked" alt="" width="500" height="500">
 </app-modal>
 <!-- Modal -->
 <div class="my-container">
