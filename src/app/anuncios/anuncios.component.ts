@@ -1,7 +1,7 @@
 import { CitiesService } from './../services/cities/cities.service';
 import { CEPService } from 'src/app/services/cep/cep.service';
 import { ModalService } from './../services/modal/modal.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -34,6 +34,7 @@ export class AnunciosComponent implements OnInit {
     citiesShowModal = false;
     loading = false;
     imageName: string;
+    itemPrice1: string;
     itemId: string;
     registerFlag = false;
     registerForm = this.fb.group({
@@ -62,6 +63,7 @@ export class AnunciosComponent implements OnInit {
         private citiesService: CitiesService,
         private fb: FormBuilder,
         private modalService: ModalService,
+        private ngZone: NgZone,
         private pagService: PagseguroService,
         private propService: PropagandaService,
         private regService: RegisterService,
@@ -75,13 +77,17 @@ export class AnunciosComponent implements OnInit {
 
     closeModal(id: string) {
         this.modalService.close(id);
+        if (id === 'modal-pagseguro-success') { this.router.navigate(['/']); }
     }
 
     checkout() {
         const data = {
-            currency: 'BRL',
-            itemId1: this.itemId
+            itemId1: this.itemId,
+            itemPrice1: this.itemPrice1
         };
+        this.pagService.checkout(data).subscribe(
+            (transaction: any) => this.lightbox(transaction)
+        );
     }
 
     chooseBanner() {
@@ -104,6 +110,14 @@ export class AnunciosComponent implements OnInit {
 
     fileEvent(event) {
         this.imageName = event.target.files[0].name;
+    }
+
+    lightbox(code) {
+        this.loading = false;
+        PagSeguroLightbox(code, {
+            success: () => this.openModal('modal-pagseguro-success'),
+            abort: () => this.ngZone.run(() => this.router.navigate([{ outlets: { error: ['error-message'] }}]))
+        });
     }
 
     // cel field mask
@@ -140,7 +154,7 @@ export class AnunciosComponent implements OnInit {
         if (this.registerForm.valid &&
             (this.cityTags.length > 0) &&
             (this.stateTags.length > 0) &&
-            !banner.files[0]) {
+            banner.files[0]) {
             if (banner.files[0].type !== 'image/jpeg') {
                 this.bannerTypeFlag = true;
                 this.openModal('modal-validator');
@@ -260,7 +274,8 @@ export class AnunciosComponent implements OnInit {
         });
     }
 
-    setQtySideAndRegister(itemId, stateQty, cityQty, side) {
+    setQtySideAndRegister(itemPrice, itemId, stateQty, cityQty, side) {
+        this.itemPrice1 = itemPrice;
         this.itemId = itemId;
         this.cityQty = cityQty;
         this.stateQty = stateQty;

@@ -23,7 +23,7 @@ export class RegisterService {
     }
 
     registerUserPropaganda(user) {
-        return this.http.post(this.baseUrl + 'user-propaganda-register', user);
+        return this.http.post(this.baseUrl + '/user-propaganda-register', user);
     }
 
     verifyEmail(user) {

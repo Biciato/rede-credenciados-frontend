@@ -36,7 +36,7 @@
                             <td>Lateral</td>
                             <td>1</td>
                             <td>10</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('1', 1, 10, 'lateral')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('25.00', '1', 1, 10, 'lateral')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -45,7 +45,7 @@
                             <td>Topo</td>
                             <td>1</td>
                             <td>10</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('2', 1, 10, 'topo')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('75.00', '2', 1, 10, 'topo')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -54,7 +54,7 @@
                             <td>Lateral</td>
                             <td>2</td>
                             <td>20</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('3', 2, 20, 'lateral')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('50.00', '3', 2, 20, 'lateral')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -63,7 +63,7 @@
                             <td>Topo</td>
                             <td>2</td>
                             <td>20</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('4', 2, 20, 'topo')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('100.00', '4', 2, 20, 'topo')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -72,7 +72,7 @@
                             <td>Lateral</td>
                             <td>4</td>
                             <td>30</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('5', 4, 30, 'lateral')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('75.00', '5', 4, 30, 'lateral')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -81,7 +81,7 @@
                             <td>Topo</td>
                             <td>4</td>
                             <td>30</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('6', 4 , 30, 'topo')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('120.00', '6', 4 , 30, 'topo')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -90,7 +90,7 @@
                             <td>Lateral</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('7', 'todos', 'todas', 'lateral')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('100.00', '7', 'todos', 'todas', 'lateral')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -99,7 +99,7 @@
                             <td>Topo</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('8', 'todos', 'todas', 'topo')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('150.00', '8', 'todos', 'todas', 'topo')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -360,6 +360,23 @@
             </ul>
             <div id="simFooter">
                 <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-pagseguro-success">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Cadastro Realizado com sucesso:</h3>
+            <p>
+                Assim que confirmarmos o recebimento do pagamento, o seu anúncio já será realizado.
+                Obrigado pela confiança.
+            </p>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-pagseguro-success')"><i class="fas fa-times"></i>FECHAR</a>
             </div>
         </div>
     </div>

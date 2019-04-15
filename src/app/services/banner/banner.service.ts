@@ -29,7 +29,7 @@ export class BannerService {
     }
 
     storeSimpleUserBanner(banner, id, filename, local) {
-        return this.http.post(this.baseUrl + `/banner/${id}/${local}/${filename}`, banner);
+        return this.http.post(this.baseUrl + `/banner-simple-user/${id}/${local}/${filename}`, banner);
     }
 
     showTopSimpleUserBanner(id) {
