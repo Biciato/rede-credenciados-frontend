@@ -152,28 +152,28 @@ h3 {
 
     label, .input-empty ~ label {
         color:#999; 
-        font-size: 16px;
+        font-size: 0.9vw;
         font-weight:normal;
         position:absolute;
         pointer-events:none;
-        top: -2px;
+        top: -0.5vw;
         transition:0.2s ease all; 
     }
 
     input:focus ~ label, textarea:focus ~ label {
         top:-20px;
-        font-size:12px;
+        font-size:0.5vw;
         color: #5264AE;
     }
 
     input:disabled ~ label, textarea:disabled ~ label {
         top:-20px;
-        font-size:12px;
+        font-size:0.5vw;
     }
 
     .input-not-empty {
         top:-20px;
-        font-size:12px;
+        font-size:0.6vw;
         color: #999; 
     }
 
