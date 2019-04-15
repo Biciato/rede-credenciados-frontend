@@ -85,19 +85,22 @@
                         th, td {
                             padding: 15px;
                             text-align: center;
+
+                            label {
+                                background-color: #5cb85c;
+                                color: white;
+                                border-radius: 15px;
+                                cursor: pointer;
+                                padding: 0.5rem;
+                            }
                         }
 
                         tr {
                             border-bottom: 2px solid #e5e5e5;
-                            cursor: pointer;
-                        }
-
-                        tr:hover {
-                            background-color: gray;
                         }
 
                         .price-active {
-                            background-color: gray;    
+                            background-color: lightgray;    
                         }
 
                         tr:last-child {

@@ -444,6 +444,7 @@
                 <li *ngIf="!!cidade.errors && !!cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.stateInvalid"><strong>Estado:</strong> inválido</li>
+                <li *ngIf="jobTags.length < 1"><strong>Especialidades:</strong> selecione pelo menos uma especialidade</li>
                 <li *ngIf="!!apresentacaoForm.errors && !!apresentacaoForm.errors.required && resumeFlag">
                     <strong>Apresentação:</strong> campo obrigatório
                 </li>

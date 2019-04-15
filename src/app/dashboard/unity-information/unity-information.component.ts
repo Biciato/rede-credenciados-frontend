@@ -462,6 +462,7 @@ export class UnityInformationComponent implements OnInit {
         this.editResumeBtn = false;
         this.editUnityButton = false;
         this.editServicesBtn = false;
+        this.resumeFlag = true;
     }
 
     newUnity() {
@@ -504,6 +505,7 @@ export class UnityInformationComponent implements OnInit {
                         this.editResumeBtn = false;
                         this.editUnityButton = false;
                         this.editServicesBtn = false;
+                        this.resumeFlag = false;
                         this.loading = false;
                     },
                     () => {
