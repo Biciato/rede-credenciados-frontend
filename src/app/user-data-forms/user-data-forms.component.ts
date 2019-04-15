@@ -166,7 +166,6 @@ export class UserDataFormsComponent implements OnInit {
         private pjService: PessoaJuridicaService,
         private resService: ResumeService,
         private registerService: RegisterService,
-        private route: ActivatedRoute,
         private router: Router,
         private unityService: UnityService
     ) { }
@@ -174,6 +173,7 @@ export class UserDataFormsComponent implements OnInit {
     ngOnInit() {
         // sets person type, user id and token from route parameters
         this.user = JSON.parse(window.localStorage.getItem('user_rede_credenciados'));
+        console.log(this.addressForm.value.complemento);
 
         // gets pf or pj acordingly to person type prop
         if (this.user.personType === 'pessoa_fisica') {
@@ -222,6 +222,7 @@ export class UserDataFormsComponent implements OnInit {
 
     get cep() { return this.addressForm.get('cep'); }
     get rua() { return this.addressForm.get('rua'); }
+    get complemento() { return this.addressForm.get('complemento'); }
     get bairro() { return this.addressForm.get('bairro'); }
     get numero() { return this.addressForm.get('numero'); }
     get cidade() { return this.addressForm.get('cidade'); }

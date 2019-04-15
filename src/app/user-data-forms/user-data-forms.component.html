@@ -14,7 +14,7 @@
                     <input type="text" formControlName="razao_social">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="razao_social.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="razao_social.value === '' ? 'input-empty' : 'input-not-empty'">
                         Razão Social
                     </label>
                     <div *ngIf="razao_social.invalid && (razao_social.dirty || razao_social.touched)"
@@ -30,7 +30,7 @@
                     <input type="text" formControlName="nome_fantasia">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="nome_fantasia.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="nome_fantasia.value === '' ? 'input-empty' : 'input-not-empty'">
                         Nome Fantasia
                     </label>
                     <div *ngIf="nome_fantasia.invalid && (nome_fantasia.dirty || nome_fantasia.touched)"
@@ -45,7 +45,7 @@
                     <input type="text" formControlName="cnpj" (keyup)="onKeyCNPJ($event)" maxlength="18">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cnpj.value === null ? 'input-empty' : 'input-not-empty'">CNPJ</label>
+                    <label [className]="cnpj.value === '' ? 'input-empty' : 'input-not-empty'">CNPJ</label>
                     <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)"
                         class="alert alert-danger">
                         <div *ngIf="!!cnpj.errors.required">
@@ -61,7 +61,7 @@
                     <input type="text" formControlName="nome_contato">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="nome_contato.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="nome_contato.value === '' ? 'input-empty' : 'input-not-empty'">
                         Nome para Contato
                     </label>
                     <div *ngIf="nome_contato.invalid && (nome_contato.dirty || nome_contato.touched)"
@@ -76,7 +76,7 @@
                     <input type="text" formControlName="email">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="email.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Principal
                     </label>
                     <div *ngIf="email.invalid && (email.dirty || email.touched)"
@@ -94,7 +94,7 @@
                     <input type="text" formControlName="email2">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="email2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Secundário
                     </label>
                     <div *ngIf="email2.invalid && (email2.dirty || email2.touched)"
@@ -109,7 +109,7 @@
                     <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="tel.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 1
                     </label>
                     <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
@@ -127,7 +127,7 @@
                     <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="tel2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 2
                     </label>
                     <div *ngIf="tel2.invalid && (tel2.dirty || tel2.touched)"
@@ -142,7 +142,7 @@
                     <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
                         Celular 1
                     </label>
                     <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
@@ -157,7 +157,7 @@
                     <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cel2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Celular 2
                     </label>
                     <div *ngIf="cel2.invalid && (cel2.dirty || cel2.touched)"
@@ -177,7 +177,7 @@
                     <input type="text" formControlName="cpf" (keyup)="onKeyCPF($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cpf.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cpf.value === '' ? 'input-empty' : 'input-not-empty'">
                         CPF
                     </label>
                     <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)"
@@ -195,7 +195,7 @@
                     <input type="text" formControlName="rg" (keyup)="onKeyRG($event)" maxlength="12">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="rg.value === null ? 'input-empty' : 'input-not-empty'">RG</label>
+                    <label [className]="rg.value === '' ? 'input-empty' : 'input-not-empty'">RG</label>
                     <div *ngIf="rg.invalid && (rg.dirty || rg.touched)"
                         class="alert alert-danger">
                         <div *ngIf="!!rg.errors.required">
@@ -211,7 +211,7 @@
                     <input type="text" formControlName="nascimento" (keyup)="onKeyDate($event)" maxlength="10">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="nascimento.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="nascimento.value === '' ? 'input-empty' : 'input-not-empty'">
                         Data de Nascimento
                     </label>
                     <div *ngIf="nascimento.invalid && (nascimento.dirty || nascimento.touched)"
@@ -229,7 +229,7 @@
                     <input type="text" id="idade" formControlName="idade">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="idade.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="idade.value === '' ? 'input-empty' : 'input-not-empty'">
                         Idade
                     </label>
                 </div>
@@ -238,7 +238,7 @@
                     <input type="text" formControlName="sexo">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="sexo.value === null ? 'input-empty' : 'input-not-empty'">Sexo</label>
+                    <label [className]="sexo.value === '' ? 'input-empty' : 'input-not-empty'">Sexo</label>
                     <div *ngIf="sexo.invalid && (sexo.dirty || sexo.touched)"
                         class="alert alert-danger">
                         <div *ngIf="!!sexo.errors.required">
@@ -251,7 +251,7 @@
                     <input type="text" formControlName="nome">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="nome.value === null ? 'input-empty' : 'input-not-empty'">Nome</label>
+                    <label [className]="nome.value === '' ? 'input-empty' : 'input-not-empty'">Nome</label>
                     <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
                         class="alert alert-danger">
                         <div *ngIf="!!nome.errors.required">
@@ -264,7 +264,7 @@
                     <input type="text" formControlName="email">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="email.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Principal
                     </label>
                     <div *ngIf="email.invalid && (email.dirty || email.touched)"
@@ -282,7 +282,7 @@
                     <input type="text" formControlName="email2">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="email2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Secundário
                     </label>
                     <div *ngIf="email2Pf.invalid && (email2.dirty || email2Pf.touched)"
@@ -297,7 +297,7 @@
                     <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="tel.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 1
                     </label>
                     <div *ngIf="telPf.invalid && (telPf.dirty || telPf.touched)"
@@ -315,7 +315,7 @@
                     <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="tel2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 2
                     </label>
                     <div *ngIf="tel2Pf.invalid && (tel2Pf.dirty || tel2Pf.touched)"
@@ -330,7 +330,7 @@
                     <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
                         Celular 1
                     </label>
                     <div *ngIf="celPf.invalid && (celPf.dirty || celPf.touched)"
@@ -345,7 +345,7 @@
                     <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cel2.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
                         Celular 2
                     </label>
                     <div *ngIf="cel2Pf.invalid && (cel2Pf.dirty || cel2Pf.touched)"
@@ -365,7 +365,7 @@
                     <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cep.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cep.value === '' ? 'input-empty' : 'input-not-empty'">
                         CEP
                     </label>
                     <div *ngIf="cep.invalid && (cep.dirty || cep.touched)"
@@ -383,7 +383,7 @@
                     <input type="text" formControlName="rua">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="rua.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="rua.value === '' ? 'input-empty' : 'input-not-empty'">
                         Logradouro
                     </label>
                     <div *ngIf="rua.invalid && (rua.dirty || rua.touched)"
@@ -398,7 +398,7 @@
                     <input type="text" formControlName="numero">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="numero.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="numero.value === '' ? 'input-empty' : 'input-not-empty'">
                         Número
                     </label>
                     <div *ngIf="numero.invalid && (numero.dirty || numero.touched)"
@@ -410,10 +410,10 @@
                 </div>
 
                 <div class="group" style="width: 21%">
-                    <input type="text" formControlName="complemento" #complemento>
+                    <input type="text" formControlName="complemento">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="complemento.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="complemento.value === '' ? 'input-empty' : 'input-not-empty'">
                         Complemento
                     </label>
                 </div>
@@ -422,7 +422,7 @@
                     <input type="text" formControlName="bairro">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="bairro.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="bairro.value === '' ? 'input-empty' : 'input-not-empty'">
                         Bairro
                     </label>
                     <div *ngIf="bairro.invalid && (bairro.dirty || bairro.touched)"
@@ -437,7 +437,7 @@
                     <input type="text" formControlName="cidade">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="cidade.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="cidade.value === '' ? 'input-empty' : 'input-not-empty'">
                         Cidade
                     </label>
                     <div *ngIf="cidade.invalid && (cidade.dirty || cidade.touched)"
@@ -453,7 +453,7 @@
                         (click)="showStates = true">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="estado.value === null ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="estado.value === '' ? 'input-empty' : 'input-not-empty'">
                         Estado
                     </label>
                     <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
@@ -502,7 +502,7 @@
                 <textarea [formControl]="resumeForm"></textarea>
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label [className]="resumeForm.value === null ? 'input-empty' : 'input-not-empty'">
+                <label [className]="resumeForm.value === '' ? 'input-empty' : 'input-not-empty'">
                     Resumo, Informações Gerais, Apresentação, Descrição
                 </label>
                 <div *ngIf="resumeForm.invalid && (resumeForm.dirty || resumeForm.touched)"
@@ -587,7 +587,7 @@
                 <li *ngIf="!!cidade.errors && !!cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.stateInvalid"><strong>Estado:</strong> inválido</li>
-                <li *ngIf="!!resumeForm.errors && !!resumeForm.errors.required && resumeFlag">
+                <li *ngIf="!!resumeForm.errors && !!resumeForm.errors.required">
                     <strong>Apresentação:</strong> campo obrigatório
                 </li>
             </ul>

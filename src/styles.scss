@@ -162,13 +162,8 @@ h3 {
 
     input:focus ~ label, textarea:focus ~ label {
         top:-20px;
-        font-size:0.5vw;
+        font-size:0.6vw;
         color: #5264AE;
-    }
-
-    input:disabled ~ label, textarea:disabled ~ label {
-        top:-20px;
-        font-size:0.5vw;
     }
 
     .input-not-empty {

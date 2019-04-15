@@ -36,7 +36,7 @@ section {
 
         #stateSection {
             margin-left: 4%;
-            width: 36%;
+            width: 24%;
 
             h1 {
                 text-align: start;
@@ -51,7 +51,6 @@ section {
 
 
             #stateFormCard {
-                width: 64%;
                 margin-top: 5%;
                 background-color: #e5e5e5;
                 border-radius: 15px;
@@ -155,7 +154,6 @@ section {
 
             #cotations {
 
-                width: 64%;
                 margin-top: 5%;
                 background-color: #e5e5e5;
                 border-radius: 15px;
@@ -182,7 +180,6 @@ section {
             }
 
             #loginCard {
-                width: 64%;
                 margin-top: 10%;
                 background-color: #e5e5e5;
                 border-radius: 15px;
@@ -238,7 +235,7 @@ section {
         }
 
         #map {
-            width: 682.5px;
+            width: 50vw;
             height: fit-content;
             display: flex;
             margin-top: 2em;
@@ -266,13 +263,14 @@ section {
                 .pesquisa {
 
                     display: flex;
+                    width: 25vw;
 
                     .pesquisa-img {
 
                         display: flex;
-                        margin: 1em;
+                        margin: 1em 1em 0;
                         border-right: 8px solid silver;
-                        padding: 1em;
+                        padding: 1em 1em 0;
 
                         img {
                             border-radius: 50%;
@@ -284,6 +282,8 @@ section {
                     }
 
                     .pesquisa-dados {
+                        display: flex;
+                        flex-direction: column;
                         h3 {
                             color: rgb(231,122,21);
                             font-weight: normal;
