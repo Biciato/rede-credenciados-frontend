@@ -12,14 +12,19 @@ import { Atividade } from '../models/atividade';
             <h2>SELECIONE AS ESPECIALIDADES</h2>
         </div>
         <div id="modalBody">
-            <div *ngFor="let atividade of atividades; let i = index">
-                <label [for]="i">
-                    <input type="checkbox" [name]="atividade.atividade"
-                    class="checkbox" (click)="addOrRemove($event)" [checked]="atividadesSelected.includes(atividade.atividade)">
-                    {{ atividade.atividade }}
-                </label>
+            <div id="atividades">   
+                <div *ngFor="let atividade of atividades; let i = index">
+                    <label [for]="i">
+                        <input type="checkbox" [name]="atividade.atividade"
+                        class="checkbox" (click)="addOrRemove($event)" 
+                        [checked]="atividadesSelected.includes(atividade.atividade)">
+                        {{ atividade.atividade }}
+                    </label>
+                </div>
             </div>
-            <button (click)="submit()" class="rd-button-dash">FINALIZAR SELEÇÃO</button>
+            <div id="buttonBottom">
+                <button (click)="submit()" class="rd-button-dash">FINALIZAR SELEÇÃO</button>
+            </div>
         </div>
     `,
     styleUrls: ['./atividades.component.scss']
