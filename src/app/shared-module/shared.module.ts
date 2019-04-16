@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ClickOutsideModule } from 'ng-click-outside';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,7 @@ import { TipoPessoaPipe } from '../pipes/tipo-pessoa.pipe';
 
 @NgModule({
     imports: [
+        ClickOutsideModule,
         CommonModule,
         FormsModule,
         NgxLoadingModule.forRoot({}),
@@ -23,6 +25,7 @@ import { TipoPessoaPipe } from '../pipes/tipo-pessoa.pipe';
     ],
     exports: [
         AtividadesComponent,
+        ClickOutsideModule,
         FormsModule,
         ReactiveFormsModule,
         ModalComponent,

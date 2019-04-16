@@ -1,95 +1,98 @@
-header {
-    display: flex;
-    flex-direction: column;
+:host::ng-deep {
+    header {
+        display: flex;
+        flex-direction: column;
 
-    #menu {
+        #menu {
 
-        background-color: #e77a1c;
-        width: 100%;
-
-        ul {
-            list-style: none;
+            background-color: #e77a1c;
             width: 100%;
-            text-align: center;
-            margin-block-end: 0;
-            border-bottom: 0.2em solid white;
-            padding-bottom: 0.5em;
 
-            li {
-                display: inline;
-                padding: 0 0.5em;
-                border-right: 0.1em solid white;
+            ul {
+                list-style: none;
+                width: 100%;
+                text-align: center;
+                margin-block-end: 0;
+                border-bottom: 0.2em solid white;
+                padding-bottom: 0.5em;
 
-                a {
-                    background-color: #e77a1c;
-                    text-decoration: none;
-                    color: white;
-                    padding: 0.2em 0.5em;
-                    cursor: pointer;
+                li {
+                    display: inline;
+                    padding: 0 0.5em;
+                    border-right: 0.1em solid white;
+
+                    a {
+                        background-color: #e77a1c;
+                        text-decoration: none;
+                        color: white;
+                        padding: 0.2em 0.5em;
+                        cursor: pointer;
+                    }
                 }
             }
         }
-    }
 
-    display: flex;
-    background-color: #e5e5e5;
-
-    #top {
-        
         display: flex;
-        justify-content: center;
-        flex: auto;
+        background-color: #e5e5e5;
 
-        img {
-            margin-top: 0.2em;
-            height: 90%;
-            cursor: pointer;
-        }
+        #top {
+            
+            display: flex;
+            justify-content: center;
+            flex: auto;
 
-        img:focus {
-            outline: none;
-        }
+            img {
+                margin-top: 0.2em;
+                height: 90%;
+                cursor: pointer;
+            }
 
-        span {
-            margin: 0;
-            padding: 0.2em 5em 0.2em 7em;
-            color: #e77a1c;
-            font-size: 28px;
-            font-weight: bold;
-            line-height: 55px;
-        }
+            img:focus {
+                outline: none;
+            }
 
-        a:nth-child(3) {
-            margin-left: 5em;
-        }
+            span {
+                margin: 0;
+                padding: 0.2em 5em 0.2em 7em;
+                color: #e77a1c;
+                font-size: 28px;
+                font-weight: bold;
+                line-height: 55px;
+            }
 
-        a {
-            background-color: #FFF;
-            padding: 0.6em;
-            margin: 0.8em;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #999;
-            cursor: pointer;
-        }
+            a:nth-child(3) {
+                margin-left: 5em;
+            }
 
-        #exit {
-            background-color: #e5e5e5;
-            padding: 0.6em;
-            margin: 0.8em;
-            border: 1px solid #e77a1c;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #e77a1c;
-        }
+            a {
+                background-color: #FFF;
+                padding: 0.6em;
+                margin: 0.8em;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #999;
+                cursor: pointer;
+            }
 
-        #exit:hover {
-            box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
-            cursor: pointer;
+            #exit {
+                background-color: #e5e5e5;
+                padding: 0.6em;
+                margin: 0.8em;
+                border: 1px solid #e77a1c;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #e77a1c;
+            }
+
+            #exit:hover {
+                box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+                cursor: pointer;
+            }
         }
     }
 }
+
 
 #modal-login, #modal-reset-password {
 
@@ -364,7 +367,8 @@ header {
                             height: fit-content;
                             max-height: 400px;
                             overflow-y: auto;
-                            position: relative;
+                            position: absolute;
+                            margin-top: 10vh;
                             z-index: 100;
                             min-width: 283px;
 

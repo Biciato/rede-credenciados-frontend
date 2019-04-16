@@ -21,6 +21,7 @@
     "@angular/router": "~7.2.0",
     "@types/googlemaps": "^3.30.16",
     "core-js": "^2.5.4",
+    "ng-click-outside": "^4.0.0",
     "ngx-loading": "^3.0.1",
     "ngx-pagination": "^3.2.1",
     "rxjs": "~6.3.3",

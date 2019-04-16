@@ -110,13 +110,15 @@
                     <div class="form-group">
                         <label>Selecione o(s) Estado(s)</label>
                         <ul>
-                            <li (click)="showStatesModal()">{{ stateClickedModal || 'Selecione o estado' }}
+                            <li (click)="showStatesModal()" (clickOutside)="statesShowModal = false">
+                                {{ stateClickedModal || 'Selecione o estado' }}
                                 <i class="fas fa-caret-down"></i></li>
                             <span *ngFor="let state of stateTags">
                                 {{ state }}
-                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeStateModal(state)"></i>
+                                <i class="fas fa-times" style="margin-left: 0.5em;" 
+                                (click)="removeStateModal(state)"></i>
                             </span>
-                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false;">
+                            <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false">
                                 <span *ngFor="let brState of brStates" (click)="selectStateModal(brState)">
                                     {{ brState }}
                                 </span>
@@ -129,7 +131,7 @@
                             <input [(ngModel)]="searchCity" (click)="showCities()" name="city"
                                 [ngModelOptions]="{standalone: true}" #searchCityVar
                                 (keydown.enter)="selectCityModal(searchCityVar.value)"
-                                autocomplete="off">
+                                autocomplete="off" (clickOutside)="citiesShowModal = false">
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label [className]="searchCityVar.value === null ? 'input-empty' : 'input-not-empty'">

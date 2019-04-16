@@ -29,7 +29,7 @@
                     </ul>
                     <label>2 – O que Você Procura ?</label>
                     <input [(ngModel)]="searchJob" [value]="jobClicked ? jobClicked.atividade : 'Selecione a atividade'"
-                        (click)="jobListShow = true" name="job" autocomplete="off">
+                        (click)="jobListShow = true" name="job" autocomplete="off" (clickOutside)="clearJobDiv()">
                     <div *ngIf="jobListShow" (mouseleave)="clearJobDiv()">
                         <span *ngFor="let job of jobsFull | searchBox: {atividade: searchJob}" (click)="selectJob(job)">
                             {{job.atividade}}
@@ -37,7 +37,7 @@
                     </div>
                     <label>3 – Selecione a cidade</label>
                     <input [(ngModel)]="searchCity" [value]="cityClicked ? cityClicked : 'Selecione uma cidade'"
-                        (click)="showCities()" name="job" autocomplete="off">
+                        (click)="showCities()" name="job" autocomplete="off" (clickOutside)="clearCityDiv()">
                     <div *ngIf="citiesShow" (mouseleave)="clearCityDiv()">
                         <span *ngFor="let city of cities| searchBox: { nome: searchCity}"
                             (click)="selectCity(city.nome)">{{ city.nome }}</span>

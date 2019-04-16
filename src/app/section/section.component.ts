@@ -187,6 +187,10 @@ export class SectionComponent {
         this.citiesShowModal = false;
     }
 
+    closeDropdowns() {
+        this.jobListShow = false;
+    }
+
     closeModal(id: string) {
         this.modalService.close(id);
     }
