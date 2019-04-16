@@ -41,6 +41,26 @@
             <!-- Card Body -->
         </div>
         <!-- Unities Seletion Card -->
+        <!-- Card Unity Imgs -->
+        <div id="cardUnityImgs" *ngIf="unidades.length > 0" class="card-dash">
+            <!-- Card Header -->
+            <div id="cardUnityImgsHeader" class="card-header-dash"><h3>Imagens Unidade</h3></div>
+            <!-- Card Header -->
+            <!-- Card Body -->
+            <div id="cardUnityImgsBody" class="card-body-dash">
+                <h5>Insira até 05 imagens de sua unidade para divulgação</h5>
+                <h5>Imagens: JPG</h5>
+                <input type="file" name="arquivo" id="arquivo" style="display: none" (change)="uploadArquivo()">
+                <button (click)="chooseArquivo()" class="rd-button-dash">UPLOAD IMAGEM</button>
+                <button (click)="openModal('modal-delete-arquivo')" class="rd-button-dash">REMOVER IMAGEM</button>
+                <div *ngIf="slideHome" >
+                    <!-- Images of Carousel -->
+                    <img [src]="currentSlide" alt="image-carrousel" style="width: 100%">
+                </div>
+            </div>
+            <!-- Card Body -->
+        </div>
+        <!-- Card Unity Imgs -->
     </div>
     <div id="infoCol" >
         <!-- Info Card -->
@@ -487,6 +507,27 @@
             <div id="simFooter">
                 <a (click)="closeModal('modal-cnpj-invalid')"><i class="fas fa-times"></i>FECHAR</a>
             </div>
+        </div>
+    </div>
+</app-modal>
+<!-- Modal -->
+<app-modal id="modal-delete-arquivo">
+    <div id="modalHeader">
+        <h2>SELECIONE OS ARQUIVOS PARA REMOVER</h2>
+    </div>
+    <div id="modalBody">
+        <div class="col-1">
+            <div *ngFor="let arquivo of arquivos; let i = index">
+                <label [for]="i">
+                    <input type="checkbox" [name]="arquivo"
+                    class="checkbox" (click)="addOrRemove($event)" [checked]="arquivosSelected.includes(arquivo)">
+                    {{ arquivo }}
+                </label>
+            </div>
+        </div>
+        <div class="col-2">
+            <button (click)="removeArquivo()" class="rd-button-dash">SALVAR</button>
+            <button (click)="closeModal('modal-delete-arquivo')" class="rd-button-dash">FECHAR</button>
         </div>
     </div>
 </app-modal>

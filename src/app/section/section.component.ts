@@ -95,7 +95,8 @@ export class SectionComponent {
         const innerWidth = window.innerWidth;
         if (innerWidth < 930) {
             this.resized = true;
-        } else {
+        }
+        if (innerWidth > 930) {
             this.resized = false;
         }
     }
@@ -266,8 +267,8 @@ export class SectionComponent {
     maisInformacoesLink(pesquisa) {
         if (pesquisa.pessoa_fisica_id) {
             this.tipoPessoa = 'pessoa_fisica';
-        } else {
-            this.tipoPessoa = 'pessoa_juridica';
+        } else if (pesquisa.unidade_id) {
+            this.tipoPessoa = 'unidade';
         }
         this.router.navigate([`informacoes`],
                 {queryParams: {
@@ -289,7 +290,6 @@ export class SectionComponent {
 
     newSearch() {
         this.pesquisaFlag = false;
-        this.resized = false;
         this.cityClickedModal = undefined;
         this.stateClickedModal = undefined;
         this.jobClicked = undefined;

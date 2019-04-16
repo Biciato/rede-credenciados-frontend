@@ -12,19 +12,31 @@ export class ArquivoService {
 
     constructor(private http: HttpClient) { }
 
-    store(arquivo, user_id, filename) {
-        return this.http.post(this.baseUrl + `/arquivos/${user_id}/${filename}`, arquivo);
+    store(arquivo, userId, filename) {
+        return this.http.post(this.baseUrl + `/arquivos/${userId}/${filename}`, arquivo);
+    }
+
+    storeUnityImg(arquivo, id, filename) {
+        return this.http.post(this.baseUrl + `/arquivos-unidade/${id}/${filename}`, arquivo);
     }
 
     storeSlideImg(slideImg, filename, ordem, token) {
         const httpOptions = { headers: new HttpHeaders({
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
         return this.http.post(this.baseUrl + '/slide-imagem/' + filename + '/' + ordem, slideImg, httpOptions);
     }
 
     indexImgs(id) {
-        return this.http.get<String[]>(this.baseUrl + `/arquivos-imagens-index/${id}`, {
+        return this.http.get<string[]>(this.baseUrl + `/arquivos-imagens-index/${id}`, {
+            headers: new HttpHeaders({
+                'Content-type': 'application/json'
+            })
+        });
+    }
+
+    indexUnityImgs(id) {
+        return this.http.get<string[]>(this.baseUrl + `/imagens-unidade-index/${id}`, {
             headers: new HttpHeaders({
                 'Content-type': 'application/json'
             })
@@ -50,15 +62,23 @@ export class ArquivoService {
     delete(id, arquivo, token) {
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/pdf',
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
         return this.http.delete(this.baseUrl + `/arquivos/${id}/${arquivo}`, httpOptions);
+    }
+
+    deleteUnityImg(id, arquivo, token) {
+        const httpOptions = { headers: new HttpHeaders({
+            'Content-type': 'application/pdf',
+            Authorization: 'Bearer ' + token
+        })};
+        return this.http.delete(this.baseUrl + `/arquivos-unidade/${id}/${arquivo}`, httpOptions);
     }
 
     deleteSlideImg(slideImagem, token) {
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/pdf',
-            'Authorization': 'Bearer ' + token
+            Authorization: 'Bearer ' + token
         })};
         return this.http.delete(this.baseUrl + `/slide-imagem/${slideImagem}`, httpOptions);
     }

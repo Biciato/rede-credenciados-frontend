@@ -117,7 +117,7 @@ section {
                     }
 
                     input {
-                        width: 15rem;
+                        width: 75%;
                         padding: 0.5em;
                         border: none;
                         border-radius: 5px;
@@ -302,6 +302,7 @@ section {
 
                         a {
                             padding: 0.5em;
+                            max-width: 145px;
                             color: white;
                             background-color: rgb(231,122,21);
                             border-radius: 20px;

@@ -73,7 +73,7 @@
             <!-- Login Card -->
         </div>
         <div id="map">
-            <app-map *ngIf="!resized" (stateName)="onGetStateName($event)"></app-map>
+            <app-map *ngIf="!resized && !pesquisaFlag" (stateName)="onGetStateName($event)"></app-map>
             <!-- Search Results Div  -->
             <div id="pesquisa" *ngIf="pesquisaFlag">
                 <button (click)="newSearch()" class="rd-button-home">NOVA CONSULTA</button>

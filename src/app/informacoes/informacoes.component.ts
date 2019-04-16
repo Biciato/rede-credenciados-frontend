@@ -26,7 +26,7 @@ import { PesquisaCliente } from '../models/pesquisa-cliente';
 export class InformacoesComponent implements OnInit {
     @ViewChild('gmap') gmapElement: any;
 
-    avatar: string;
+    avatar = '../../../assets/images/sem-foto.jpg';
     baseUrlArquivos = environment.baseUrlArquivos;
     // initiating contact form
     contatoForm = new FormGroup({
@@ -52,7 +52,7 @@ export class InformacoesComponent implements OnInit {
     dadosPesquisa: PesquisaCliente;
     empresaImgs = [];
     fileToShow: any;
-    imageClicked: string;
+    imageClicked = '../../../assets/images/sem-foto.jpg';
     loading = false;
     map: google.maps.Map;
     resumo: any;
@@ -128,7 +128,7 @@ export class InformacoesComponent implements OnInit {
                 atividades: this.route.snapshot.queryParamMap.get('atividades'),
                 email: this.route.snapshot.queryParamMap.get('email'),
                 id: this.route.snapshot.queryParamMap.get('id'),
-                user_id: this.route.snapshot.queryParamMap.get('user_id'),
+                user_id: this.route.snapshot.queryParamMap.get('user_id')
             };
             this.getGoogleMapData();
         }
@@ -137,8 +137,19 @@ export class InformacoesComponent implements OnInit {
                 (data) => data.length > 0 ? this.avatar = this.baseUrlArquivos + data : data,
                 () => this.avatar = '../../../assets/images/sem-foto.jpg'
             );
-
-        this.arqService.indexImgs(this.route.snapshot.queryParamMap.get('user_id') ||
+        if (this.route.snapshot.queryParamMap.get('tipoPessoa') === 'unidade') {
+            this.arqService.indexUnityImgs(this.route.snapshot.queryParamMap.get('id')).subscribe(
+                (idx) => idx.forEach(element => {
+                    this.empresaImgs.push(this.baseUrlArquivos + element);
+                }),
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                }
+            );
+        }
+        if (this.route.snapshot.queryParamMap.get('tipoPessoa') === 'pessoa_fisica_id' ||
+            this.route.snapshot.queryParamMap.get('tipoPessoa') === 'pessoa_juridica_id') {
+            this.arqService.indexImgs(this.route.snapshot.queryParamMap.get('user_id') ||
             this.user.id).subscribe(
                 (idx) => idx.forEach(element => {
                     this.empresaImgs.push(this.baseUrlArquivos + element);
@@ -147,6 +158,7 @@ export class InformacoesComponent implements OnInit {
                     this.router.navigate([{ outlets: { error: ['error-message'] }}]);
                 }
             );
+        }
     }
 
     get nome() { return this.contatoForm.get('nome'); }
