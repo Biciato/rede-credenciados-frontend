@@ -55,6 +55,7 @@ export class InformacoesComponent implements OnInit {
     imageClicked = '../../../assets/images/sem-foto.jpg';
     loading = false;
     map: google.maps.Map;
+    marker: google.maps.Marker;
     resumo: any;
     user: any;
 
@@ -272,15 +273,20 @@ export class InformacoesComponent implements OnInit {
     }
 
     setMap(dados) {
-        const mapProp = {
-            center: new google.maps.LatLng(
-                dados.results[0].geometry.location.lat,
-                dados.results[0].geometry.location.lng
-            ),
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+        const locationRio = {
+            lat: dados.results[0].geometry.location.lat,
+            lng: dados.results[0].geometry.location.lng
         };
-        this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        this.map = new google.maps.Map(this.gmapElement.nativeElement, {
+            zoom: 18,
+            center: locationRio,
+            gestureHandling: 'cooperative'
+            });
+        this.marker = new google.maps.Marker({
+            position: locationRio,
+            map: this.map,
+            title: this.dadosPesquisa.nome
+        });
     }
 
     showArquivo() {
