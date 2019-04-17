@@ -227,10 +227,12 @@ export class SectionComponent {
     }
 
     getPropIdx(cidade, estado) {
+        console.log(estado);
         this.propService.index(cidade, estado).subscribe(data => this.getBanners(data));
     }
 
     getBanners(data) {
+        console.log(data);
         data[0].forEach(el => {
             this.bannerService.showTop(el.user_id).subscribe(img => {
                 this.bannersTop.push(this.baseUrlArquivos + img);

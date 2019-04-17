@@ -264,15 +264,15 @@
                     <input type="text" formControlName="email">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email.value === '' ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="emailPf.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Principal
                     </label>
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                    <div *ngIf="emailPf.invalid && (emailPf.dirty || emailPf.touched)"
                         class="alert alert-danger">
-                        <div *ngIf="!!email.errors.required">
+                        <div *ngIf="!!emailPf.errors.required">
                             *campo obrigatório.
                         </div>
-                        <div *ngIf="!!email.errors.email">
+                        <div *ngIf="!!emailPf.errors.email">
                             *formato de e-mail inválido.
                         </div>
                     </div>
@@ -282,10 +282,10 @@
                     <input type="text" formControlName="email2">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="email2.value === '' ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="email2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
                         Email Secundário
                     </label>
-                    <div *ngIf="email2Pf.invalid && (email2.dirty || email2Pf.touched)"
+                    <div *ngIf="email2Pf.invalid && (email2Pf.dirty || email2Pf.touched)"
                         class="alert alert-danger">
                         <div *ngIf="!!email2Pf.errors.email">
                             *formato de e-mail inválido.
@@ -297,7 +297,7 @@
                     <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel.value === '' ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="telPf.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 1
                     </label>
                     <div *ngIf="telPf.invalid && (telPf.dirty || telPf.touched)"
@@ -315,7 +315,7 @@
                     <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label [className]="tel2.value === '' ? 'input-empty' : 'input-not-empty'">
+                    <label [className]="tel2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
                         Telefone 2
                     </label>
                     <div *ngIf="tel2Pf.invalid && (tel2Pf.dirty || tel2Pf.touched)"

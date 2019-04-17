@@ -173,7 +173,6 @@ export class UserDataFormsComponent implements OnInit {
     ngOnInit() {
         // sets person type, user id and token from route parameters
         this.user = JSON.parse(window.localStorage.getItem('user_rede_credenciados'));
-        console.log(this.addressForm.value.complemento);
 
         // gets pf or pj acordingly to person type prop
         if (this.user.personType === 'pessoa_fisica') {

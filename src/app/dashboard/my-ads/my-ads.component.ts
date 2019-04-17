@@ -35,7 +35,7 @@ export class MyAdsComponent implements OnInit {
     cityTags: string[];
     cidadesLateral = [];
     cidadesTopo = [];
-    cityQty: number;
+    cityQty: any;
 
     estadosLateral = [];
     estadosTopo = [];
@@ -49,6 +49,8 @@ export class MyAdsComponent implements OnInit {
     loading: boolean;
     local: string;
 
+    newPropagandaObj: any;
+
     pessoaJuridica: PessoaJuridica;
     propagandaPj: Propaganda;
 
@@ -61,7 +63,7 @@ export class MyAdsComponent implements OnInit {
     statesShow: boolean;
     statesShowModal: boolean;
     stateName: string;
-    stateQty: number;
+    stateQty: any;
 
     user: any;
 
@@ -144,8 +146,10 @@ export class MyAdsComponent implements OnInit {
         this.modalService.open(id2);
     }
 
-    createPropagnada(stateQty, cityQty?, local?) {
+    createPropagnada(stateQty, cityQty, local) {
         if (stateQty === 'todos') {
+            this.cityQty = 'todos';
+            this.local = local
             this.modalService.open('modal-propaganda-banner');
         } else {
             this.stateQty = stateQty;
@@ -312,22 +316,36 @@ export class MyAdsComponent implements OnInit {
 
             return;
         }
-        let propaganda = {};
+
         if (this.local === 'topo') {
-            propaganda = {
-                estados_topo: this.stateTags.toString(),
-                cidades_topo: this.cityTags.toString()
-            };
+            if (this.cityQty === 'todos') {
+                this.newPropagandaObj = {
+                    estados_topo: 'todos',
+                    cidades_topo: 'todos'
+                };
+            } if (this.cityQty !== 'todos') {
+                this.newPropagandaObj = {
+                    estados_topo: this.stateTags.toString(),
+                    cidades_topo: this.cityTags.toString()
+                };
+            }
         }
         if (this.local === 'lateral') {
-            propaganda = {
-                estados_lateral: this.stateTags.toString(),
-                cidades_lateral: this.cityTags.toString()
-            };
+            if (this.cityQty === 'todos') {
+                this.newPropagandaObj = {
+                    estados_lateral: 'todos',
+                    cidades_lateral: 'todos'
+                };
+            } else if (this.cityQty !== 'todos') {
+                this.newPropagandaObj = {
+                    estados_lateral: this.stateTags.toString(),
+                    cidades_lateral: this.cityTags.toString()
+                };
+            }
         }
-        // if (this.unitySelected === this.pessoaJuridica.nome_fantasia) {
+        console.log(this.newPropagandaObj);
         if (this.propagandaPj.id) {
-            this.propService.updatePropPJ(this.user.id, propaganda, this.user.token)
+            this.propService.updatePropPJ(this.user.id, this.newPropagandaObj, this.user.token)
                 .subscribe(
                     () => this.uploadBanner(),
                     () => {
@@ -336,7 +354,7 @@ export class MyAdsComponent implements OnInit {
                     }
                 );
         } else {
-            this.propService.createPropPJ(this.user.id, propaganda, this.user.token)
+            this.propService.createPropPJ(this.user.id, this.newPropagandaObj, this.user.token)
                 .subscribe(
                     () => this.uploadBanner(),
                     () => {
@@ -345,15 +363,6 @@ export class MyAdsComponent implements OnInit {
                     }
                 );
         }
-        /* }  else {
-            if (this.propagandaUnidade) {
-                this.propService.updatePropUni(this.propagandaUnidade.id, propaganda, this.token)
-                    .subscribe(() => this.router.navigate([{ outlets: { update: ['update-message'] }}]));
-            } else {
-                this.propService.createPropUni(this.unidadeSelecId, propaganda, this.token)
-                    .subscribe(() => this.router.navigate([{ outlets: { propaganda: ['register-propaganda'] }}]));
-            }
-        } */
     }
 
     // method that select a city
