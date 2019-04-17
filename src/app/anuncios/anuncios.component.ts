@@ -96,11 +96,19 @@ export class AnunciosComponent implements OnInit {
 
     createProp(user) {
         let propaganda;
-        this.side === 'topo' ? propaganda = {
+        if (this.cityQty === 'todos') {
+            this.side === 'topo' ? propaganda = {
+                estados_topo: 'todos', cidades_topo: 'todos'
+            } : propaganda = {
+                estados_lateral: 'todos', cidades_lateral: 'todos'
+            };
+        } else {
+            this.side === 'topo' ? propaganda = {
                 estados_topo: this.stateTags.toString(), cidades_topo: this.cityTags.toString()
             } : propaganda = {
                 estados_lateral: this.stateTags.toString(), cidades_lateral: this.cityTags.toString()
             };
+        }
         this.propService.createPropUser(user.id, propaganda).subscribe(_ => this.uploadBanner(user),
             () => {
                 this.router.navigate([{ outlets: { error: ['error-message'] }}]);
@@ -116,7 +124,7 @@ export class AnunciosComponent implements OnInit {
         this.loading = false;
         PagSeguroLightbox(code, {
             success: () => this.openModal('modal-pagseguro-success'),
-            abort: () => this.ngZone.run(() => this.router.navigate([{ outlets: { error: ['error-message'] }}]))
+            abort: () => this.ngZone.run(() => this.router.navigate(['/']))
         });
     }
 
@@ -152,8 +160,9 @@ export class AnunciosComponent implements OnInit {
     onSubmit() {
         const banner = document.getElementById('banner') as HTMLInputElement;
         if (this.registerForm.valid &&
-            (this.cityTags.length > 0) &&
-            (this.stateTags.length > 0) &&
+            (((this.cityTags.length > 0) &&
+            (this.stateTags.length > 0)) ||
+            (this.cityQty === 'todos')) &&
             banner.files[0]) {
             if (banner.files[0].type !== 'image/jpeg') {
                 this.bannerTypeFlag = true;

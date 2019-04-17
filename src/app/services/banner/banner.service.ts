@@ -33,10 +33,10 @@ export class BannerService {
     }
 
     showTopSimpleUserBanner(id) {
-        return this.http.get<any>(this.baseUrl + `/banner/${id}/top`);
+        return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/top`);
     }
 
     showSideSimpleUserBanner(id) {
-        return this.http.get<any>(this.baseUrl + `/banner/${id}/side`);
+        return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/side`);
     }
 }

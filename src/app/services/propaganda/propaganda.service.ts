@@ -65,4 +65,8 @@ export class PropagandaService {
     index(cidade, estado) {
         return this.http.get(this.baseUrl + `/propagandas/${cidade}/${estado}`);
     }
+
+    indexSimpleUsers(cidade, estado) {
+        return this.http.get(this.baseUrl + `/propagandas-simple-user/${cidade}/${estado}`);
+    }
 }

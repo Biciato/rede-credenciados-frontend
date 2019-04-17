@@ -9,6 +9,7 @@ import { CitiesService } from '../services/cities/cities.service';
 import { LoginService } from '../services/login/login.service';
 import { ModalService } from '../services/modal/modal.service';
 import { PesquisaClientesService } from '../services/pesquisa-clientes/pesquisa-clientes.service';
+import { SimpleUserService } from '../services/simple-user/simple-user.service';
 
 import { Atividade } from '../models/atividade';
 import { CITYCODE } from '../models/city-code';
@@ -76,6 +77,10 @@ export class SectionComponent {
     // initiating search form group
     searchCity: string;
     searchJob: string;
+    simpleUserTopIds = [];
+    simpleUserTopOkIds = [];
+    simpleUserSideIds = [];
+    simpleUserSideOkIds = [];
     stateClicked: string;
     stateSelected: string;
     stateClickedModal: string;
@@ -101,16 +106,19 @@ export class SectionComponent {
         }
     }
 
-    constructor(private activityService: ActivityService,
-                private avatarService: AvatarService,
-                private bannerService: BannerService,
-                private citiesService: CitiesService,
-                private googleService: GoogleGeolocatorService,
-                private loginService: LoginService,
-                private modalService: ModalService,
-                private pesClientService: PesquisaClientesService,
-                private propService: PropagandaService,
-                private router: Router) {
+    constructor(
+        private activityService: ActivityService,
+        private avatarService: AvatarService,
+        private bannerService: BannerService,
+        private citiesService: CitiesService,
+        private googleService: GoogleGeolocatorService,
+        private loginService: LoginService,
+        private modalService: ModalService,
+        private pesClientService: PesquisaClientesService,
+        private propService: PropagandaService,
+        private router: Router,
+        private simpleUserService: SimpleUserService
+    ) {
         this.brStates = [
             'Rio de Janeiro',
             'Rondonia',
@@ -170,6 +178,40 @@ export class SectionComponent {
         this.googleService.locationLatLong().subscribe(latLong => this.getCityState(latLong));
     }
 
+    checkSimpleUsersTop() {
+        this.simpleUserTopIds.forEach(el => {
+            this.simpleUserService.show(el.id).subscribe(
+                () => {
+                    if (el.pagamento_status === 'ok') {
+                        this.simpleUserTopOkIds.push(el.id);
+                    }
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                },
+                () => this.includeSimpleUserTop()
+            )
+        });
+    }
+
+    checkSimpleUsersSide() {
+        this.simpleUserSideIds.forEach(el => {
+            this.simpleUserService.show(el).subscribe(
+                (user: any) => {
+                    if (user.pagamento_status === 'ok') {
+                        this.simpleUserSideOkIds.push(user.id);
+                    }
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                },
+                () => this.includeSimpleUserSide()
+            )
+        });
+    }
+
     // method that hide jobs list
     clearJobDiv() {
         this.jobListShow = false;
@@ -227,12 +269,11 @@ export class SectionComponent {
     }
 
     getPropIdx(cidade, estado) {
-        console.log(estado);
         this.propService.index(cidade, estado).subscribe(data => this.getBanners(data));
+        this.propService.indexSimpleUsers(cidade, estado).subscribe(data => this.getSimpleUserIds(data));
     }
 
     getBanners(data) {
-        console.log(data);
         data[0].forEach(el => {
             this.bannerService.showTop(el.user_id).subscribe(img => {
                 this.bannersTop.push(this.baseUrlArquivos + img);
@@ -255,6 +296,43 @@ export class SectionComponent {
         this.bannersSide.push('../../assets/images/Banner-Promocional.gif');
         this.startBannerTopRotations();
         this.startBannerSideRotations();
+    }
+
+    getSimpleUserIds(data) {
+        data[0].forEach(el => this.simpleUserService.show(el.users_propaganda_id)
+            .subscribe(
+                (user: any) => this.simpleUserTopIds.push(user.id),
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                },
+                () => this.checkSimpleUsersTop()
+            )
+        );
+        data[1].forEach(el => this.simpleUserService.show(el.users_propaganda_id)
+            .subscribe(
+                (user: any) => this.simpleUserSideIds.push(user.id),
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                },
+                () => this.checkSimpleUsersSide()
+            )
+        );
+    }
+
+    includeSimpleUserTop() {
+        this.simpleUserTopOkIds.forEach(el => {
+            this.bannerService.showTopSimpleUserBanner(el)
+                .subscribe(img => this.bannersTop.push(this.baseUrlArquivos + img))
+        });
+    }
+
+    includeSimpleUserSide() {
+        this.simpleUserSideOkIds.forEach(el => {
+            this.bannerService.showSideSimpleUserBanner(el)
+                .subscribe(img => this.bannersSide.push(this.baseUrlArquivos + img))
+        });
     }
 
     // check login data and gets token from api server

@@ -90,7 +90,7 @@
                             <td>Lateral</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('100.00', '7', 'todos', 'todas', 'lateral')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('100.00', '7', 'todos', 'todos', 'lateral')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -99,7 +99,7 @@
                             <td>Topo</td>
                             <td>Todos</td>
                             <td>Todas</td>
-                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('150.00', '8', 'todos', 'todas', 'topo')">
+                            <td><button class="rd-button-dash" (click)="setQtySideAndRegister('150.00', '8', 'todos', 'todos', 'topo')">
                                 ESCOLHER
                             </button></td>
                         </tr>
@@ -278,7 +278,7 @@
                     </div>
                 </form>
                 <!-- Pj data form -->
-                <div id="stateCity">
+                <div id="stateCity" *ngIf="cityQty !== 'todos'">
                     <div class="form-group">
                         <label *ngIf="stateTags.length < stateQty">
                             {{ stateQty > 1 ? 'Selecione os estados' : 'Selecione o estado' }}
@@ -287,7 +287,7 @@
                         <ul>
                             <li (click)="showStatesModal()" *ngIf="stateTags.length < stateQty"
                                 (clickOutside)="statesShowModal = false">
-                                {{ stateClickedModal || 'Selecione o estado' }}                                
+                                {{ stateClickedModal || 'Selecione o estado' }}
                                 <i class="fas fa-caret-down"></i></li>
                             <span *ngFor="let state of stateTags">
                                 {{ state }}
@@ -314,7 +314,7 @@
                         <div class="tags">
                             <span *ngFor="let city of cityTags">
                                 {{ city }}
-                                <i class="fas fa-times" style="margin-left: 0.5em;" 
+                                <i class="fas fa-times" style="margin-left: 0.5em;"
                                     (click)="removeCityModal(city)"></i>
                             </span>
                         </div>
@@ -325,13 +325,13 @@
                             </span>
                         </div>
                     </div>
-                    <div>
-                        <input id="banner" name="banner" style="display: none" type="file" 
-                            (change)="fileEvent($event)" #banner>
-                        <span>{{ imageName }}</span> 
-                        <button class="rd-button-dash" style="background-color: deepskyblue" 
-                            (click)="chooseBanner()">SELECIONE A IMAGEM</button>
-                    </div>
+                </div>
+                <div id="imageSelection">
+                    <input id="banner" name="banner" style="display: none" type="file"
+                        (change)="fileEvent($event)" #banner>
+                    <span>{{ imageName }}</span>
+                    <button class="rd-button-dash" style="background-color: deepskyblue"
+                        (click)="chooseBanner()">SELECIONE A IMAGEM</button>
                 </div>
                 <button class="rd-button-dash" (click)="onSubmit()">SALVAR</button>
             </div>
