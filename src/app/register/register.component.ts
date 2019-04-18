@@ -86,7 +86,6 @@ export class RegisterComponent implements OnInit {
                 (data) => {
                     Object.entries(data).length === 0 &&
                     data.constructor === Object ? this.emailValidation() : this.openModal('modal-validator-email');
-                    this.loading = false;
                 },
                 () => {
                     this.router.navigate([{ outlets: { error: ['error-message'] }}]);
@@ -97,6 +96,9 @@ export class RegisterComponent implements OnInit {
 
     closeModal(id: string) {
         this.modalService.close(id);
+        if (id === 'modal-registro') {
+            this.router.navigate(['/']);
+        }
     }
 
     emailValidation() {
@@ -105,7 +107,6 @@ export class RegisterComponent implements OnInit {
             .subscribe(
                 (data) => {
                     data === true ? this.registerUser() : this.openModal('modal-email-validation');
-                    this.loading = false;
                 },
                 () => {
                     this.router.navigate([{ outlets: { error: ['error-message'] }}]);
@@ -184,9 +185,8 @@ export class RegisterComponent implements OnInit {
             this.pessoaFisicaForm.reset();
             this.pessoaJuridicaForm.reset();
             this.jobTags = [];
-            this.router.navigate(['/']);
-            setTimeout(() => this.loading = false, 2000);
         }
+        this.loading = false;
     }
 
     // remove state tag
@@ -210,15 +210,17 @@ export class RegisterComponent implements OnInit {
 
     // links user registration to activities, address and resume data
     registerAtividadeEnderecoApresentacao(user, pessoa) {
-         this.initialRegisterService.register(pessoa, this.ativComp.atividadesSelected.toString())
-             .subscribe(() => this.redirectAfterSuccess(user), () => {
-                this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-                this.loading = false;
-            });
+        this.loading = true;
+        this.initialRegisterService.register(pessoa, this.ativComp.atividadesSelected.toString())
+            .subscribe(() => this.redirectAfterSuccess(user), () => {
+              this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+              this.loading = false;
+          });
     }
 
     // redirects to /home and shows successful message
     redirectAfterSuccess(user) {
+        this.loading = true;
         this.registerService.verifyEmail(
             {
                 id: user.id,
@@ -235,6 +237,7 @@ export class RegisterComponent implements OnInit {
 
     // create pf or pj from user's data on api server
     registerPfOrPj(user: User) {
+        this.loading = true;
         if (user.tipo_pessoa === 'pessoa_fisica') {
             let sexo: string;
             const el = document.querySelector('input[name="sexo"]:checked') as HTMLInputElement;
