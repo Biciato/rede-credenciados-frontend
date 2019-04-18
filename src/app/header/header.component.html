@@ -115,7 +115,7 @@
                                 <i class="fas fa-caret-down"></i></li>
                             <span *ngFor="let state of stateTags">
                                 {{ state }}
-                                <i class="fas fa-times" style="margin-left: 0.5em;" 
+                                <i class="fas fa-times" style="margin-left: 0.5em; cursor: pointer;"
                                 (click)="removeStateModal(state)"></i>
                             </span>
                             <div *ngIf="statesShowModal" (mouseleave)="statesShowModal = false">
@@ -141,7 +141,8 @@
                         <div class="tags">
                             <span *ngFor="let city of cityTags">
                                 {{ city }}
-                                <i class="fas fa-times" style="margin-left: 0.5em;" (click)="removeCityModal($event.innerHTML)"></i>
+                                <i class="fas fa-times" style="margin-left: 0.5em;"
+                                (click)="removeCityModal(city)"></i>
                             </span>
                         </div>
                         <div *ngIf="citiesShowModal" class="dropdown" (mouseleave)="citiesShowModal = false">

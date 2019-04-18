@@ -36,7 +36,7 @@
         background-color: #e5e5e5;
 
         #top {
-            
+
             display: flex;
             justify-content: center;
             flex: auto;
@@ -124,7 +124,7 @@
             .alert {
                 margin-top: 0;
                 div {
-                    margin-top: 0;   
+                    margin-top: 0;
                 }
             }
 
@@ -267,7 +267,7 @@
         margin: 0;
 
         .card-body-dash {
-        
+
             form {
 
                 display: flex;
@@ -356,6 +356,10 @@
                                 margin-top: 0.2em;
                                 display: inline-block;
                                 width: fit-content;
+
+                                i {
+                                    cursor: pointer;
+                                }
                             }
                         }
 
@@ -396,10 +400,10 @@
                     }
                 }
             }
-        }    
+        }
     }
-    
-    
+
+
 }
 
 #modal-validator-header {
@@ -421,7 +425,7 @@
         flex-direction: column;
         text-align: center;
 
-        div { 
+        div {
             p {
                 width: 38rem;
             }
@@ -518,4 +522,3 @@
 
 
 
-   

@@ -162,8 +162,14 @@ export class HeaderComponent {
     get newPassword() { return this.resetPasswordForm.get('newPassword'); }
     get newPasswordConfirmation() { return this.resetPasswordForm.get('newPasswordConfirmation'); }
 
-    openModal(id: string) {
-        this.modalService.open(id);
+    backToDash() {
+        this.router.navigate([`dashboard/minhas-informacoes`]);
+        this.verPerfilMode = false;
+    }
+
+    backToDashAdmin() {
+        this.router.navigate([`dashboard-admin/credenciados`]);
+        this.verPerfilMode = false;
     }
 
     closeModal(id: string) {
@@ -176,24 +182,45 @@ export class HeaderComponent {
         }
     }
 
-    // method that populates cities div
-    showCities() {
-        if (this.stateSelectedModal === undefined) {
-            window.alert('Selecione um Estado');
+    // send user id, person type and token via route parameters to dashboard components and set dashboard mode
+    enterDash(data, id) {
+        this.loading = false;
+        this.user = {
+            id: data.user.id,
+            personType: data.user.tipo_pessoa,
+            token: data.token
+        };
+        window.localStorage.setItem('user_rede_credenciados', JSON.stringify(this.user));
+        if (data.user.email_verified_at !== null && (data.user.admin === 0 || data.user.admin === '0')) {
+            this.router.navigate([`dashboard/minhas-informacoes`]);
+            this.dashboardMode = true;
+            if (id) { this.modalService.close(id); }
+        } else if (data.user.email_verified_at !== null && (data.user.admin === 1 || data.user.admin === '1')) {
+            this.router.navigate([`dashboard-admin/credenciados`]);
+            this.dashboardMode = true;
+            this.adminMode = true;
+            this.verPerfilMode = false;
+            if (id) { this.modalService.close(id); }
+        } else if (data.user.email_verified_at === null) {
+            this.userIdEmailService.passEmailAndId(data.user.id, data.user.email);
+            this.router.navigate([{ outlets: { verified: ['email-verified'] }}]);
         } else {
-            this.citiesShowModal = true;
-            this.searchCity = '';
+            this.router.navigate([{ outlets: { popup: ['compose'] }}]);
         }
     }
 
-    backToDash() {
-        this.router.navigate([`dashboard/minhas-informacoes`]);
+    // exit from dashboard component
+    exit() {
+        this.dashboardMode = false;
+        this.adminMode = false;
         this.verPerfilMode = false;
+        window.localStorage.clear();
+        this.router.navigate(['/']);
     }
 
-    backToDashAdmin() {
-        this.router.navigate([`dashboard-admin/credenciados`]);
-        this.verPerfilMode = false;
+    forgetPassword(id) {
+        this.modalService.close(id);
+        this.router.navigate(['/forget-password-email']);
     }
 
     home() {
@@ -201,88 +228,62 @@ export class HeaderComponent {
         this.verPerfilMode = true;
     }
 
-    // method that populates cities div in Modal
-    populateCities() {
-        if (this.stateSelectedModal === undefined) {
-            window.alert('Selecione um Estado');
-        } else {
-            const stateCode = CITYCODE[this.stateSelectedModal];
-            if (stateCode) {
-                this.loading = true;
-                this.citiesService.getCities(stateCode).subscribe(
-                        cities => {
-                            cities.forEach(element => {
-                                const el = element;
-                                if (this.cities.length === 0) {
-                                    this.cities.push(element);
-                                } else if (this.cities.some(val => val.nome === el.nome)) {
-                                    return;
-                                } else {
-                                    this.cities.push(element);
-                                    this.cities.sort((a, b) => a.nome.localeCompare(b.nome));
-                                }
-                            });
-                            this.loading = false;
-                        },
-                        () => {
-                            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-                            this.loading = false;
-                        }
-                    );
+    linkRoutes(linkName) {
+        switch (linkName) {
+            case 'Principal': {
+                this.router.navigate(['/']);
+                break;
+            }
+            case 'Quem Somos': {
+                this.router.navigate(['/quem-somos']);
+                break;
+            }
+            case 'Cadastre-se grátis': {
+                this.router.navigate(['/register']);
+                break;
+            }
+            case 'Solicitar cotações': {
+                this.modalService.open('modal-cotacao');
+                break;
+            }
+            case 'Currículos': {
+                this.router.navigate(['/curriculum']);
+                break;
+            }
+            case 'Anúncios': {
+                this.router.navigate(['/anuncios']);
+                break;
+            }
+            case 'Contato': {
+                this.router.navigate(['/contato']);
+                break;
+            }
+            default: {
+                this.router.navigate(['/']);
+                break;
             }
         }
     }
 
-    showStatesModal() {
-        this.statesShowModal = true;
+    minhasInformacoes() {
+        this.router.navigate([`informacoes`]);
+        this.verPerfilMode = !this.verPerfilMode;
     }
 
-    // method that select a city
-    selectCityModal(city) {
-        this.cityClickedModal = city;
-        this.citiesShowModal = false;
-        this.searchCity = city;
-        if (this.cityTags.includes(city) === false) {this.cityTags.push(city); }
+    // tel field mask
+    onKeyTel(event: any) {
+        event.target.value = event.target.value.replace( /\D/g , ''); // Remove tudo o que não é dígito
+        event.target.value = event.target.value.replace( /(\d{0})(\d)/ , '$1($2'); // Coloca um ponto entre o segundo e o terceiro dígitos
+        event.target.value = event.target.value.replace( /(\d{2})(\d)/ , '$1) $2'); // Coloca um ponto entre o segundo e o terceiro dígitos
+        event.target.value = event.target.value.replace( /(\d{4})(\d)/ , '$1-$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
     }
 
-    // method that select a state
-    selectStateModal(state) {
-        this.stateClickedModal = state;
-        this.stateSelectedModal = state;
-        if (this.stateTags.includes(state) === false) {this.stateTags.push(state); }
-        this.statesShowModal = false;
-        this.populateCities();
-    }
-
-    // remove state tag in Modal
-    removeStateModal(state) {
-        this.stateTags = this.stateTags.filter( val => val !== state);
-        if (this.stateTags.length === 0) { this.stateSelectedModal = undefined; }
-        this.removeCities(state);
-    }
-
-    removeCities(state) {
-        const stateCode = CITYCODE[state];
-        if (stateCode) {
-            this.loading = true;
-            this.citiesService.getCities(stateCode).subscribe(
-                    cities => {
-                        cities.forEach(element => {
-                            this.cities = this.cities.filter(val => val.nome !== element.nome);
-                        });
-                        this.loading = false;
-                    },
-                    () => {
-                        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-                        this.loading = false;
-                    }
-                );
-        }
-    }
-
-    // remove city tag in Modal
-    removeCityModal(city) {
-        this.cityTags = this.cityTags.filter( val => val !== city);
+    // cel field mask
+    onKeyCel(event: any) {
+        event.target.value = event.target.value.replace( /\D/g , ''); // Remove tudo o que não é dígito
+        event.target.value = event.target.value.replace( /(\d{0})(\d)/ , '$1($2'); // Coloca um ponto entre o segundo e o terceiro dígitos
+        event.target.value = event.target.value.replace( /(\d{2})(\d)/ , '$1) $2'); // Coloca um ponto entre o segundo e o terceiro dígitos
+        event.target.value = event.target.value.replace( /(\d{5})(\d)/ , '$1-$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
     }
 
     // sends cotacao data to api server
@@ -335,69 +336,6 @@ export class HeaderComponent {
             );
     }
 
-    // send user id, person type and token via route parameters to dashboard components and set dashboard mode
-    enterDash(data, id) {
-        this.loading = false;
-        this.user = {
-            id: data.user.id,
-            personType: data.user.tipo_pessoa,
-            token: data.token
-        };
-        window.localStorage.setItem('user_rede_credenciados', JSON.stringify(this.user));
-        if (data.user.email_verified_at !== null && (data.user.admin === 0 || data.user.admin === '0')) {
-            this.router.navigate([`dashboard/minhas-informacoes`]);
-            this.dashboardMode = true;
-            if (id) { this.modalService.close(id); }
-        } else if (data.user.email_verified_at !== null && (data.user.admin === 1 || data.user.admin === '1')) {
-            this.router.navigate([`dashboard-admin/credenciados`]);
-            this.dashboardMode = true;
-            this.adminMode = true;
-            this.verPerfilMode = false;
-            if (id) { this.modalService.close(id); }
-        } else if (data.user.email_verified_at === null) {
-            this.userIdEmailService.passEmailAndId(data.user.id, data.user.email);
-            this.router.navigate([{ outlets: { verified: ['email-verified'] }}]);
-        } else {
-            this.router.navigate([{ outlets: { popup: ['compose'] }}]);
-        }
-    }
-
-    minhasInformacoes() {
-        this.router.navigate([`informacoes`]);
-        this.verPerfilMode = !this.verPerfilMode;
-    }
-
-    // method that show jobs
-    showJobs() {
-        this.loading = true;
-        this.activityService.all().subscribe(
-                activityList => {
-                    activityList.map(item => this.jobsFull.push(item));
-                    this.loading = false;
-                },
-                () => {
-                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-                    this.loading = false;
-                }
-            );
-        this.jobListShow = !this.jobListShow;
-    }
-
-    // method that select a job
-    selectJob(job) {
-        this.jobClicked = job;
-        this.jobListShow = false;
-    }
-
-    // exit from dashboard component
-    exit() {
-        this.dashboardMode = false;
-        this.adminMode = false;
-        this.verPerfilMode = false;
-        window.localStorage.clear();
-        this.router.navigate(['/']);
-    }
-
     onResetPasswordSubmit(id: string) {
         if (this.resetPasswordForm.valid) {
             if ((this.resetPasswordForm.value.password !==
@@ -433,61 +371,124 @@ export class HeaderComponent {
         }
     }
 
-    forgetPassword(id) {
-        this.modalService.close(id);
-        this.router.navigate(['/forget-password-email']);
+    openModal(id: string) {
+        this.modalService.open(id);
     }
 
-    linkRoutes(linkName) {
-        switch (linkName) {
-            case 'Principal': {
-                this.router.navigate(['/']);
-                break;
-            }
-            case 'Quem Somos': {
-                this.router.navigate(['/quem-somos']);
-                break;
-            }
-            case 'Cadastre-se grátis': {
-                this.router.navigate(['/register']);
-                break;
-            }
-            case 'Solicitar cotações': {
-                this.modalService.open('modal-cotacao');
-                break;
-            }
-            case 'Currículos': {
-                this.router.navigate(['/curriculum']);
-                break;
-            }
-            case 'Anúncios': {
-                this.router.navigate(['/anuncios']);
-                break;
-            }
-            case 'Contato': {
-                this.router.navigate(['/contato']);
-                break;
-            }
-            default: {
-                this.router.navigate(['/']);
-                break;
+    // method that populates cities div in Modal
+    populateCities() {
+        if (this.stateSelectedModal === undefined) {
+            window.alert('Selecione um Estado');
+        } else {
+            const stateCode = CITYCODE[this.stateSelectedModal];
+            if (stateCode) {
+                this.loading = true;
+                this.citiesService.getCities(stateCode).subscribe(
+                        cities => {
+                            cities.forEach(element => {
+                                const el = element;
+                                if (this.cities.length === 0) {
+                                    this.cities.push(element);
+                                } else if (this.cities.some(val => val.nome === el.nome)) {
+                                    return;
+                                } else {
+                                    this.cities.push(element);
+                                    this.cities.sort((a, b) => a.nome.localeCompare(b.nome));
+                                }
+                            });
+                            this.loading = false;
+                        },
+                        () => {
+                            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                            this.loading = false;
+                        }
+                    );
             }
         }
     }
 
-    // tel field mask
-    onKeyTel(event: any) {
-        event.target.value = event.target.value.replace( /\D/g , ''); // Remove tudo o que não é dígito
-        event.target.value = event.target.value.replace( /(\d{0})(\d)/ , '$1($2'); // Coloca um ponto entre o segundo e o terceiro dígitos
-        event.target.value = event.target.value.replace( /(\d{2})(\d)/ , '$1) $2'); // Coloca um ponto entre o segundo e o terceiro dígitos
-        event.target.value = event.target.value.replace( /(\d{4})(\d)/ , '$1-$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
+    // remove state tag in Modal
+    removeStateModal(state) {
+        this.stateTags = this.stateTags.filter( val => val !== state);
+        if (this.stateTags.length === 0) { this.stateSelectedModal = undefined; }
+        this.removeCities(state);
     }
 
-    // cel field mask
-    onKeyCel(event: any) {
-        event.target.value = event.target.value.replace( /\D/g , ''); // Remove tudo o que não é dígito
-        event.target.value = event.target.value.replace( /(\d{0})(\d)/ , '$1($2'); // Coloca um ponto entre o segundo e o terceiro dígitos
-        event.target.value = event.target.value.replace( /(\d{2})(\d)/ , '$1) $2'); // Coloca um ponto entre o segundo e o terceiro dígitos
-        event.target.value = event.target.value.replace( /(\d{5})(\d)/ , '$1-$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
+    removeCities(state) {
+        const stateCode = CITYCODE[state];
+        if (stateCode) {
+            this.loading = true;
+            this.citiesService.getCities(stateCode).subscribe(
+                    cities => {
+                        cities.forEach(element => {
+                            this.cityTags = this.cityTags.filter(val => val !== element.nome);
+                            this.cities = this.cities.filter(val => val.nome !== element.nome);
+                        });
+                        this.loading = false;
+                    },
+                    () => {
+                        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                        this.loading = false;
+                    }
+                );
+        }
+    }
+
+    // remove city tag in Modal
+    removeCityModal(city) {
+        this.cityTags = this.cityTags.filter( val => val !== city);
+    }
+
+    // method that populates cities div
+    showCities() {
+        if (this.stateSelectedModal === undefined) {
+            window.alert('Selecione um Estado');
+        } else {
+            this.citiesShowModal = true;
+            this.searchCity = '';
+        }
+    }
+
+    showStatesModal() {
+        this.statesShowModal = true;
+    }
+
+    // method that select a city
+    selectCityModal(city) {
+        this.cityClickedModal = city;
+        this.citiesShowModal = false;
+        this.searchCity = city;
+        if (this.cityTags.includes(city) === false) {this.cityTags.push(city); }
+    }
+
+    // method that select a state
+    selectStateModal(state) {
+        this.stateClickedModal = state;
+        this.stateSelectedModal = state;
+        if (this.stateTags.includes(state) === false) {this.stateTags.push(state); }
+        this.statesShowModal = false;
+        this.populateCities();
+    }
+
+    // method that show jobs
+    showJobs() {
+        this.loading = true;
+        this.activityService.all().subscribe(
+                activityList => {
+                    activityList.map(item => this.jobsFull.push(item));
+                    this.loading = false;
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                }
+            );
+        this.jobListShow = !this.jobListShow;
+    }
+
+    // method that select a job
+    selectJob(job) {
+        this.jobClicked = job;
+        this.jobListShow = false;
     }
 }
