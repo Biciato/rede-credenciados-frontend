@@ -10,6 +10,7 @@ import { LoginService } from '../services/login/login.service';
 import { ModalService } from '../services/modal/modal.service';
 import { PesquisaClientesService } from '../services/pesquisa-clientes/pesquisa-clientes.service';
 import { SimpleUserService } from '../services/simple-user/simple-user.service';
+import { UserIdAndEmailService } from '../services/user-id-email/user-email-id.service';
 
 import { Atividade } from '../models/atividade';
 import { CITYCODE } from '../models/city-code';
@@ -92,6 +93,7 @@ export class SectionComponent {
 
     tipoPessoa = '';
 
+    user: any;
     userIdsSide = [];
     userIdsTop = [];
 
@@ -117,7 +119,8 @@ export class SectionComponent {
         private pesClientService: PesquisaClientesService,
         private propService: PropagandaService,
         private router: Router,
-        private simpleUserService: SimpleUserService
+        private simpleUserService: SimpleUserService,
+        private userIdEmailService: UserIdAndEmailService
     ) {
         this.brStates = [
             'Rio de Janeiro',
@@ -240,20 +243,26 @@ export class SectionComponent {
     // sets header component dashboard mode through UIEvent call
     enterDash(data) {
         this.loading = false;
-        this.loginForm.reset();
-        const user = {
+        this.user = {
             id: data.user.id,
-            token: data.user.token
+            personType: data.user.tipo_pessoa,
+            token: data.token
         };
-        window.localStorage.setItem('user_rede_credenciados', JSON.stringify(user));
-        if (data.user.id && data.user.admin === 0 || data.user.admin === '0') {
-            this.router.navigate(['dashboard/minhas-informacoes']);
+        window.localStorage.setItem('user_rede_credenciados', JSON.stringify(this.user));
+        if (data.user.email_verified_at !== null && (data.user.admin === 0 || data.user.admin === '0')) {
+            this.router.navigate([`dashboard/minhas-informacoes`]);
             const event = new UIEvent('reset');
             window.dispatchEvent(event);
-        } else if (data.user.id && data.user.admin === 1 || data.user.admin === '1') {
+            this.loginForm.reset();
+        } else if (data.user.email_verified_at !== null && (data.user.admin === 1 || data.user.admin === '1')) {
             const event = new UIEvent('reset');
             window.dispatchEvent(event);
             this.router.navigate([`dashboard-admin/credenciados`]);
+            this.loginForm.reset();
+        } else if (data.user.email_verified_at === null) {
+            this.userIdEmailService.passEmailAndId(data.user.id, data.user.email);
+            this.router.navigate([{ outlets: { verified: ['email-verified'] }}]);
+            this.loginForm.reset();
         } else {
             this.router.navigate([{ outlets: { popup: ['compose'] }}]);
         }

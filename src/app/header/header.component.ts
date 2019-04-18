@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ActivityService } from '../services/activity/activity.service';
@@ -96,6 +96,7 @@ export class HeaderComponent {
         private location: Location,
         private loginService: LoginService,
         private modalService: ModalService,
+        private route: ActivatedRoute,
         private router: Router,
         private userIdEmailService: UserIdAndEmailService
     ) {
