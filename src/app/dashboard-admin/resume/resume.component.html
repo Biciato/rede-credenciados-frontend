@@ -1,0 +1,240 @@
+<main class="mt-3">
+  <div id="containerTelaInicial" class="container-fluid">
+    <section class="tela-inicial-section">
+      <!-- Cards da Vendas, INADIMPLENTES, Cartoes pendentes e Usuários -->
+      <div class="row">
+        <!--Card Vendas-->
+        <div class="col-md-3 mb-4">
+          <!--Card-->
+          <div class="card">
+            <!--Card Data-->
+            <div class="admin-up">
+              <i class="far fa-money-bill-alt"></i>
+              <div class="data">
+                <p>VENDAS PUBLICIDADE</p>
+                <h6 class="font-weight-bold dark-grey-text">R$ 2.000,00</h6>
+              </div>
+            </div>
+            <!--/.Card Data-->
+            <!--Card content-->
+            <div class="card-body card-body-cascade mt-5">
+              <div class="progress">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: 25%"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <!--Text-->
+              <p class="card-text">Relação ao mês passado</p>
+            </div>
+            <!--/.Card content-->
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Card Vendas-->
+        <!--Card INADIMPLENTES-->
+        <div class="col-md-3 mb-4">
+          <!--Card-->
+          <div class="card">
+            <!--Card Data-->
+            <div class="admin-up">
+              <i class="fas fa-chart-line" style="background-color: #fb3"></i>
+              <div class="data">
+                <p class="two-p">INADIMPLENTES</p>
+                <h4 class="two-p">200</h4>
+                <p class="two-p">EM VALOR</p>
+                <h6 class="two-p">R$ 1.500,00</h6>
+              </div>
+            </div>
+            <!--/.Card Data-->
+            <!--Card content-->
+            <div class="card-body card-body-cascade mt-3">
+              <div class="progress">
+                <div class="progress-bar red accent-2" role="progressbar"
+                  style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <!--Text-->
+              <p class="card-text">Relação ao mês passado</p>
+            </div>
+            <!--/.Card content-->
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Card INADIMPLENTES-->
+        <!--Card Cartoes Pendentes-->
+        <div class="col-md-3 mb-5">
+          <!--Card-->
+          <div class="card">
+            <!--Card Data-->
+            <div class="admin-up">
+              <i class="fas fa-chart-pie light-blue lighten-1" style="background-color: #29b6f6"></i>
+              <div class="data">
+                <p>TOTAL DE CREDENCIADOS</p>
+                <h4 class="two-p">20.000</h4>
+                <p class="two-p">CADASTROS MÊS VIGENTE</p>
+                <h6 class="two-p" style="margin-block-end: 0.5em">100</h6>
+              </div>
+            </div>
+            <!--/.Card Data-->
+            <!--Card content-->
+            <div class="card-body card-body-cascade mt-3">
+              <div class="progress">
+                <div class="progress-bar red accent-2" role="progressbar" style="width: 75%"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <p class="card-text">Relação ao mês passado</p>
+            </div>
+            <!--/.Card content-->
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Card Cartoes Pendentes-->
+      </div>
+      <!-- Cards da Vendas, INADIMPLENTES, Cartoes pendentes e Usuários -->
+    </section>
+    <div style="height: 5px"></div>
+    <section class="vendas">
+      <!--Card de Vendas e gráficos de Vendas-->
+      <div class="card">
+        <!--Section: Chart-->
+        <section>
+          <!--Grid row-->
+          <div class="row">
+            <!--Coluna dos dados sobre Vendas-->
+            <div class="col-md-6">
+              <!--Card Header-->
+              <div class="view view-cascade gradient-card-header light-blue lighten-1">
+                <h2 class="h2-responsive mb-0">Vendas</h2>
+              </div>
+              <!--/Card header-->
+              <!--Card content-->
+              <div class="card-body card-body-cascade pb-0">
+                <!--Panel data-->
+                <div class="row card-body pt-3">
+                  <!--First column-->
+                  <div class="col-md-6">
+                      <!--Date select-->
+                      <p class="lead"><span class="badge info-color p-2">Intervalo de Dados</span></p>
+                      <select class="mdb-select colorful-select dropdown-info">
+                      <option value="" disabled selected>Escolher período</option>
+                      <option value="1">Hoje</option>
+                      <option value="2">Ontem</option>
+                      <option value="3">Última semana</option>
+                      <option value="3">Último mês</option>
+                  </select>
+                    <!--Date pickers-->
+                    <p class="lead mt-5"><span class="badge info-color p-2">Data específica</span></p>
+                    <br>
+                    <div class="md-form">
+                      <input placeholder="Selecionar data" type="text" id="from" class="form-control datepicker">
+                      <label for="date-picker-example">De</label>
+                    </div>
+                    <div class="md-form">
+                      <input placeholder="Selecionar data" type="text" id="to" class="form-control datepicker">
+                      <label for="date-picker-example">Até</label>
+                    </div>
+                  </div>
+                  <!--/First column-->
+                  <!--Second column-->
+                  <div class="col-md-6 text-center">
+                    <!--Summary-->
+                    <p>Total vendas: <strong>R$ 2000</strong>
+                    <p>Média vendas: <strong> R$ 100</strong></p>
+                    <!--Summary-->
+                    <!--Change chart-->
+                    <span class="min-chart my-4" id="chartSales" data-percent="76"><span class="percent"></span></span>
+                    <h5>
+                      <span class="badge red accent-2 p-2">Mudar <i class="fa fa-arrow-circle-up ml-1"></i></span>
+                    </h5>
+                    <!--Change chart-->
+                  </div>
+                  <!--/Second column-->
+                </div>
+                <!--/Panel data-->
+              </div>
+              <!--/.Card content-->
+            </div>
+            <!--Coluna dos dados sobre Vendas-->
+            <!--Coluna do gráfico-->
+            <div class="col-md-6">
+              <!--Card image-->
+              <div id="chartView" class="view view-cascade gradient-card-header blue-gradient">
+                <!-- Chart -->
+                <canvas id="lineChart" ></canvas>
+            </div>
+              <!--/Card image-->
+            </div>
+            <!--Coluna do gráfico-->
+          </div>
+          <!--Grid row-->
+        </section>
+        <!--Section: Chart-->
+      </div>
+      <!--Card de Vendas e gráficos de Vendas-->
+    </section>
+    <div style="height: 5px"></div>
+    <section class="tela-inicial-section">
+      <div class="row">
+        <div class="col-md-6">
+          <!--Card da tabela da Porcentagem dos Bairros-->
+          <div class="card">
+            <div class="card-body">
+              <!--Tabela Bairros-->
+              <table class="table large-header">
+                <thead>
+                  <tr class="text-center">
+                    <th class="font-weight-bold dark-grey-text"><strong>Bairro</strong></th>
+                    <th class="font-weight-bold dark-grey-text"><strong>Quantidade</strong></th>
+                    <th class="font-weight-bold dark-grey-text"><strong>Porcentagem</strong></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center">
+                    <td>Pq. Novo Mundo</td>
+                    <td>15</td>
+                    <td>30%</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>Centro</td>
+                    <td>32</td>
+                    <td>43%</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>São Vito</td>
+                    <td>41</td>
+                    <td>35%</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>Werner Plaas</td>
+                    <td>14</td>
+                    <td>20%</td>
+                  </tr>
+                  <tr class="text-center">
+                    <td>Jd. São Paulo</td>
+                    <td>24</td>
+                    <td>314</td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--Tabela Bairros-->
+              <!--Botao Relatorio-->
+              <button class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold dark-grey-text">Relatório Completo</button>
+              <!--Botao Relatorio-->
+            </div>
+          </div>
+          <!--Card da tabela da Porcentagem dos Bairros-->
+        </div>
+        <div class="col-md-6">
+          <!--Card do Gráfico das idades-->
+          <div class="card" id="cardUsuarios">
+            <div class="card-body">
+              <h4 class="h4-responsive text-center mb-3">
+                Idade dos Usuários
+              </h4>
+              <canvas id="doughnutChart"></canvas>
+            </div>
+          </div>
+          <!--Card do Gráfico das idades-->
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

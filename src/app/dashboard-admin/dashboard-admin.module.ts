@@ -10,6 +10,13 @@ import { SidenavAdminComponent } from './sidenav-admin/sidenav-admin.component';
 import { EspecialidadesComponent } from './especialidades/especialidades.component';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
+import { ResumeComponent } from './resume/resume.component';
+import { CommunicationComponent } from './communication/communication.component';
+import { MessagesAdminComponent } from './messages-admin/messages-admin.component';
+import { FinancialComponent } from './financial/financial.component';
+import { MyInfoComponent } from './my-info/my-info.component';
+import { ClientsComponent } from './clients/clients.component';
+import { ResumeIndicationComponent } from './resume-indication/resume-indication.component';
 
 @NgModule({
   imports: [
@@ -24,7 +31,14 @@ import { SlideShowComponent } from './slide-show/slide-show.component';
       SidenavAdminComponent,
       EspecialidadesComponent,
       NewsletterComponent,
-      SlideShowComponent
+      SlideShowComponent,
+      ResumeComponent,
+      CommunicationComponent,
+      MessagesAdminComponent,
+      FinancialComponent,
+      MyInfoComponent,
+      ClientsComponent,
+      ResumeIndicationComponent
   ],
   exports: [
       CredenciadosComponent,

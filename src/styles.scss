@@ -110,9 +110,9 @@ h3 {
     margin: 1em;
 }
 
-.group { 
-    position: relative; 
-    margin-bottom: 45px; 
+.group {
+    position: relative;
+    margin-bottom: 45px;
     margin-right: 2em;
 
     .dropdown {
@@ -151,13 +151,13 @@ h3 {
     }
 
     label, .input-empty ~ label {
-        color:#999; 
+        color:#999;
         font-size: 0.9vw;
         font-weight:normal;
         position:absolute;
         pointer-events:none;
         top: -0.5vw;
-        transition:0.2s ease all; 
+        transition:0.2s ease all;
     }
 
     input:focus ~ label, textarea:focus ~ label {
@@ -169,23 +169,23 @@ h3 {
     .input-not-empty {
         top:-20px;
         font-size:0.6vw;
-        color: #999; 
+        color: #999;
     }
 
     /* BOTTOM BARS ================================= */
-    .bar { 
-        position: relative; 
-        display: block; 
-        width: 100%; 
+    .bar {
+        position: relative;
+        display: block;
+        width: 100%;
     }
     .bar:before, .bar:after {
         content:'';
-        height:2px; 
+        height:2px;
         width:0;
-        bottom:1px; 
+        bottom:1px;
         position:absolute;
-        background:#5264AE; 
-        transition:0.2s ease all; 
+        background:#5264AE;
+        transition:0.2s ease all;
     }
     .bar:before { left:50%; }
     .bar:after { right:50%; }
@@ -196,9 +196,9 @@ h3 {
     /* HIGHLIGHTER ================================== */
     .highlight {
         position:absolute;
-        height:60%; 
-        width:100px; 
-        top:25%; 
+        height:60%;
+        width:100px;
+        top:25%;
         left:0;
         pointer-events:none;
         opacity:0.5;
@@ -233,7 +233,7 @@ h3 {
         max-width: auto;
         margin: auto;
     }
-    
+
     &::before {
         /*
         The shadow/backdrop which also is clickable to close the modal.
