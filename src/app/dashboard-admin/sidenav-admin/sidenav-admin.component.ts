@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
         <section>
             <!-- Links Sidenav List -->
             <ul>
-                <li [routerLink]="['/dashboard-admin/resumo']"><i class="fas fa-chart-bar"></i>Resume</li>
+                <li [routerLink]="['/dashboard-admin/resumo']"><i class="fas fa-chart-bar"></i>Resumo</li>
                 <li [routerLink]="['/dashboard-admin/minhas-informações']"><i class="fas fa-user"></i>Minhas Informações</li>
                 <li [routerLink]="['/dashboard-admin/clientes']"><i class="fas fa-users"></i>Clientes</li>
                 <li [routerLink]="['/dashboard-admin/credenciados']"><i class="fas fa-id-card-alt"></i>Credenciados</li>

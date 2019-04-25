@@ -12,7 +12,6 @@ import { MyAdsComponent } from './my-ads/my-ads.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { UnityInformationComponent } from './unity-information/unity-information.component';
 import { UnityRegisterComponent } from './unity-information/unity-register.component';
-import { UserDataFormsComponent } from '../user-data-forms/user-data-forms.component';
 import { UserInformationComponent } from './user-information/user-information.component';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { UserInformationComponent } from './user-information/user-information.co
         SidenavComponent,
         UnityInformationComponent,
         UnityRegisterComponent,
-        UserDataFormsComponent,
         UserInformationComponent
     ],
     declarations: [
@@ -43,7 +41,6 @@ import { UserInformationComponent } from './user-information/user-information.co
         SidenavComponent,
         UnityInformationComponent,
         UnityRegisterComponent,
-        UserDataFormsComponent,
         UserInformationComponent
     ],
     providers: [],

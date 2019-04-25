@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -62,7 +62,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     DashboardModule,
     DashboardAdminModule,
     FormsModule,
@@ -70,7 +69,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     SectionModule,
     SharedModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

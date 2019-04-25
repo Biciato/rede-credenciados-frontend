@@ -113,24 +113,27 @@
                   <div class="col-md-6">
                       <!--Date select-->
                       <p class="lead"><span class="badge info-color p-2">Intervalo de Dados</span></p>
-                      <select class="mdb-select colorful-select dropdown-info">
-                      <option value="" disabled selected>Escolher período</option>
-                      <option value="1">Hoje</option>
-                      <option value="2">Ontem</option>
-                      <option value="3">Última semana</option>
-                      <option value="3">Último mês</option>
-                  </select>
-                    <!--Date pickers-->
-                    <p class="lead mt-5"><span class="badge info-color p-2">Data específica</span></p>
-                    <br>
-                    <div class="md-form">
-                      <input placeholder="Selecionar data" type="text" id="from" class="form-control datepicker">
-                      <label for="date-picker-example">De</label>
-                    </div>
-                    <div class="md-form">
-                      <input placeholder="Selecionar data" type="text" id="to" class="form-control datepicker">
-                      <label for="date-picker-example">Até</label>
-                    </div>
+                      <mat-form-field>
+                        <mat-label>Escolher período</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let period of periods" [value]="period">
+                            {{period}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <!--Date pickers-->
+                      <p class="lead mt-5"><span class="badge info-color p-2">Data específica</span></p>
+                      <br>
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" placeholder="Selecionar data">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker2" placeholder="Selecionar data">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                      </mat-form-field>
                   </div>
                   <!--/First column-->
                   <!--Second column-->
@@ -141,9 +144,11 @@
                     <!--Summary-->
                     <!--Change chart-->
                     <span class="min-chart my-4" id="chartSales" data-percent="76"><span class="percent"></span></span>
-                    <h5>
-                      <span class="badge red accent-2 p-2">Mudar <i class="fa fa-arrow-circle-up ml-1"></i></span>
-                    </h5>
+                    <mat-chip-list>
+                        <mat-chip color="accent">Mudar</mat-chip>
+                    </mat-chip-list>
+
+
                     <!--Change chart-->
                   </div>
                   <!--/Second column-->
@@ -158,7 +163,15 @@
               <!--Card image-->
               <div id="chartView" class="view view-cascade gradient-card-header blue-gradient">
                 <!-- Chart -->
-                <canvas id="lineChart" ></canvas>
+                <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins">
+                </canvas>
             </div>
               <!--/Card image-->
             </div>
@@ -173,65 +186,69 @@
     <div style="height: 5px"></div>
     <section class="tela-inicial-section">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="table">
           <!--Card da tabela da Porcentagem dos Bairros-->
-          <div class="card">
-            <div class="card-body">
+          <mat-card>
+            <mat-card-content>
               <!--Tabela Bairros-->
-              <table class="table large-header">
-                <thead>
-                  <tr class="text-center">
-                    <th class="font-weight-bold dark-grey-text"><strong>Bairro</strong></th>
-                    <th class="font-weight-bold dark-grey-text"><strong>Quantidade</strong></th>
-                    <th class="font-weight-bold dark-grey-text"><strong>Porcentagem</strong></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="text-center">
-                    <td>Pq. Novo Mundo</td>
-                    <td>15</td>
-                    <td>30%</td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>Centro</td>
-                    <td>32</td>
-                    <td>43%</td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>São Vito</td>
-                    <td>41</td>
-                    <td>35%</td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>Werner Plaas</td>
-                    <td>14</td>
-                    <td>20%</td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>Jd. São Paulo</td>
-                    <td>24</td>
-                    <td>314</td>
-                  </tr>
-                </tbody>
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                multiTemplateDataRows
+                matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                  <th mat-header-cell *matHeaderCellDef> Weight </th>
+                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                  <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
               <!--Tabela Bairros-->
               <!--Botao Relatorio-->
-              <button class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold dark-grey-text">Relatório Completo</button>
+              <br>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              <br>
+              <button mat-raised-button color="primary">Relatório Completo</button>
               <!--Botao Relatorio-->
-            </div>
-          </div>
+            </mat-card-content>
+          </mat-card>
           <!--Card da tabela da Porcentagem dos Bairros-->
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="canvas-rosca">
           <!--Card do Gráfico das idades-->
-          <div class="card" id="cardUsuarios">
-            <div class="card-body">
-              <h4 class="h4-responsive text-center mb-3">
-                Idade dos Usuários
-              </h4>
-              <canvas id="doughnutChart"></canvas>
-            </div>
-          </div>
+          <mat-card>
+            <mat-card-content>
+              <mat-card-header>
+                <mat-card-title class="title">Idade dos Usuários</mat-card-title>
+              </mat-card-header>
+              <canvas baseChart width="572" height="305"
+                  [data]="doughnutChartData"
+                  [labels]="doughnutChartLabels"
+                  [chartType]="doughnutChartType">
+                </canvas>
+            </mat-card-content>
+          </mat-card>
           <!--Card do Gráfico das idades-->
         </div>
       </div>
