@@ -13,4 +13,8 @@ export class SimpleUserService {
     show(id) {
         return this.http.get(this.baseUrl + '/user-propaganda/' + id);
     }
+
+    index() {
+        return this.http.get(this.baseUrl + '/user-propagandas');
+    }
 }

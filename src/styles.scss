@@ -204,6 +204,10 @@ h3 {
         left:0;
         pointer-events:none;
         opacity:0.5;
+        i {
+            margin-left: 140%;
+            cursor: pointer;
+        }
     }
 
     /* active state */

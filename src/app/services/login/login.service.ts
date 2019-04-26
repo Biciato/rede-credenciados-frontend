@@ -22,7 +22,6 @@ export class LoginService {
     }
 
     resetPassword(id, password, token) {
-      console.log(token);
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json',
@@ -34,6 +33,16 @@ export class LoginService {
 
     dashEnter() {
         this.dsMode.emit(true);
+    }
+
+    getUser(id, token) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json',
+              'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(this.baseUrl + '/user/' + id, httpOptions);
     }
 
     sendEmail(id, email) {
@@ -70,5 +79,15 @@ export class LoginService {
 
     getUserEmailAndId() {
         return this.userEmailAndIdSrc.asObservable();
+    }
+
+    updateUser(user, id, token) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json',
+              'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.put(this.baseUrl + '/user/' + id, user, httpOptions);
     }
 }

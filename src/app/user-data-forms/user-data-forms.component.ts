@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AtividadesComponent } from '../atividades/atividades.component';
 
@@ -23,6 +23,7 @@ import { ABVR_ESTADO_INVERSO } from '../models/abreviacao-estados';
 
 import { stateValidator } from '../validators/state.validator';
 import { rgValidator } from '../validators/rg.validator';
+import { LoginService } from '../services/login/login.service';
 
 @Component({
     selector: 'app-user-data-forms',
@@ -91,6 +92,14 @@ export class UserDataFormsComponent implements OnInit {
             stateValidator()], updateOn: 'blur' } ),
     });
 
+    // Initiating login form group
+    loginForm = new FormGroup({
+        login: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+            Validators.email], updateOn: 'blur' }),
+        password: new FormControl({ value: '', disabled: true}, { validators:
+            [Validators.required, Validators.minLength(6)]}),
+    });
+
     brStates = [
         'Rio de Janeiro',
         'Rondonia',
@@ -138,8 +147,11 @@ export class UserDataFormsComponent implements OnInit {
     jobsFull = [];
     jobTags: Array<Atividade>;
 
+    isAdmin: boolean;
+
     loading = false;
 
+    passwordTypeInput = 'password';
     pessoaFisica: PessoaFisica;
     pessoaJuridica: PessoaJuridica;
 
@@ -161,6 +173,7 @@ export class UserDataFormsComponent implements OnInit {
         private actService: ActivityService,
         private addrService: AddressService,
         private cepService: CEPService,
+        private loginService: LoginService,
         private modalService: ModalService,
         private pfService: PessoaFisicaService,
         private pjService: PessoaJuridicaService,
@@ -173,6 +186,14 @@ export class UserDataFormsComponent implements OnInit {
     ngOnInit() {
         // sets person type, user id and token from route parameters
         this.user = JSON.parse(window.localStorage.getItem('user_rede_credenciados'));
+        if (window.location.href.includes('dashboard-admin')) {
+            this.isAdmin = true;
+            this.loginService.getUser(this.user.id, this.user.token)
+                .subscribe((user) => this.setValuesOnLoginForm(user), () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                });
+        }
 
         // gets pf or pj acordingly to person type prop
         if (this.user.personType === 'pessoa_fisica') {
@@ -229,121 +250,107 @@ export class UserDataFormsComponent implements OnInit {
 
     get resume() { return this.resumeForm.get('resume'); }
 
-    // sets values on pf form and gets address, resume and activities datas
-    setValuesOnPfForm(pessoaFisica) {
-        this.count = 0;
-        if (pessoaFisica) {
-            this.pessoaFisica = pessoaFisica;
-            this.addrService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
-                .subscribe((endereco => this.setValuesOnAddressForm(endereco)));
-            this.resService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
-                .subscribe(resume => this.setValuesOnResumeForm(resume));
-            this.actService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
-                .subscribe(data => this.showAtividadesList(data.atividades));
-            this.pessoaFisicaForm.setValue({
-                cpf: this.pessoaFisica.cpf,
-                rg: this.pessoaFisica.rg || '',
-                nascimento: this.pessoaFisica.nascimento || '',
-                sexo: this.pessoaFisica.sexo,
-                idade: this.calcIdade(this.pessoaFisica.nascimento) || '',
-                nome: this.pessoaFisica.nome,
-                email: this.pessoaFisica.email,
-                email2: this.pessoaFisica.email2 || '',
-                tel: this.pessoaFisica.tel || '',
-                tel2: this.pessoaFisica.tel2 || '',
-                cel: this.pessoaFisica.cel || '',
-                cel2: this.pessoaFisica.cel2 || ''
-            });
-            const el = document.getElementById('idade') as HTMLInputElement;
-            if (el.value !== '') {
-                el.value = this.calcIdade(this.pessoaFisica.nascimento).toString();
+    get login() { return this.loginForm.get('login'); }
+    get password() { return this.loginForm.get('password'); }
+
+    // calculates age through date data from api server
+    calcIdade(data) {
+        if (data) {
+            const d = new Date();
+            const anoAtual = d.getFullYear();
+            const mesAtual = d.getMonth() + 1;
+            const diaAtual = d.getDate();
+            const split = data.split('/');
+            const novadata = split[1] + '/' + split[0] + '/' + split[2];
+            const dataAmericana = new Date(novadata);
+            const vAno = dataAmericana.getFullYear();
+            const vMes = dataAmericana.getMonth() + 1;
+            const vDia = dataAmericana.getDate();
+            const anoAniversario = +vAno;
+            const mesAniversario = +vMes;
+            const diaAniversario = +vDia;
+            let quantosAnos = anoAtual - anoAniversario;
+            if (mesAtual < mesAniversario || mesAtual === mesAniversario && diaAtual < diaAniversario) {
+                quantosAnos--;
             }
-        } else {
-            this.loading = false;
+            return quantosAnos < 0 ? 0 : quantosAnos;
         }
     }
 
-    openModal(id) {
-        this.modalService.open(id);
+    changePasswordInputType(type) {
+        this.passwordTypeInput = type;
+    }
+
+    checkEmail() {
+        this.loading = true;
+        let email: string;
+        if (this.isAdmin === true) {
+            email = this.loginForm.value.login;
+        } else if (this.user.personType === 'pessoa_fisica') {
+            email = this.pessoaFisicaForm.value.email;
+        } else if (this.user.personType === 'pessoa_juridica'){
+            email = this.pessoaJuridicaForm.value.email;
+        }
+        this.registerService.checkUserEmail(email)
+            .subscribe(
+                (data) => {
+                    (Object.entries(data).length === 0) &&
+                    (data.constructor === Object) ||
+                    (data && data.email === email) ? this.emailValidation(email) :
+                        this.openModal('modal-invalid-email');
+                    this.loading = false;
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                }
+            );
     }
 
     closeModal(id) {
         this.modalService.close(id);
     }
 
-    // sets values on pf form and gets address, resume and activities datas
-    setValuesOnPjForm(pessoaJuridica) {
-        if (pessoaJuridica) {
-            this.pessoaJuridica = pessoaJuridica;
-            this.addrService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
-                .subscribe((endereco => this.setValuesOnAddressForm(endereco)));
-            this.resService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
-                .subscribe(resume => this.setValuesOnResumeForm(resume));
-            this.actService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
-                .subscribe(data => this.showAtividadesList(data.atividades));
-            this.pessoaJuridicaForm.setValue({
-                razao_social: this.pessoaJuridica.razao_social,
-                nome_fantasia: this.pessoaJuridica.nome_fantasia,
-                cnpj: this.pessoaJuridica.cnpj,
-                nome_contato: this.pessoaJuridica.nome_contato,
-                email: this.pessoaJuridica.email,
-                email2: this.pessoaJuridica.email2 || '',
-                tel: this.pessoaJuridica.tel || '',
-                tel2: this.pessoaJuridica.tel2 || '',
-                cel: this.pessoaJuridica.cel || '',
-                cel2: this.pessoaJuridica.cel2 || ''
-            });
-        } else {
-            this.loading = false;
-        }
+    disableLoginForm() {
+        this.loginForm.disable();
     }
 
-    showAtividadesList(atividades) {
-        this.jobTags = atividades.split(',');
-        this.count++;
-        if (this.count === 3) { this.loading = false; }
+    disablePfForm() {
+        this.pessoaFisicaForm.disable();
     }
 
-    setValuesOnAddressForm(endereco) {
-        if (endereco) {
-            if (endereco.erro === true) {
-                return;
-            }
-            this.endereco = endereco;
-            this.addressForm.setValue({
-                cep: this.endereco.cep || '',
-                rua: this.endereco.rua || endereco.logradouro || '',
-                numero: this.endereco.numero || '',
-                complemento: this.endereco.complemento || '',
-                bairro: this.endereco.bairro || endereco.bairro || '',
-                cidade: this.endereco.cidade || endereco.localidade || '',
-                estado: this.endereco.estado || endereco.uf || '',
-            });
-            this.count++;
-            if (this.count === 3) { this.loading = false; }
-        } else {
-            this.loading = false;
-        }
+    disablePjForm() {
+        this.pessoaJuridicaForm.disable();
     }
 
-    setValuesOnResumeForm(resume) {
-        if (resume) {
-            this.resumeForm.setValue(resume.apresentacao);
-            if (this.count === 3) { this.loading = false; }
-        } else {
-            this.loading = false;
-        }
+    disableAddressForm() {
+        this.loading = false;
+        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
+        this.saveAddressBtn = false;
+        this.editAddressBtn = true;
+        this.addressForm.disable();
     }
 
-    selectState(state) {
-        this.addressForm.patchValue({estado: state}) ;
-        this.showStates = false;
+    disableResumeForm() {
+        this.loading = false;
+        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
+        this.saveResumeBtn = false;
+        this.editResumeBtn = true;
+        this.resumeForm.disable();
+    }
+
+    disableAtividadesForm() {
+        this.loading = false;
+        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
+        this.saveServicesBtn = false;
+        this.editServicesBtn = true;
     }
 
     // collections of functions that handles edit and save buttons
 
     editAddressForm() {
         this.addressForm.enable();
+        this.loginForm.enable();
         this.saveAddressBtn = true;
         this.editAddressBtn = false;
         if (this.user.personType === 'pessoa_fisica') {
@@ -373,9 +380,25 @@ export class UserDataFormsComponent implements OnInit {
 
     // end collections of functions that handles edit and save buttons
 
+    emailValidation(email) {
+        this.loading = true;
+        this.registerService.emailValidation({email})
+            .subscribe(
+                (data) => {
+                    data === true ? this.onAddressSubmit() : this.openModal('modal-email-validation');
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                }
+            );
+    }
+
     // sends address data to api server
     onAddressSubmit() {
-        if (this.addressForm.valid && (this.pessoaFisicaForm.valid || this.pessoaJuridicaForm.valid)) {
+        if (this.addressForm.valid &&
+            this.loginForm.valid &&
+            (this.pessoaFisicaForm.valid || this.pessoaJuridicaForm.valid)) {
             this.loading = true;
             if (this.addressForm.value.estado.length > 2) {
                 this.stateSelected = ABVR_ESTADO_INVERSO[this.addressForm.value.estado];
@@ -391,6 +414,11 @@ export class UserDataFormsComponent implements OnInit {
                 cidade: this.addressForm.value.cidade,
                 estado: this.stateSelected
             };
+            this.loginService.updateUser(this.loginForm.value, this.user.id, this.user.token)
+                .subscribe(() => this.disableAddressForm(), () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                });
             if (this.pessoaJuridica) {
                 this.addrService.update(this.pessoaJuridica.id, endereco,
                     this.user.personType, this.user.token)
@@ -419,6 +447,7 @@ export class UserDataFormsComponent implements OnInit {
                     });
             }
         } else {
+            console.log(this.loginForm);
             this.openModal('modal-validator');
         }
     }
@@ -472,50 +501,6 @@ export class UserDataFormsComponent implements OnInit {
             this.saveServicesBtn = false;
             this.editServicesBtn = true;
         }
-    }
-
-    // remove state tag
-    removeJob(job) {
-        this.jobTags.splice(job, 1);
-    }
-
-    disablePfForm() {
-        this.loading = false;
-        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
-        this.savePfButton = false;
-        this.editPfButton = true;
-        this.pessoaFisicaForm.disable();
-    }
-
-    disablePjForm() {
-        this.loading = false;
-        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
-        this.savePjButton = false;
-        this.editPjButton = true;
-        this.pessoaJuridicaForm.disable();
-    }
-
-    disableAddressForm() {
-        this.loading = false;
-        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
-        this.saveAddressBtn = false;
-        this.editAddressBtn = true;
-        this.addressForm.disable();
-    }
-
-    disableResumeForm() {
-        this.loading = false;
-        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
-        this.saveResumeBtn = false;
-        this.editResumeBtn = true;
-        this.resumeForm.disable();
-    }
-
-    disableAtividadesForm() {
-        this.loading = false;
-        this.router.navigate([{ outlets: { update: ['update-message'] }}]);
-        this.saveServicesBtn = false;
-        this.editServicesBtn = true;
     }
 
     // cnpj field mask
@@ -646,27 +631,124 @@ export class UserDataFormsComponent implements OnInit {
         }
     }
 
-    // calculates age through date data from api server
-    calcIdade(data) {
-        if (data) {
-            const d = new Date();
-            const anoAtual = d.getFullYear();
-            const mesAtual = d.getMonth() + 1;
-            const diaAtual = d.getDate();
-            const split = data.split('/');
-            const novadata = split[1] + '/' + split[0] + '/' + split[2];
-            const dataAmericana = new Date(novadata);
-            const vAno = dataAmericana.getFullYear();
-            const vMes = dataAmericana.getMonth() + 1;
-            const vDia = dataAmericana.getDate();
-            const anoAniversario = +vAno;
-            const mesAniversario = +vMes;
-            const diaAniversario = +vDia;
-            let quantosAnos = anoAtual - anoAniversario;
-            if (mesAtual < mesAniversario || mesAtual === mesAniversario && diaAtual < diaAniversario) {
-                quantosAnos--;
+    openModal(id) {
+        this.modalService.open(id);
+    }
+
+    // remove state tag
+    removeJob(job) {
+        this.jobTags.splice(job, 1);
+    }
+
+    // sets values on pf form and gets address, resume and activities datas
+    setValuesOnPfForm(pessoaFisica) {
+        this.count = 0;
+        if (pessoaFisica) {
+            this.pessoaFisica = pessoaFisica;
+            this.addrService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
+                .subscribe((endereco => this.setValuesOnAddressForm(endereco)));
+            this.resService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
+                .subscribe(resume => this.setValuesOnResumeForm(resume));
+            this.actService.get(this.pessoaFisica.id, this.user.personType, this.user.token)
+                .subscribe(data => this.showAtividadesList(data.atividades));
+            this.pessoaFisicaForm.setValue({
+                cpf: this.pessoaFisica.cpf,
+                rg: this.pessoaFisica.rg || '',
+                nascimento: this.pessoaFisica.nascimento || '',
+                sexo: this.pessoaFisica.sexo,
+                idade: this.calcIdade(this.pessoaFisica.nascimento) || '',
+                nome: this.pessoaFisica.nome,
+                email: this.pessoaFisica.email,
+                email2: this.pessoaFisica.email2 || '',
+                tel: this.pessoaFisica.tel || '',
+                tel2: this.pessoaFisica.tel2 || '',
+                cel: this.pessoaFisica.cel || '',
+                cel2: this.pessoaFisica.cel2 || ''
+            });
+            const el = document.getElementById('idade') as HTMLInputElement;
+            if (el.value !== '') {
+                el.value = this.calcIdade(this.pessoaFisica.nascimento).toString();
             }
-            return quantosAnos < 0 ? 0 : quantosAnos;
+        } else {
+            this.loading = false;
         }
+    }
+
+    setValuesOnLoginForm(user) {
+        if (user) {
+            this.loginForm.patchValue({
+                login: user.email,
+                password: this.user.password
+            })
+        }
+    }
+
+    // sets values on pf form and gets address, resume and activities datas
+    setValuesOnPjForm(pessoaJuridica) {
+        if (pessoaJuridica) {
+            this.pessoaJuridica = pessoaJuridica;
+            this.addrService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
+                .subscribe((endereco => this.setValuesOnAddressForm(endereco)));
+            this.resService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
+                .subscribe(resume => this.setValuesOnResumeForm(resume));
+            this.actService.get(this.pessoaJuridica.id, this.user.personType, this.user.token)
+                .subscribe(data => this.showAtividadesList(data.atividades));
+            this.pessoaJuridicaForm.setValue({
+                razao_social: this.pessoaJuridica.razao_social,
+                nome_fantasia: this.pessoaJuridica.nome_fantasia,
+                cnpj: this.pessoaJuridica.cnpj,
+                nome_contato: this.pessoaJuridica.nome_contato,
+                email: this.pessoaJuridica.email,
+                email2: this.pessoaJuridica.email2 || '',
+                tel: this.pessoaJuridica.tel || '',
+                tel2: this.pessoaJuridica.tel2 || '',
+                cel: this.pessoaJuridica.cel || '',
+                cel2: this.pessoaJuridica.cel2 || ''
+            });
+        } else {
+            this.loading = false;
+        }
+    }
+
+    showAtividadesList(atividades) {
+        this.jobTags = atividades.split(',');
+        this.count++;
+        if (this.count === 3) { this.loading = false; }
+    }
+
+    setValuesOnAddressForm(endereco) {
+        if (endereco) {
+            if (endereco.erro === true) {
+                return;
+            }
+            this.endereco = endereco;
+            this.addressForm.setValue({
+                cep: this.endereco.cep || '',
+                rua: this.endereco.rua || endereco.logradouro || '',
+                numero: this.endereco.numero || '',
+                complemento: this.endereco.complemento || '',
+                bairro: this.endereco.bairro || endereco.bairro || '',
+                cidade: this.endereco.cidade || endereco.localidade || '',
+                estado: this.endereco.estado || endereco.uf || '',
+            });
+            this.count++;
+            if (this.count === 3) { this.loading = false; }
+        } else {
+            this.loading = false;
+        }
+    }
+
+    setValuesOnResumeForm(resume) {
+        if (resume) {
+            this.resumeForm.setValue(resume.apresentacao);
+            if (this.count === 3) { this.loading = false; }
+        } else {
+            this.loading = false;
+        }
+    }
+
+    selectState(state) {
+        this.addressForm.patchValue({estado: state}) ;
+        this.showStates = false;
     }
 }

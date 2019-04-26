@@ -359,7 +359,7 @@
             <!-- Pf data form -->
             <h3 style="margin: 1em 0 1em 2em;">Endereço</h3>
             <!-- Address form -->
-            <form [formGroup]="addressForm" (ngSubmit)="onAddressSubmit()">
+            <form [formGroup]="addressForm">
 
                 <div class="group" style="width: 12%">
                     <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
@@ -470,16 +470,73 @@
                         </div>
                     </div>
                 </div>
+            </form>
 
-                <button *ngIf="saveAddressBtn" style="background-color: #5cb85c" class="rd-button-dash">SALVAR</button>
-                <button (click)="editAddressForm()" *ngIf="editAddressBtn" style="background-color: #33b5e5;"
-                    class="rd-button-dash">EDITAR</button>
+            <h3 style="margin: 1em 0 1em 2em;" *ngIf="isAdmin">Login</h3>
+
+            <form [formGroup]="loginForm" *ngIf="isAdmin" id="loginForm">
+                <div class="group" style="width: 20%">
+                    <input type="text" formControlName="login"
+                        (click)="showStates = true"
+                        (clickOutside)="showStates = false">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label [className]="login.value === '' ? 'input-empty' : 'input-not-empty'">
+                        Login
+                    </label>
+                    <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
+                        <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
+                    </div>
+                    <div *ngIf="login.invalid && (login.dirty || login.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="!!login.errors.required">
+                            *campo obrigatório.
+                        </div>
+                        <div *ngIf="!!login.errors.stateInvalid">
+                            *estado inválido.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group" style="width: 20%; margin-right: 0;">
+                    <input type="text" formControlName="password"
+                        [type]="passwordTypeInput"
+                        (click)="showStates = true"
+                        (clickOutside)="showStates = false">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+
+                    <label [className]="password.value === '' ? 'input-empty' : 'input-not-empty'">
+                        Senha
+                    </label>
+
+                    <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
+                        <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
+                    </div>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="!!password.errors.required">
+                            *campo obrigatório.
+                        </div>
+                        <div *ngIf="!!password.errors.stateInvalid">
+                            *estado inválido.
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-eye" *ngIf="passwordTypeInput === 'password'"
+                    (click)="changePasswordInputType('text')"></i>
+                <i class="fas fa-eye-slash" *ngIf="passwordTypeInput === 'text'"
+                    (click)="changePasswordInputType('password')"></i>
             </form>
             <!-- Address form -->
+            <button *ngIf="saveAddressBtn" style="background-color: #5cb85c" class="rd-button-dash"
+                (click)="checkEmail()">SALVAR</button>
+            <button (click)="editAddressForm()" *ngIf="editAddressBtn" style="background-color: #33b5e5;"
+                class="rd-button-dash">EDITAR</button>
         </div>
     </div>
     <!-- Card Services  -->
-    <div id="cardServices" class="card-dash">
+    <div id="cardServices" class="card-dash" *ngIf="!isAdmin">
         <div id="cardServicesHeader" class="card-header-dash">
             <h3>Serviços Prestados {{ user.personType === 'pessoa_fisica' ? 'pelo profissional' : 'pela Empresa' }} </h3>
         </div>
@@ -496,7 +553,7 @@
     </div>
     <!-- Card Services  -->
     <!-- Card Resume  -->
-    <div id="cardResume" class="card-dash">
+    <div id="cardResume" class="card-dash"  *ngIf="!isAdmin">
         <div id="cardResumeHeader" class="card-header-dash"><h3>Resumo, Informações Gerais, Apresentação, Descrição</h3></div>
         <div id="cardResumeBody" class="card-body-dash">
             <div class="group">
@@ -588,6 +645,10 @@
                 <li *ngIf="!!cidade.errors && !!cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
                 <li *ngIf="!!estado.errors && !!estado.errors.stateInvalid"><strong>Estado:</strong> inválido</li>
+                <li *ngIf="!!login.errors && !!login.errors.required"><strong>Login:</strong> campo obrigatório</li>
+                <li *ngIf="!!login.errors && !!login.errors.email"><strong>Login:</strong> formato inválido</li>
+                <li *ngIf="!!password.errors && !!password.errors.required"><strong>Password:</strong> campo obrigatório</li>
+                <li *ngIf="!!password.errors && !!password.errors.minlength"><strong>Password:</strong> mínimo 6 characteres</li>
                 <li *ngIf="!!resumeForm.errors && !!resumeForm.errors.required">
                     <strong>Apresentação:</strong> campo obrigatório
                 </li>
@@ -607,6 +668,19 @@
             <h3>Esse {{ cpfCnpj }} já existe em nossos cadastros</h3>
             <div id="simFooter">
                 <a (click)="closeModal('modal-validator-cpf-cnpj')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-invalid-email">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>Email inválido</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-invalid-email')"><i class="fas fa-times"></i>FECHAR</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,33 @@
+:host {
+    width: calc(100% - 281.64px);
+    max-height: 50rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+
+    .card-dash {
+        width: 74%;
+        .card-header-dash {
+            width: 96%;
+            margin-left: 2%;
+        }
+
+        .card-body-dash {
+
+            padding: 2em;
+
+            .group {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+i {
+    background-color: chocolate;
+    padding: 0.5%;
+    color: white;
+    border-radius: 5px;
+    margin-left: 0.5%;
+}
+

@@ -200,6 +200,8 @@ export class HeaderComponent {
             this.dashboardMode = true;
             this.adminMode = true;
             this.verPerfilMode = false;
+            this.user.password = this.loginForm.value.password;
+            window.localStorage.setItem('user_rede_credenciados', JSON.stringify(this.user));
             if (id) { this.modalService.close(id); }
         } else if (data.user.email_verified_at === null) {
             this.userIdEmailService.passEmailAndId(data.user.id, data.user.email);
