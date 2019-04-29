@@ -184,7 +184,7 @@ export class UserDataFormsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // sets person type, user id and token from route parameters
+        // sets person type, user id and token from local Storage
         this.user = JSON.parse(window.localStorage.getItem('user_rede_credenciados'));
         if (window.location.href.includes('dashboard-admin')) {
             this.isAdmin = true;

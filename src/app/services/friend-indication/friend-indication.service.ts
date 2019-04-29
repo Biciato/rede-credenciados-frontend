@@ -10,8 +10,16 @@ export class FriendIndicationService {
 
     constructor(private http: HttpClient) { }
 
+    create(indication) {
+        return this.http.post(this.baseUrl + '/friend-indication', indication);
+    }
+
+    index() {
+        return this.http.get(this.baseUrl + '/friend-indications');
+    }
+
     sendEmail(dados) {
-        return this.http.post(this.baseUrl + '/friend-indication', dados);
+        return this.http.post(this.baseUrl + '/friend-indication-email', dados);
     }
 
     sendSMS(dados) {

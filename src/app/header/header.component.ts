@@ -196,7 +196,7 @@ export class HeaderComponent {
             this.dashboardMode = true;
             if (id) { this.modalService.close(id); }
         } else if (data.user.email_verified_at !== null && (data.user.admin === 1 || data.user.admin === '1')) {
-            this.router.navigate([`dashboard-admin/credenciados`]);
+            this.router.navigate([`dashboard-admin/resumo`]);
             this.dashboardMode = true;
             this.adminMode = true;
             this.verPerfilMode = false;

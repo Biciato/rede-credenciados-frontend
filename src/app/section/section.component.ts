@@ -257,7 +257,7 @@ export class SectionComponent {
         } else if (data.user.email_verified_at !== null && (data.user.admin === 1 || data.user.admin === '1')) {
             const event = new UIEvent('reset');
             window.dispatchEvent(event);
-            this.router.navigate([`dashboard-admin/credenciados`]);
+            this.router.navigate([`dashboard-admin/resumo`]);
             this.loginForm.reset();
         } else if (data.user.email_verified_at === null) {
             this.userIdEmailService.passEmailAndId(data.user.id, data.user.email);

@@ -1,3 +1,44 @@
-<p>
-  messages-admin works!
-</p>
+<div id="cardPriceTab" class="card-dash" *ngIf="!registerFlag">
+    <!-- Card  Header -->
+    <div id="cardPriceTabHeader" class="card-header-dash"><h3>Enviar Mensagens</h3></div>
+    <!-- Card  Header -->
+    <!-- Card  Body -->
+    <div id="cardPriceTabBody" class="card-body-dash">
+        <div class="group">
+            <textarea type="text" [formControl]="mensagemInput"></textarea>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>
+                Mensagem
+            </label>
+        </div>
+        <div id="tags">
+            <span *ngFor="let jobTag of jobTags; let i = index">
+                {{ jobTag }}
+                <i class="fas fa-times" (click)="removeJob(i)"></i>
+            </span>
+        </div>
+        <mat-chip-list style="margin: 1rem auto">
+            <mat-chip color="primary" selected (click)="openModal('modal-atividades')"
+                style="cursor: pointer">
+                Filtrar Especialidades
+            </mat-chip>
+        </mat-chip-list>
+        <button mat-raised-button color="warn">ENVIAR</button>
+    </div>
+</div>
+
+<!-- Loading Status  -->
+<div class="my-container">
+    <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+        [template]="customLoadingTemplate"></ngx-loading>
+</div>
+<!-- Loading Status -->
+<app-modal id="modal-atividades">
+  <app-atividades></app-atividades>
+</app-modal>

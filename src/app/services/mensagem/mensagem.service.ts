@@ -12,6 +12,14 @@ export class MensagemService {
 
     constructor(private http: HttpClient) { }
 
+    create(message, token) {
+        const httpOptions = { headers: new HttpHeaders({
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        })};
+        return this.http.post(this.baseUrl + 'message', message, httpOptions);
+    }
+
     mensagensUser(id, token) {
         const httpOptions = { headers: new HttpHeaders({
             'Content-type': 'application/json',

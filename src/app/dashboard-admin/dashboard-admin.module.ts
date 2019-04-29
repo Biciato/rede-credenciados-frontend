@@ -13,10 +13,13 @@ import { SlideShowComponent } from './slide-show/slide-show.component';
 import { ResumeComponent } from './resume/resume.component';
 import { CommunicationComponent } from './communication/communication.component';
 import { MessagesAdminComponent } from './messages-admin/messages-admin.component';
-import { FinancialComponent } from './financial/financial.component';
 import { MyInfoComponent } from './my-info/my-info.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ResumeIndicationComponent } from './resume-indication/resume-indication.component';
+import { ToPayComponent } from './financial/to-pay/to-pay.component';
+import { ToReceiveComponent } from './financial/to-receive/to-receive.component';
+import { FluxComponent } from './financial/flux/flux.component';
+import { PayedUsedComponent } from './financial/payed-used/payed-used.component';
 
 @NgModule({
   imports: [
@@ -35,10 +38,13 @@ import { ResumeIndicationComponent } from './resume-indication/resume-indication
       ResumeComponent,
       CommunicationComponent,
       MessagesAdminComponent,
-      FinancialComponent,
       MyInfoComponent,
       ClientsComponent,
-      ResumeIndicationComponent
+      ResumeIndicationComponent,
+      ToPayComponent,
+      ToReceiveComponent,
+      FluxComponent,
+      PayedUsedComponent
   ],
   exports: [
       CredenciadosComponent,

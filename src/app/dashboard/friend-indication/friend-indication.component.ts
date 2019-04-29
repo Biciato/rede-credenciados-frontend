@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 import { FriendIndicationService } from '../../services/friend-indication/friend-indication.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
+import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
+import { PessoaJuridicaService } from 'src/app/services/pessoa-juridica/pessoa-juridica.service';
+import { AddressService } from 'src/app/services/address/address.service';
 
 @Component({
     selector: 'app-friend-indication',
@@ -44,10 +47,44 @@ export class FriendIndicationComponent implements OnInit {
 
     whatFormFlag = false;
 
+    user: any;
+    userAddress: any;
+    userTypePerson: any;
+
     constructor(private frieIndService: FriendIndicationService, private modalService: ModalService,
-                private router: Router) { }
+                private router: Router, private pfService: PessoaFisicaService,
+                private pjService: PessoaJuridicaService, private addrService: AddressService) { }
 
     ngOnInit() {
+        // sets person type, user id and token from route parameters
+        this.user = JSON.parse(window.localStorage.getItem('user_rede_credenciados'));
+        if (this.user.personType === 'pessoa_fisica') {
+            this.loading = true;
+            this.pfService.getPessoaFisica(this.user.id, this.user.token)
+                .subscribe(
+                    pf => {
+                        this.userTypePerson = pf;
+                        this.loading = false;
+                    },
+                    () => {
+                        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                        this.loading = false;
+                    }
+                );
+        } else {
+            this.loading = true;
+            this.pjService.getPessoaJuridica(this.user.id, this.user.token)
+                .subscribe(
+                    pj => {
+                        this.userTypePerson = pj;
+                        this.loading = false;
+                    },
+                    () => {
+                        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                        this.loading = false;
+                    }
+                );
+        }
     }
 
     get nome() { return this.viaEmailForm.get('nome'); }
@@ -69,6 +106,33 @@ export class FriendIndicationComponent implements OnInit {
         this.modalService.close(id);
     }
 
+    create(indication) {
+        this.frieIndService.create(indication).subscribe(
+            () => {
+                this.loading = false;
+                this.viaEmailForm.reset();
+                this.router.navigate([{ outlets: { message: ['solicitation-message'] }}]);
+            },
+            () => {
+                this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                this.loading = false;
+            }
+        );
+    }
+
+    getUserAddress() {
+        this.addrService.get(this.userTypePerson.id, this.user.personType, this.user.token)
+            .subscribe(address => {
+                this.userAddress = address;
+                this.loading = false;
+            },
+            () => {
+                this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                this.loading = false;
+            }
+        );
+    }
+
     openModal(id) {
         this.modalService.open(id);
     }
@@ -80,9 +144,15 @@ export class FriendIndicationComponent implements OnInit {
             this.frieIndService.sendEmail(this.viaEmailForm.value)
                 .subscribe(
                     () => {
-                        this.viaEmailForm.reset();
+                        this.create({
+                            quem_indicou: this.viaEmailForm.value.nome,
+                            indicado: this.viaEmailForm.value.nome_indicado,
+                            tel: this.user.tel,
+                            bairro: this.userAddress.bairro,
+                            cidade: this.userAddress.cidade,
+                            estado: this.userAddress.estado
+                        });
                         this.loading = false;
-                        this.router.navigate([{ outlets: { message: ['solicitation-message'] }}]);
                     },
                     () => {
                         this.router.navigate([{ outlets: { error: ['error-message'] }}]);
