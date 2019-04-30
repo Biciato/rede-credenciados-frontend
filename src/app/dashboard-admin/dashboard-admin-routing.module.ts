@@ -8,11 +8,14 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 import { SlideShowComponent } from './slide-show/slide-show.component';
 import { ResumeComponent } from './resume/resume.component';
 import { ClientsComponent } from './clients/clients.component';
-import { FinancialComponent } from './financial/financial.component';
 import { MessagesAdminComponent } from './messages-admin/messages-admin.component';
 import { ResumeIndicationComponent } from './resume-indication/resume-indication.component';
 import { MyInfoComponent } from './my-info/my-info.component';
 import { CommunicationComponent } from './communication/communication.component';
+import { ToPayComponent } from './financial/to-pay/to-pay.component';
+import { ToReceiveComponent } from './financial/to-receive/to-receive.component';
+import { FluxComponent } from './financial/flux/flux.component';
+import { PayedUsedComponent } from './financial/payed-used/payed-used.component';
 
 const routes: Routes = [
     { path: 'dashboard-admin',
@@ -43,8 +46,20 @@ const routes: Routes = [
                 component: ClientsComponent
             },
             {
-                path: 'financeiro',
-                component: FinancialComponent
+                path: 'financeiro-a-pagar',
+                component: ToPayComponent
+            },
+            {
+                path: 'financeiro-a-receber',
+                component: ToReceiveComponent
+            },
+            {
+                path: 'financeiro-fluxo-caixa',
+                component: FluxComponent
+            },
+            {
+                path: 'financeiro-pagou-utilizou',
+                component: PayedUsedComponent
             },
             {
                 path: 'mensagens',

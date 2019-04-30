@@ -1,0 +1,44 @@
+<section>
+  <!-- Links Sidenav List -->
+  <ul>
+    <li [routerLink]="['/dashboard-admin/resumo']" (click)="toggleMenu(false)">
+      <i class="fas fa-chart-bar"></i>Resumo
+    </li>
+    <li [routerLink]="['/dashboard-admin/minhas-informações']" (click)="toggleMenu(false)">
+      <i class="fas fa-user"></i>Minhas Informações
+    </li>
+    <li [routerLink]="['/dashboard-admin/clientes']" (click)="toggleMenu(false)">
+      <i class="fas fa-users"></i>Clientes
+    </li>
+    <li [routerLink]="['/dashboard-admin/credenciados']" (click)="toggleMenu(false)">
+      <i class="fas fa-id-card-alt"></i>Credenciados
+    </li>
+    <li [routerLink]="['/dashboard-admin/slide-show']" (click)="toggleMenu(false)">
+      <i class="far fa-image"></i>Slide Show
+    </li>
+    <li [routerLink]="['/dashboard-admin/especialidades']" (click)="toggleMenu(false)">
+      <i class="fas fa-stethoscope"></i>Especialidades
+    </li>
+    <li [routerLink]="['/dashboard-admin/newsletter']" (click)="toggleMenu(false)">
+      <i class="fas fa-paper-plane"></i>Newsletter
+    </li>
+    <li [routerLink]="['/dashboard-admin/resumo-indicação']" (click)="toggleMenu(false)">
+      <i class="far fa-hand-point-up"></i>Resumo Indicações
+    </li>
+    <li (click)="toggleMenu(true)">
+      <i class="fas fa-dollar-sign"></i>Financeiro<i [ngClass]="isToggled ? 'fas fa-angle-down' : 'fas fa-angle-right'"></i>
+    </li>
+    <ul *ngIf="isToggled">
+      <li [routerLink]="['/dashboard-admin/financeiro-a-pagar']">À Receber</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-a-receber']">À pagar</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-fluxo-caixa']">Fluxo Caixa Direto</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-pagou-utilizou']">Pagou X Utilizou</li>
+    </ul>
+    <li [routerLink]="['/dashboard-admin/mensagens']" (click)="toggleMenu(false)">
+      <i class="fas fa-comments"></i>Mensagens
+    </li>
+    <li [routerLink]="['/dashboard-admin/comunicação']" (click)="toggleMenu(false)">
+      <i class="fas fa-phone-volume"></i>Comunicação
+    </li>
+  </ul>
+</section>

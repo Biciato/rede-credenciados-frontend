@@ -30,6 +30,7 @@ import { UserDataFormsComponent } from '../user-data-forms/user-data-forms.compo
 import { NomeAtividadePipe } from '../pipes/nome-atividade.pipe';
 import { SearchBoxPipe } from '../pipes/search-box.pipe';
 import { TipoPessoaPipe } from '../pipes/tipo-pessoa.pipe';
+import { CurrencyFormatPipe } from '../pipes/custom-number-format';
 
 import { MatPaginatorIntlCro } from '../custom-paginator';
 
@@ -70,6 +71,7 @@ import { MatPaginatorIntlCro } from '../custom-paginator';
         NomeAtividadePipe,
         SearchBoxPipe,
         TipoPessoaPipe,
+        CurrencyFormatPipe,
         MatFormFieldModule,
         MatSelectModule,
         BrowserAnimationsModule,
@@ -95,8 +97,11 @@ import { MatPaginatorIntlCro } from '../custom-paginator';
         NomeAtividadePipe,
         SearchBoxPipe,
         TipoPessoaPipe,
+        CurrencyFormatPipe,
         UserDataFormsComponent
     ],
-    providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}],
+    providers: [
+      { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}
+    ],
 })
 export class SharedModule { }

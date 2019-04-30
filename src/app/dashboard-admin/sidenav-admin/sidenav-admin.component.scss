@@ -14,9 +14,23 @@ section {
         list-style: none;
         padding-inline-start: 0;
 
-        li{
+        ul {
+            font-size: 15px;
+            padding-inline-start: 35px;
+            cursor: pointer;
+            i {
+                width: 15px;
+                margin-right: 1.5em;
+            }
 
-            font-family: Roboto, sans-serif;
+            li {
+                padding: 0.5em 2em;
+                margin: 0.5em 0 0 2em;
+                cursor: pointer;
+            }
+        }
+
+        li{
             font-size: 15px;
             padding: 1em 2em;
             cursor: pointer;
@@ -24,6 +38,11 @@ section {
             i {
                 width: 15px;
                 margin-right: 1.5em;
+            }
+
+            .fa-angle-down, .fa-angle-right {
+                margin-left: 0.5em;
+                font-size: 18px;
             }
         }
 
