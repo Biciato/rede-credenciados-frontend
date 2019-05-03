@@ -20,36 +20,46 @@ import { ToPayComponent } from './financial/to-pay/to-pay.component';
 import { ToReceiveComponent } from './financial/to-receive/to-receive.component';
 import { FluxComponent } from './financial/flux/flux.component';
 import { PayedUsedComponent } from './financial/payed-used/payed-used.component';
+import { DetailsDialog } from './financial/payed-used/details.dialog';
+import { NewActivityDialog } from './especialidades/new-activity.dialog';
 
 @NgModule({
   imports: [
-      CommonModule,
-      DashboardAdminRoutingModule,
-      SharedModule,
-      ReactiveFormsModule
+    CommonModule,
+    DashboardAdminRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   declarations: [
-      CredenciadosComponent,
-      DashboardAdminComponent,
-      SidenavAdminComponent,
-      EspecialidadesComponent,
-      NewsletterComponent,
-      SlideShowComponent,
-      ResumeComponent,
-      CommunicationComponent,
-      MessagesAdminComponent,
-      MyInfoComponent,
-      ClientsComponent,
-      ResumeIndicationComponent,
-      ToPayComponent,
-      ToReceiveComponent,
-      FluxComponent,
-      PayedUsedComponent
+    CredenciadosComponent,
+    DashboardAdminComponent,
+    SidenavAdminComponent,
+    EspecialidadesComponent,
+    NewsletterComponent,
+    SlideShowComponent,
+    ResumeComponent,
+    CommunicationComponent,
+    MessagesAdminComponent,
+    MyInfoComponent,
+    ClientsComponent,
+    ResumeIndicationComponent,
+    ToPayComponent,
+    ToReceiveComponent,
+    FluxComponent,
+    PayedUsedComponent,
+    DetailsDialog,
+    NewActivityDialog
   ],
   exports: [
-      CredenciadosComponent,
-      DashboardAdminComponent,
-      SidenavAdminComponent
-  ]
+    CredenciadosComponent,
+    DashboardAdminComponent,
+    SidenavAdminComponent,
+    DetailsDialog,
+    NewActivityDialog
+  ],
+  entryComponents: [
+    DetailsDialog,
+    NewActivityDialog
+  ],
 })
 export class DashboardAdminModule { }

@@ -1,66 +1,85 @@
-<!-- Card Credenciados -->
 <div class="card-dash">
-    <!-- Card  Header -->
-    <div class="card-header-dash">
-        <h3>Credenciados Cadastrados</h3>
+  <div class="card-header-dash"><h3>Credenciados</h3></div>
+  <div class="card-body-dash">
+    <div>
+      <mat-form-field style="width: 20%">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+      <i class="fas fa-search" style="background-color: chocolate"></i>
     </div>
-    <!-- Card  Header -->
-    <!-- Card  Body -->
-    <div class="card-body-dash">
-        <div class="group">
-            <input [(ngModel)]="searchText" placeholder="Procurar..." style="width: 10rem">
-        </div>
-        <!-- Card  Table -->
-        <div id="table">
-            <div id="tableBody">
-                <table>
-                    <tr>
-                        <th class="td-start">Situação</th>
-                        <th class="td-start">Tipo Pessoa</th>
-                        <th class="td-start">Razão Social/Nome </th>
-                        <th class="td-start">Nome Fantasia</th>
-                        <th class="td-start">Município</th>
-                        <th class="td-start">telefone 1</th>
-                        <th class="td-start">Telefone 2</th>
-                        <th class="td-start">Celular</th>
-                        <th class="td-start">E-mail</th>
-                        <th>Excluir</th>
-                    </tr>
-                    <tr *ngFor="let credenciado of credenciados | searchBox: {
-                                situacao: searchText, email: searchText,  tipo_pessoa: searchText,
-                                razao_social: searchText, nome_fantasia: searchText,  nome: searchText,
-                                cidade: searchText, tel1: searchText,  cel: searchText
-                            } | paginate: { itemsPerPage: 10, currentPage: p }">
-                        <td class="td-start">{{ credenciado.situacao || 'Ativo' }}</td>
-                        <td class="td-start">{{ credenciado.tipo_pessoa | tipoPessoa}}</td>
-                        <td class="td-start">{{ credenciado.razao_social || credenciado.nome }}</td>
-                        <td class="td-start">{{ credenciado.nome_fantasia }}</td>
-                        <td class="td-start">{{ credenciado.cidade }}</td>
-                        <td class="td-start">{{ credenciado.tel1 }}</td>
-                        <td class="td-start">{{ credenciado.tel2 }}</td>
-                        <td class="td-start">{{ credenciado.cel }}</td>
-                        <td class="td-start">{{ credenciado.email }}</td>
-                        <td class="td-center"><i (click)="deleteCredenciado(credenciado)" class="fas fa-trash-alt"></i></td>
-                    </tr>
-                </table>
-            </div>
-            <pagination-controls class="my-pagination"
-                    (pageChange)="p = $event"
-                    previousLabel="Anterior"
-                    nextLabel="Próximo"></pagination-controls>
-        </div>
-        <!-- Card  Table -->
-    </div>
-    <!-- Card  Body -->
-</div>
-<!-- Card Credenciados -->
-<!-- Loading Status -->
-<div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Situação </th>
+          <td mat-cell *matCellDef="let row"> Ativo </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="personType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Pessoa </th>
+          <td mat-cell *matCellDef="let row"> {{row.tipo_pessoa.replace('_', ' ')}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Razão Social/Nome </th>
+          <td mat-cell *matCellDef="let row"> {{row.nome || row.razao_social}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="fantasyName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome Fantasia </th>
+          <td mat-cell *matCellDef="let row"> {{row.nome_fantasia}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Município </th>
+          <td mat-cell *matCellDef="let row"> {{row.cidade}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="tel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tel1 </th>
+          <td mat-cell *matCellDef="let row"> {{row.tel}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="tel2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tel2 </th>
+          <td mat-cell *matCellDef="let row"> {{row.tel2}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="cel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cel </th>
+          <td mat-cell *matCellDef="let row"> {{row.cel}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+          <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Excluir </th>
+          <td mat-cell *matCellDef="let row" style="text-align: center">
+            <button mat-raised-button color="primary" style="width: 0"
+              (click)="deleteCredenciado(row)">
+              <i class="far fa-trash-alt" style="margin-right: 0"></i>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
 </div>
-<!-- Loading Status -->

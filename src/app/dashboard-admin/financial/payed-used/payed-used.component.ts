@@ -1,14 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SimpleUserService } from 'src/app/services/simple-user/simple-user.service';
+import { MatDialog } from '@angular/material';
 
-export interface ClientData {
-  nome: string;
-  email: string;
-  tel: string;
-  cidade: string;
-  estado: string;
-  pagamento_status: string;
+import { DetailsDialog } from './details.dialog';
+
+import { PAYED_USED_MOCK_DATA } from './payed-used-mock-data';
+
+export interface PayedUsedData {
+  situacao: string;
+  formPgto: string;
+  titular: string;
+  vencimento: Date;
+  valor: number;
+  saldo: string;
 }
 
 @Component({
@@ -17,22 +21,22 @@ export interface ClientData {
   styleUrls: ['./payed-used.component.scss']
 })
 export class PayedUsedComponent implements OnInit {
-  displayedColumns: string[] = ['nome', 'email', 'tel', 'cidade', 'estado',
-      'pagamento_status'];
-  dataSource: MatTableDataSource<ClientData>;
+  displayedColumns: string[] = ['situacao', 'formPgto', 'titular', 'vencimento', 'valor',
+      'saldo', 'detalhes'];
+  dataSource: MatTableDataSource<PayedUsedData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private simpleUserService: SimpleUserService) {
-    this.simpleUserService.index().subscribe((clients: Array<ClientData>) => this.applyPaginator(clients));
+  constructor(public dialog: MatDialog) {
+    this.applyPaginator();
   }
 
   ngOnInit() {
 
   }
 
-  applyPaginator(clients) {
-    this.dataSource = new MatTableDataSource(clients)
+  applyPaginator() {
+    this.dataSource = new MatTableDataSource(PAYED_USED_MOCK_DATA)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -43,5 +47,12 @@ export class PayedUsedComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openDialog(row): void {
+    this.dialog.open(DetailsDialog, {
+      width: 'fit-content',
+      data: row
+    });
   }
 }

@@ -10,6 +10,14 @@
         .card-header-dash {
             width: 96%;
             margin-left: 2%;
+            padding: 0;
+            background: #2196f3;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, rgb(231, 150, 28), rgb(231, 82, 28));  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, rgb(231, 150, 28), rgb(231, 82, 28)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            h3 {
+                margin-block-start: 0.5em;
+                margin-block-end: 0.5em;
+            }
         }
 
         .card-body-dash {
@@ -32,7 +40,25 @@ i {
 }
 
 table {
+    color: #4f4f4f;
     th {
         background-color: #cfd8dc!important;
     }
+
+    .table-footer {
+        padding-right: 35px;
+        text-align: end;
+        strong {
+            margin-right: 3em;
+        }
+        span {
+            font-weight: bold;
+        }
+    }
 }
+
+:host ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+}
+

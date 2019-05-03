@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ChartsModule } from 'ng2-charts';
 
 import { AtividadesComponent } from '../atividades/atividades.component';
@@ -57,6 +58,7 @@ import { MatPaginatorIntlCro } from '../custom-paginator';
         MatSortModule,
         MatTreeModule,
         MatTableModule,
+        MatDialogModule,
         MatIconModule
     ],
     exports: [
@@ -88,6 +90,7 @@ import { MatPaginatorIntlCro } from '../custom-paginator';
         MatTreeModule,
         ChartsModule,
         MatIconModule,
+        MatDialogModule,
         UserDataFormsComponent
     ],
     declarations: [

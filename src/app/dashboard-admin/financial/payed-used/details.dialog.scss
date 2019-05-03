@@ -1,0 +1,15 @@
+.table-footer {
+    padding-right: 35px;
+    text-align: end;
+    strong {
+        margin-right: 3em;
+    }
+    span {
+        font-weight: bold;
+    }
+}
+
+:host ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+}

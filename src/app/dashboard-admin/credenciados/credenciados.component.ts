@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { CredenciadosService } from '../../services/credenciados/credenciado.service';
 
-import { Credenciado } from '../../models/credenciado';
+export interface UsersData {
+  atividade: string;
+}
 
 @Component({
     selector: 'app-credenciados',
@@ -12,25 +15,43 @@ import { Credenciado } from '../../models/credenciado';
 })
 
 export class CredenciadosComponent implements OnInit {
-    credenciado: Credenciado;
-    credenciados: Credenciado[];
+    displayedColumns: string[] = ['status', 'personType', 'name',
+      'fantasyName', 'city', 'tel', 'tel2', 'cel', 'email', 'delete'];
+    dataSource: MatTableDataSource<UsersData>;
     loading = false;
-    p = 1;
-    searchText: string;
     token: string;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private credService: CredenciadosService, private router: Router,
-                private route: ActivatedRoute) { }
+    constructor(private credService: CredenciadosService, private router: Router) { }
 
     ngOnInit() {
         this.token = JSON.parse(window.localStorage.getItem('user_rede_credenciados')).token;
         this.getCredenciados();
     }
 
+    applyPaginator(credenciados) {
+      this.loading = false;
+      this.dataSource = new MatTableDataSource(credenciados)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    applyFilter(filterValue: string) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
     deleteCredenciado(credenciado) {
         this.loading = true;
         this.credService.delete(credenciado.id, this.token).subscribe(
-            () => { this.getCredenciados(); this.loading = false; },
+            _ => {
+                this.router.navigate([{ outlets: { update: ['update-message'] }}]);
+                this.getCredenciados();
+            },
             () => {
                 this.router.navigate([{ outlets: { error: ['error-message'] }}]);
                 this.loading = false;
@@ -42,7 +63,7 @@ export class CredenciadosComponent implements OnInit {
         this.loading = true;
         this.credService.index().subscribe(
             credenciados => {
-                this.credenciados = credenciados;
+                this.applyPaginator(credenciados);
                 this.loading = false;
             },
             () => {

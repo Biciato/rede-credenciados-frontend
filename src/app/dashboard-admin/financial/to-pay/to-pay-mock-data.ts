@@ -1,0 +1,42 @@
+export const TO_PAY_MOCK_DATA = [
+  {
+    nTitulo: '14',
+    situacao: 'Quitado',
+    sacado: 'Maria Aparecida Oliveira',
+    vencimento: new Date(2014, 1, 1),
+    pagamento: new Date(2014, 1, 1),
+    referente: 'Anúncio - 05/2018',
+    indicacoes: 10,
+    individual: 25.00,
+  },
+  {
+    nTitulo: '15',
+    situacao: 'Quitado',
+    sacado: 'Jose Antonio dos Santos',
+    vencimento: new Date(2014, 1, 1),
+    pagamento: new Date(2014, 1, 1),
+    referente: 'Anúncio - 05/2018',
+    indicacoes: 3,
+    individual: 25.00,
+  },
+  {
+    nTitulo: '14',
+    situacao: 'Pendente',
+    sacado: 'Lucia da Silva',
+    vencimento: new Date(2014, 1, 1),
+    pagamento: new Date(2014, 1, 1),
+    referente: 'Anúncio - 05/2018',
+    indicacoes: 7,
+    individual: 25.00,
+  },
+  {
+    nTitulo: '56',
+    situacao: 'Pendente',
+    sacado: 'Sonia Regina Ricardo',
+    vencimento: new Date(2014, 1, 1),
+    pagamento: new Date(2014, 1, 1),
+    referente: 'Anúncio - 05/2018',
+    indicacoes: 20,
+    individual: 25.00,
+  }
+];

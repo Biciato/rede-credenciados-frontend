@@ -1,0 +1,100 @@
+<h1 mat-dialog-title style="background-color: steelblue">
+  Detalhamento Vencimento: {{data.titular}} - CPF: 321.312.123.8
+</h1>
+<div mat-dialog-content>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+        <td mat-cell *matCellDef="let row"
+          [style.color]="row.type === 'crédito' ? 'skyblue' : 'red'">
+          {{row.type}}
+        </td>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+        <td mat-cell *matCellDef="let row"> {{row.date | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="pay">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vencimento </th>
+        <td mat-cell *matCellDef="let row"> {{row.pay | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Situação </th>
+        <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="paymentForm">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Forma Pagamento </th>
+        <td mat-cell *matCellDef="let row"> {{row.paymentForm}} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="reference">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Referente </th>
+        <td mat-cell *matCellDef="let row"> {{row.reference}} </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+        <td mat-cell *matCellDef="let row"
+          [style.color]="row.type === 'crédito' ? 'skyblue' : 'red'">
+          {{row.total | currencyformat}}
+        </td>
+      </ng-container>
+
+      <!-- Divider column -->
+      <ng-container matColumnDef="divider">
+        <td mat-footer-cell *matFooterCellDef colspan="11" style="background-color: silver"></td>
+      </ng-container>
+
+      <!-- Total To Pay column -->
+      <ng-container matColumnDef="total-credit">
+        <td mat-footer-cell *matFooterCellDef colspan="11" class="table-footer">
+          <strong>Total Crédito: </strong>
+          <span style="color: skyblue">{{ getTotalCredit() | currencyformat}} </span>
+        </td>
+      </ng-container>
+
+      <!-- Referencia column -->
+      <ng-container matColumnDef="total-debit">
+        <td mat-footer-cell *matFooterCellDef colspan="11" class="table-footer">
+          <strong>Total Débito: </strong>
+          <span style="color: red">{{ getTotalDebit() | currencyformat}} </span>
+        </td>
+      </ng-container>
+
+      <!-- Referencia column -->
+      <ng-container matColumnDef="balance">
+        <td mat-footer-cell *matFooterCellDef colspan="11" class="table-footer">
+          <strong style="margin-right: 3.8em">Saldo: </strong>
+          <span [style.color]="(getTotalCredit() - getTotalDebit()) > 0 ? 'skyblue' : 'red'">
+            {{ (getTotalCredit() - getTotalDebit()) | currencyformat }}
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="['divider']"></tr>
+      <tr mat-footer-row *matFooterRowDef="['total-credit']"></tr>
+      <tr mat-footer-row *matFooterRowDef="['total-debit']"></tr>
+      <tr mat-footer-row *matFooterRowDef="['balance']"></tr>
+    </table>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" style="margin: auto" (click)="onNoClick()">
+    FECHAR
+  </button>
+</div>

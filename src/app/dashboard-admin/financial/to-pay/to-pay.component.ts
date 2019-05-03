@@ -1,14 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SimpleUserService } from 'src/app/services/simple-user/simple-user.service';
 
-export interface ClientData {
-  nome: string;
-  email: string;
-  tel: string;
-  cidade: string;
-  estado: string;
-  pagamento_status: string;
+import { TO_PAY_MOCK_DATA } from './to-pay-mock-data';
+
+export interface ToPayData {
+  nTitulo: string;
+  sacado: string;
+  situacao: string;
+  vencimento: Date;
+  pagamento: Date;
+  referente: string;
+  indicacoes: number;
+  individual: number;
 }
 
 @Component({
@@ -17,22 +20,22 @@ export interface ClientData {
   styleUrls: ['./to-pay.component.scss']
 })
 export class ToPayComponent implements OnInit {
-  displayedColumns: string[] = ['nome', 'email', 'tel', 'cidade', 'estado',
-      'pagamento_status'];
-  dataSource: MatTableDataSource<ClientData>;
+  displayedColumns: string[] = ['nTitulo', 'sacado', 'situacao', 'vencimento', 'pagamento',
+      'referente', 'indicacoes', 'individual', 'total'];
+  dataSource: MatTableDataSource<ToPayData>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private simpleUserService: SimpleUserService) {
-    this.simpleUserService.index().subscribe((clients: Array<ClientData>) => this.applyPaginator(clients));
+  constructor() {
+    this.applyPaginator();
   }
 
   ngOnInit() {
 
   }
 
-  applyPaginator(clients) {
-    this.dataSource = new MatTableDataSource(clients)
+  applyPaginator() {
+    this.dataSource = new MatTableDataSource(TO_PAY_MOCK_DATA)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -43,5 +46,14 @@ export class ToPayComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getTotalRow(row) { return row.individual * row.indicacoes }
+  getTotalColumn() {
+    let total = 0;
+    TO_PAY_MOCK_DATA.forEach(val => {
+      total = total + (val.individual * val.indicacoes);
+    });
+    return total;
   }
 }

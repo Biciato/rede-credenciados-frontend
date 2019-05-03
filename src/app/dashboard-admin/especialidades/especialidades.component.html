@@ -1,71 +1,41 @@
-<section>
-    <!-- Ad Info Card -->
-    <div id="cardTab" class="card-dash">
-        <!-- Card  Header -->
-        <div id="cardTabHeader" class="card-header-dash"><h3>Especialidades</h3></div>
-        <!-- Card  Header -->
-        <!-- Card  Body -->
-        <div id="cardTabBody" class="card-body-dash">
-            <div class="group">
-                <input [(ngModel)]="searchText" placeholder="Procurar..." style="width: 10rem">
-            </div>
-            <!-- Card  Table -->
-            <div id="table">
-                <div id="tableBody">
-                    <table>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Excluir</th>
-                        </tr>
-                        <tr *ngFor="let atividade of atividades 
-                            | searchBox: {atividade: searchText} | paginate: { itemsPerPage: 10, currentPage: p }">
-                            <td>{{ atividade.atividade }}</td>
-                            <td (click)="deleteAtividade(atividade)"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                    </table>
-                </div>
-                <pagination-controls class="my-pagination"
-                    (pageChange)="p = $event"
-                    previousLabel="Anterior"
-                    nextLabel="Próximo"></pagination-controls>
-            </div>
-            <!-- Card  Table -->
-            <button class="rd-button-dash" style="background-color: green" (click)="openModal()">
-                <i class="fas fa-plus-square" style="margin: 0.5rem"></i>ESPECIALIDADE
+<div class="card-dash">
+  <div class="card-header-dash"><h3>Especialidades</h3></div>
+  <div class="card-body-dash">
+    <div>
+      <mat-form-field style="width: 20%">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+      <i class="fas fa-search" style="background-color: chocolate"></i>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+          <td mat-cell *matCellDef="let row"> {{row.atividade}} </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Excluir </th>
+          <td mat-cell *matCellDef="let row"  style="text-align: center">
+            <button mat-raised-button color="primary" (click)="delete(row)"
+              style="width: 0">
+              <i class="far fa-trash-alt" style="margin-right: 0"></i>
             </button>
-        </div>
-        <!-- Card  Body -->
-    </div>
-    <!-- Ad Info Card -->
-</section>
+          </td>
+        </ng-container>
 
-<!-- Modal Especialidades -->
-<app-modal id="modal-especialidade">
-    <div id="modalHeader">
-        <h2>Nova Especialidade</h2>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
     </div>
-    <div id="modalBody">
-        <div class="group">
-            <input type="text" [formControl]="nome">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Especialidade</label>
-        </div>
-        
-    </div>
-    <div id="modalFooter">
-        <button (click)="closeModal()">FECHAR</button>
-        <button (click)="saveEspecialidade()">SALVAR</button>
-    </div>
-</app-modal>
-<!-- Modal Especialidades -->
-<!-- Loading Status -->
-<div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
-
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      <i class="fas fa-plus-square"></i>ESPECIALIDADE
+    </button>
+  </div>
 </div>
-<!-- Loading Status -->

@@ -1,14 +1,20 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { SimpleUserService } from 'src/app/services/simple-user/simple-user.service';
+import { Router } from '@angular/router';
 
-export interface ClientData {
-  nome: string;
-  email: string;
-  tel: string;
-  cidade: string;
-  estado: string;
-  pagamento_status: string;
+import { TO_RECEIVE_MOCK_DATA } from './to-receive-mock-data';
+
+export interface ToReceiveData {
+  nTitulo: string;
+  situacao: string;
+  formPgto: string;
+  titular: string;
+  vencimento: Date;
+  pagamento: Date;
+  referente: string;
+  original: number;
+  acrescimo: number;
+  decrescimo: number;
 }
 
 @Component({
@@ -17,24 +23,30 @@ export interface ClientData {
   styleUrls: ['./to-receive.component.scss']
 })
 export class ToReceiveComponent implements OnInit {
-  displayedColumns: string[] = ['nome', 'email', 'tel', 'cidade', 'estado',
-      'pagamento_status'];
-  dataSource: MatTableDataSource<ClientData>;
+  displayedColumns: string[] = ['nTitulo', 'situacao', 'formPgto', 'titular',
+    'vencimento', 'pagamento', 'referente', 'original', 'acrescimo',
+    'decrescimo', 'total'];
+  dataSource: MatTableDataSource<ToReceiveData>;
+  loading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private simpleUserService: SimpleUserService) {
-    this.simpleUserService.index().subscribe((clients: Array<ClientData>) => this.applyPaginator(clients));
+  constructor(
+    private router: Router
+  ) {
+    this.loading = true;
+    this.applyPaginator();
   }
 
   ngOnInit() {
 
   }
 
-  applyPaginator(clients) {
-    this.dataSource = new MatTableDataSource(clients)
+  applyPaginator() {
+    this.dataSource = new MatTableDataSource(TO_RECEIVE_MOCK_DATA)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.loading = false;
   }
 
   applyFilter(filterValue: string) {
@@ -43,5 +55,14 @@ export class ToReceiveComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getTotalRow(row) { return row.original + row.acrescimo - row.decrescimo; }
+  getTotalColumn() {
+    let total = 0;
+    TO_RECEIVE_MOCK_DATA.forEach(val => {
+      total = total + val.original + val.acrescimo - val.decrescimo;
+    });
+    return total;
   }
 }

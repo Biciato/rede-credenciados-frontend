@@ -29,8 +29,8 @@
       <i class="fas fa-dollar-sign"></i>Financeiro<i [ngClass]="isToggled ? 'fas fa-angle-down' : 'fas fa-angle-right'"></i>
     </li>
     <ul *ngIf="isToggled">
-      <li [routerLink]="['/dashboard-admin/financeiro-a-pagar']">À Receber</li>
-      <li [routerLink]="['/dashboard-admin/financeiro-a-receber']">À pagar</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-a-receber']">À Receber</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-a-pagar']">À pagar</li>
       <li [routerLink]="['/dashboard-admin/financeiro-fluxo-caixa']">Fluxo Caixa Direto</li>
       <li [routerLink]="['/dashboard-admin/financeiro-pagou-utilizou']">Pagou X Utilizou</li>
     </ul>

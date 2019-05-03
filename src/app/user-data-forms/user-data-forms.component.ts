@@ -397,13 +397,17 @@ export class UserDataFormsComponent implements OnInit {
     // sends address data to api server
     onAddressSubmit() {
         if (this.addressForm.valid &&
-            this.loginForm.valid &&
             (this.pessoaFisicaForm.valid || this.pessoaJuridicaForm.valid)) {
             this.loading = true;
             if (this.addressForm.value.estado.length > 2) {
                 this.stateSelected = ABVR_ESTADO_INVERSO[this.addressForm.value.estado];
             } else {
                 this.stateSelected = this.addressForm.value.estado;
+            }
+            if (this.isAdmin === true && this.loginForm.invalid) {
+                this.openModal('modal-validator');
+                this.loading = false;
+                return;
             }
             const endereco = {
                 cep: this.addressForm.value.cep,
@@ -447,7 +451,6 @@ export class UserDataFormsComponent implements OnInit {
                     });
             }
         } else {
-            console.log(this.loginForm);
             this.openModal('modal-validator');
         }
     }
