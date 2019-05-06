@@ -67,7 +67,7 @@
     }
 }
 
-#modal-validator {
+#modal-validator, #modal-email-validation {
 
     #modalHeader {
         width: 600px;
@@ -86,7 +86,7 @@
         flex-direction: column;
         text-align: center;
 
-        div { 
+        div {
             p {
                 width: 38rem;
             }

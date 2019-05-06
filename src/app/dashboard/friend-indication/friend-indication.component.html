@@ -3,7 +3,7 @@
     <div id="cardTitleHeader" class="card-header-dash"><h3>Indicação de amigo</h3></div>
     <div id="cardTitleBody" class="card-body-dash">
         <p><b>Indique um amigo</b> para que ele possa conhecer nosso sistema.
-            Para indicar o Rede Credenciados à um amigo ou conhecido é 
+            Para indicar o Rede Credenciados à um amigo ou conhecido é
             muito simples, preencha os dados abaixo e clique em enviar convite</p>
     </div>
 </div>
@@ -17,9 +17,9 @@
     <!-- Card Header -->
     <!-- Card Body -->
     <div id="cardViaEmailBody" class="card-body-dash">
-        <form [formGroup]="viaEmailForm" (ngSubmit)="onViaEmailSubmit()">
-    
-            <div class="group">      
+        <form [formGroup]="viaEmailForm" (ngSubmit)="emailValidation()">
+
+            <div class="group">
                 <input type="text" formControlName="nome">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -29,12 +29,12 @@
                 <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!nome.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
-            
-            <div class="group">      
+
+            <div class="group">
                 <input type="text" formControlName="email">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -44,15 +44,15 @@
                 <div *ngIf="email.invalid && (email.dirty || email.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!email.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                     <div *ngIf="!!email.errors.email" style="color: red">
-                        *formato de e-mail inválido. 
+                        *formato de e-mail inválido.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="mensagem">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -62,12 +62,12 @@
                 <div *ngIf="message.invalid && (message.dirty || message.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!message.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="nome_indicado">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -77,7 +77,7 @@
                 <div *ngIf="nome_indicado.invalid && (nome_indicado.dirty || nome_indicado.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!nome_indicado.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
@@ -99,8 +99,8 @@
     <!-- Card Body -->
     <div id="cardViaWhatBody" class="card-body-dash">
         <form [formGroup]="viaWhatForm" (ngSubmit)="onViaWhatSubmit()">
-    
-            <div class="group">      
+
+            <div class="group">
                 <input type="text" formControlName="indicatedName">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -110,12 +110,12 @@
                 <div *ngIf="nomeWS.invalid && (nomeWS.dirty || nomeWS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!nomeWS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
-            
-            <div class="group">      
+
+            <div class="group">
                 <input type="text" formControlName="whatsapp" (keyup)="onKeyCel($event)" maxlength="15">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -125,15 +125,15 @@
                 <div *ngIf="whatsapp.invalid && (whatsapp.dirty || whatsapp.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!whatsapp.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                     <div *ngIf="!!whatsapp.errors.minlength" style="color: red">
-                        *Formato de telefone inválido. 
+                        *Formato de telefone inválido.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="message">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -143,12 +143,12 @@
                 <div *ngIf="messageWS.invalid && (messageWS.dirty || messageWS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!messageWS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="indicator">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -158,7 +158,7 @@
                 <div *ngIf="indicatorWS.invalid && (indicatorWS.dirty || indicatorWS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!indicatorWS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
@@ -180,8 +180,8 @@
     <!-- Card Body -->
     <div id="cardViaSMSBody" class="card-body-dash">
         <form [formGroup]="viaSMSForm" (ngSubmit)="onViaSMSSubmit()">
-    
-            <div class="group">      
+
+            <div class="group">
                 <input type="text" formControlName="indicatedName">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -191,12 +191,12 @@
                 <div *ngIf="nomeSMS.invalid && (nomeSMS.dirty || nomeSMS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!nomeSMS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
-            
-            <div class="group">      
+
+            <div class="group">
                 <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -206,15 +206,15 @@
                 <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!cel.errors.minlength" style="color: red">
-                        *Formato de telefone inválido. 
+                        *Formato de telefone inválido.
                     </div>
                     <div *ngIf="!!cel.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="message">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -224,12 +224,12 @@
                 <div *ngIf="messageSMS.invalid && (messageSMS.dirty || messageSMS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!messageSMS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
 
-            <div class="group">      
+            <div class="group">
                 <input type="text" formControlName="indicator">
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -239,7 +239,7 @@
                 <div *ngIf="indicatorSMS.invalid && (indicatorSMS.dirty || indicatorSMS.touched)"
                     class="alert alert-danger">
                     <div *ngIf="!!indicatorSMS.errors.required" style="color: red">
-                        *campo obrigatório. 
+                        *campo obrigatório.
                     </div>
                 </div>
             </div>
@@ -287,6 +287,19 @@
             </ul>
             <div id="simFooter">
                 <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+            </div>
+        </div>
+    </div>
+</app-modal>
+<app-modal id="modal-email-validation">
+    <div id="modalHeader">
+        <span>MENSAGEM</span>
+    </div>
+    <div id="modalBody">
+        <div>
+            <h3>E-mail inválido</h3>
+            <div id="simFooter">
+                <a (click)="closeModal('modal-email-validation')"><i class="fas fa-times"></i>FECHAR</a>
             </div>
         </div>
     </div>

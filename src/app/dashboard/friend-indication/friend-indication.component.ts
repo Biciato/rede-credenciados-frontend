@@ -7,6 +7,7 @@ import { ModalService } from 'src/app/services/modal/modal.service';
 import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
 import { PessoaJuridicaService } from 'src/app/services/pessoa-juridica/pessoa-juridica.service';
 import { AddressService } from 'src/app/services/address/address.service';
+import { RegisterService } from 'src/app/services/register/register.service';
 
 @Component({
     selector: 'app-friend-indication',
@@ -51,9 +52,15 @@ export class FriendIndicationComponent implements OnInit {
     userAddress: any;
     userTypePerson: any;
 
-    constructor(private frieIndService: FriendIndicationService, private modalService: ModalService,
-                private router: Router, private pfService: PessoaFisicaService,
-                private pjService: PessoaJuridicaService, private addrService: AddressService) { }
+    constructor(
+      private frieIndService: FriendIndicationService,
+      private modalService: ModalService,
+      private router: Router,
+      private pfService: PessoaFisicaService,
+      private pjService: PessoaJuridicaService,
+      private addrService: AddressService,
+      private registerService: RegisterService
+    ) { }
 
     ngOnInit() {
         // sets person type, user id and token from route parameters
@@ -121,6 +128,25 @@ export class FriendIndicationComponent implements OnInit {
         );
     }
 
+    emailValidation() {
+        this.loading = true;
+        this.registerService.emailValidation({email: this.viaEmailForm.value.email})
+            .subscribe(
+                (data) => {
+                    if (data === true) {
+                        this.onViaEmailSubmit()
+                    } else {
+                        this.openModal('modal-email-validation');
+                        this.loading = false;
+                    }
+                },
+                () => {
+                    this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+                    this.loading = false;
+                }
+            );
+    }
+
     getUserAddress(id) {
         this.addrService.get(id, this.user.personType, this.user.token)
             .subscribe(address => {
@@ -164,6 +190,7 @@ export class FriendIndicationComponent implements OnInit {
             this.smsFormFlag = false;
             this.whatFormFlag = false;
             this.emailFormFlag = true;
+            this.loading = false;
             this.openModal('modal-validator');
         }
     }
