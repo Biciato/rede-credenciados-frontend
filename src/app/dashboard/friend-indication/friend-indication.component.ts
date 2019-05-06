@@ -63,7 +63,7 @@ export class FriendIndicationComponent implements OnInit {
             this.pfService.getPessoaFisica(this.user.id, this.user.token)
                 .subscribe(
                     pf => {
-                        this.userTypePerson = pf;
+                        this.getUserAddress(pf.id);
                         this.loading = false;
                     },
                     () => {
@@ -76,7 +76,7 @@ export class FriendIndicationComponent implements OnInit {
             this.pjService.getPessoaJuridica(this.user.id, this.user.token)
                 .subscribe(
                     pj => {
-                        this.userTypePerson = pj;
+                        this.getUserAddress(pj.id);
                         this.loading = false;
                     },
                     () => {
@@ -107,6 +107,7 @@ export class FriendIndicationComponent implements OnInit {
     }
 
     create(indication) {
+        this.loading = true;
         this.frieIndService.create(indication).subscribe(
             () => {
                 this.loading = false;
@@ -120,8 +121,8 @@ export class FriendIndicationComponent implements OnInit {
         );
     }
 
-    getUserAddress() {
-        this.addrService.get(this.userTypePerson.id, this.user.personType, this.user.token)
+    getUserAddress(id) {
+        this.addrService.get(id, this.user.personType, this.user.token)
             .subscribe(address => {
                 this.userAddress = address;
                 this.loading = false;
@@ -147,10 +148,10 @@ export class FriendIndicationComponent implements OnInit {
                         this.create({
                             quem_indicou: this.viaEmailForm.value.nome,
                             indicado: this.viaEmailForm.value.nome_indicado,
-                            tel: this.user.tel,
+                            forma_indicacao: this.viaEmailForm.value.email,
                             bairro: this.userAddress.bairro,
                             cidade: this.userAddress.cidade,
-                            estado: this.userAddress.estado
+                            estado: this.userAddress.estado,
                         });
                         this.loading = false;
                     },
@@ -174,10 +175,17 @@ export class FriendIndicationComponent implements OnInit {
             const telString = this.viaSMSForm.value.tel.replace(/[^a-zA-Z0-9]/g, '');
             this.frieIndService
                 .sendSMS({tel: telString, message: this.viaSMSForm.value.message})
-                .subscribe(() => {
-                        this.viaSMSForm.reset();
+                .subscribe(
+                    () => {
+                        this.create({
+                            quem_indicou: this.viaSMSForm.value.indicatedName,
+                            indicado: this.viaSMSForm.value.indicator,
+                            forma_indicacao: this.viaSMSForm.value.cel,
+                            bairro: this.userAddress.bairro,
+                            cidade: this.userAddress.cidade,
+                            estado: this.userAddress.estado,
+                        });
                         this.loading = false;
-                        this.router.navigate([{ outlets: { message: ['solicitation-message'] }}]);
                     },
                     () => {
                         this.router.navigate([{ outlets: { error: ['error-message'] }}]);
@@ -200,11 +208,14 @@ export class FriendIndicationComponent implements OnInit {
             const url = `https://api.whatsapp.com/send?phone=55${telNumber}&text=${normalizeMsg}`;
             window.open(url);
             this.viaWhatForm.reset();
-        } else {
-            this.smsFormFlag = false;
-            this.emailFormFlag = false;
-            this.whatFormFlag = true;
-            this.openModal('modal-validator');
+            this.create({
+                quem_indicou: this.viaWhatForm.value.indicatedName,
+                indicado: this.viaWhatForm.value.indicator,
+                forma_indicacao: this.viaWhatForm.value.whatsapp,
+                bairro: this.userAddress.bairro,
+                cidade: this.userAddress.cidade,
+                estado: this.userAddress.estado,
+            });
         }
     }
 
