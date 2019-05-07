@@ -17,7 +17,7 @@ export class MensagemService {
             'Content-type': 'application/json',
             'Authorization': 'Bearer ' + token
         })};
-        return this.http.post(this.baseUrl + 'message', message, httpOptions);
+        return this.http.post(this.baseUrl + '/mensagem', message, httpOptions);
     }
 
     mensagensUser(id, token) {

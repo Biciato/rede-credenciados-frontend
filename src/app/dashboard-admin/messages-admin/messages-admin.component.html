@@ -4,14 +4,37 @@
     <!-- Card  Header -->
     <!-- Card  Body -->
     <div id="cardPriceTabBody" class="card-body-dash">
-        <div class="group">
-            <textarea type="text" [formControl]="mensagemInput"></textarea>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>
-                Mensagem
-            </label>
-        </div>
+        <form [formGroup]="messageForm">
+            <div class="group">
+                <input type="text" formControlName="title">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="f.title.value === '' ? 'input-empty' : 'input-not-empty'">
+                    Título
+                </label>
+                <div *ngIf="f.title.invalid && (f.title.dirty || f.title.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="f.title.errors.required">
+                        *campo obrigatório.
+                    </div>
+                </div>
+            </div>
+            <div class="group">
+                <textarea type="text" formControlName="message"></textarea>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label [className]="f.message.value === '' ? 'input-empty' : 'input-not-empty'">
+                    Mensagem
+                </label>
+                <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="f.message.errors.required">
+                        *campo obrigatório.
+                    </div>
+                </div>
+            </div>
+        </form>
+
         <div id="tags">
             <span *ngFor="let jobTag of jobTags; let i = index">
                 {{ jobTag }}
@@ -24,7 +47,7 @@
                 Filtrar Especialidades
             </mat-chip>
         </mat-chip-list>
-        <button mat-raised-button color="warn">ENVIAR</button>
+        <button mat-raised-button color="warn" (click)="sendMessage()">ENVIAR</button>
     </div>
 </div>
 

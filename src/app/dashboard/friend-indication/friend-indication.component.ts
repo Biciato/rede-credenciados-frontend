@@ -174,6 +174,7 @@ export class FriendIndicationComponent implements OnInit {
                         this.create({
                             quem_indicou: this.viaEmailForm.value.nome,
                             indicado: this.viaEmailForm.value.nome_indicado,
+                            mensagem: this.viaEmailForm.value.mensagem,
                             forma_indicacao: this.viaEmailForm.value.email,
                             bairro: this.userAddress.bairro,
                             cidade: this.userAddress.cidade,
@@ -208,6 +209,7 @@ export class FriendIndicationComponent implements OnInit {
                             quem_indicou: this.viaSMSForm.value.indicatedName,
                             indicado: this.viaSMSForm.value.indicator,
                             forma_indicacao: this.viaSMSForm.value.cel,
+                            mensagem: this.viaSMSForm.value.message,
                             bairro: this.userAddress.bairro,
                             cidade: this.userAddress.cidade,
                             estado: this.userAddress.estado,
@@ -238,6 +240,7 @@ export class FriendIndicationComponent implements OnInit {
             this.create({
                 quem_indicou: this.viaWhatForm.value.indicatedName,
                 indicado: this.viaWhatForm.value.indicator,
+                mensagem: this.viaWhatForm.value.message,
                 forma_indicacao: this.viaWhatForm.value.whatsapp,
                 bairro: this.userAddress.bairro,
                 cidade: this.userAddress.cidade,

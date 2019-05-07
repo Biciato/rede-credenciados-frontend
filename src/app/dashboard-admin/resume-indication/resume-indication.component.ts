@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { FriendIndicationService } from 'src/app/services/friend-indication/friend-indication.service';
+import { Router } from '@angular/router';
 
 export interface ResumeIndicationData {
   quem_indicou: string;
@@ -9,7 +10,7 @@ export interface ResumeIndicationData {
   cidade: string;
   estado: string;
   bairro: string;
-  created_at: Date;
+  updated_at: Date;
 }
 
 @Component({
@@ -21,11 +22,14 @@ export class ResumeIndicationComponent implements OnInit {
   displayedColumns: string[] = ['indicator', 'indicated', 'resend', 'dateInd', 'indForm',
       'city', 'district', 'state'];
   dataSource: MatTableDataSource<ResumeIndicationData>;
+  loading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private friendInd: FriendIndicationService) {
-    this.friendInd.index().subscribe((indications: Array<ResumeIndicationData>) => this.applyPaginator(indications));
+  constructor(private friendIndService: FriendIndicationService,
+    private router: Router) {
+      this.loading = true;
+      this.getindications();
   }
 
   ngOnInit() {
@@ -36,6 +40,7 @@ export class ResumeIndicationComponent implements OnInit {
     this.dataSource = new MatTableDataSource(indications)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.loading = false;
   }
 
   applyFilter(filterValue: string) {
@@ -44,5 +49,43 @@ export class ResumeIndicationComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getindications() {
+    this.friendIndService.index().subscribe(
+      (indications: Array<ResumeIndicationData>) => this.applyPaginator(indications),
+      _ => {
+        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+        this.loading = false;
+      }
+    );
+  }
+
+  resend(indication) {
+    this.loading = true;
+    this.friendIndService.sendEmail(indication)
+      .subscribe(
+        _ => {
+          this.update(indication.id);
+        },
+        _ => {
+          this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+          this.loading = false;
+        }
+      );
+  }
+
+  update(id) {
+    this.friendIndService.update(id, Date.now())
+      .subscribe(
+        _ => {
+          this.router.navigate([{ outlets: { message: ['solicitation-message'] }}]);
+          this.getindications();
+        },
+        _ => {
+          this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+          this.loading = false;
+        }
+      );
   }
 }

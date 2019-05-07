@@ -14,6 +14,10 @@ export class FriendIndicationService {
         return this.http.post(this.baseUrl + '/friend-indication', indication);
     }
 
+    update(id, date) {
+        return this.http.put(this.baseUrl + '/friend-indication/' + id, {date});
+    }
+
     index() {
         return this.http.get(this.baseUrl + '/friend-indications');
     }
