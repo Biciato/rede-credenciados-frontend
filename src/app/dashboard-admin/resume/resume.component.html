@@ -194,43 +194,33 @@
               <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                 multiTemplateDataRows
                 matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
 
-                <!-- Position Column -->
-                <ng-container matColumnDef="position">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
-                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                <ng-container matColumnDef="state">
+                  <th mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let row"> {{row.state}} </td>
                 </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <ng-container matColumnDef="stateQty">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let row"> {{row.stateQty}} </td>
                 </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef> Weight </th>
-                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                <ng-container matColumnDef="city">
+                  <th mat-header-cell *matHeaderCellDef> Cidade </th>
+                  <td mat-cell *matCellDef="let row"> {{row.city}} </td>
                 </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="symbol">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <ng-container matColumnDef="cityQty">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let row"> {{row.cityQty}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
-              <!--Tabela Bairros-->
-              <!--Botao Relatorio-->
+
               <br>
               <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-              <br>
-              <button mat-raised-button color="primary">Relatório Completo</button>
-              <!--Botao Relatorio-->
             </mat-card-content>
           </mat-card>
           <!--Card da tabela da Porcentagem dos Bairros-->
@@ -241,6 +231,66 @@
             <mat-card-content>
               <mat-card-header>
                 <mat-card-title class="title">Idade dos Usuários</mat-card-title>
+              </mat-card-header>
+              <canvas baseChart width="572" height="305"
+                  [data]="doughnutChartData"
+                  [labels]="doughnutChartLabels"
+                  [chartType]="doughnutChartType">
+                </canvas>
+            </mat-card-content>
+          </mat-card>
+          <!--Card do Gráfico das idades-->
+        </div>
+      </div>
+    </section>
+    <div style="height: 5px"></div>
+    <section class="tela-inicial-section">
+      <div class="row">
+        <div class="col-md-6" id="table">
+          <!--Card da tabela da Porcentagem dos Bairros-->
+          <mat-card>
+            <mat-card-content>
+              <!--Tabela Bairros-->
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                multiTemplateDataRows
+                matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+                <ng-container matColumnDef="state">
+                  <th mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let row"> {{row.state}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="stateQty">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let row"> {{row.stateQty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="city">
+                  <th mat-header-cell *matHeaderCellDef> Cidade </th>
+                  <td mat-cell *matCellDef="let row"> {{row.city}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cityQty">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let row"> {{row.cityQty}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <br>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </mat-card-content>
+          </mat-card>
+          <!--Card da tabela da Porcentagem dos Bairros-->
+        </div>
+        <div class="col-md-6" id="canvas-rosca">
+          <!--Card do Gráfico das idades-->
+          <mat-card>
+            <mat-card-content>
+              <mat-card-header>
+                <mat-card-title class="title">Sexo dos Usuários</mat-card-title>
               </mat-card-header>
               <canvas baseChart width="572" height="305"
                   [data]="doughnutChartData"

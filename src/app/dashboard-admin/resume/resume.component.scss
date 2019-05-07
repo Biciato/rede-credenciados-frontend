@@ -47,7 +47,7 @@
                         font-size: 1rem;
                         box-sizing: border-box;
 
-                        .card {
+                        .mat-card {
                             position: relative;
                             display: flex;
                             -ms-flex-direction: column;
@@ -58,7 +58,7 @@
                             background-clip: border-box;
                             border: 1px solid rgba(0,0,0,.125);
                             border-radius: .25rem;
-                            height: 220px;
+                            height: 100%;;
                             margin-top: 20px;
                             box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
                             border: 0;
@@ -164,7 +164,7 @@
                             }
                         }
                     }
-                    #table, #canvas-rosca {
+                    #canvas-rosca {
                         flex-basis: 50%;
                         max-width: 50%;
                         .mat-card {
@@ -177,6 +177,13 @@
                                     justify-content: center;
                                 }
                             }
+                        }
+                    }
+                    #table {
+                        flex-basis: 50%;
+                        max-width: 50%;
+                        th.mat-header-cell, td {
+                            text-align: center;
                         }
                     }
                 }
@@ -403,3 +410,5 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
   opacity: 0.5;
 }
+
+

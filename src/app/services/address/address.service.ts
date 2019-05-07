@@ -46,4 +46,12 @@ export class AddressService {
             return this.http.put<Endereco>(this.baseUrl + `/endereco-pj/${id}`, address, httpOptions);
         }
     }
+
+    indexPf() {
+      return this.http.get<Endereco[]>(this.baseUrl + `/endereco-pfs`);
+    }
+
+    indexPj() {
+      return this.http.get<Endereco[]>(this.baseUrl + `/endereco-pjs`);
+    }
 }

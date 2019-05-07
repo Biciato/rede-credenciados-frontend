@@ -3,26 +3,8 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label, MultiDataSet } from 'ng2-charts';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import { AddressService } from 'src/app/services/address/address.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-resume',
@@ -30,8 +12,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./resume.component.scss']
 })
 export class ResumeComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource: MatTableDataSource<PeriodicElement>;
+  addresses = [];
+  cities = [];
+  displayedColumns: string[] = ['state', 'stateQty',
+    'city', 'cityQty'];
+  dataSource: MatTableDataSource<any>;
+  loading = false;
   periods = [
     'Ontem',
     'Hoje',
@@ -101,15 +87,111 @@ export class ResumeComponent implements OnInit {
   public lineChartType = 'line';
   public lineChartPlugins = [];
   resultsLength = 1;
+  states = [];
+  statesTableData = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-  }
+  constructor(private addressService: AddressService,
+    private router: Router) {}
 
   ngOnInit() {
+    this.getPfAddresses();
+  }
+
+  applyPaginator() {
+    this.loading = false;
+    this.dataSource = new MatTableDataSource(this.statesTableData)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  createArraysOfAddresses(addressesPf, addressesPj) {
+    const addresses = addressesPf.concat(addressesPj);
+    addresses.forEach(element => {
+      this.states.push(element.estado);
+      this.cities.push(element.cidade);
+    });
+    this.states.sort();
+    this.cities.sort();
+    this.createStatesObjs();
+    this.applyPaginator();
+  }
+
+  createCitiesObjs() {
+    let prev, a = [], b = [];
+    for (let i = 0; i < this.cities.length; i++ ) {
+        if ((this.cities[i] !== prev) && this.cities[i] !== '') {
+            a.push(this.cities[i]);
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = this.cities[i];
+    }
+    const statesLenght = this.statesTableData.length;
+    a.forEach((el, idx) => {
+      if (idx < statesLenght) {
+        this.statesTableData[idx].city = el;
+        this.statesTableData[idx].cityQty = b[idx];
+      } else {
+        this.statesTableData.push({
+          city: el,
+          cityQty: b[idx]
+        });
+      }
+    });
+    this.applyPaginator();
+  }
+
+  createStatesObjs() {
+    let prev, a = [], b = [];
+    for (let i = 0; i < this.states.length; i++ ) {
+        if ((this.states[i] !== prev) && this.states[i] !== '') {
+            a.push(this.states[i]);
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = this.states[i];
+    }
+    a.forEach((el, idx) => {
+        this.statesTableData.push({
+          state: el,
+          stateQty: b[idx]
+        })
+      }
+    );
+    this.createCitiesObjs();
+  }
+
+  getPfAddresses() {
+    this.loading = true;
+    this.addressService.indexPf().subscribe(
+      addresses => this.getPjAddresses(addresses),
+      _ => {
+        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+        this.loading = false;
+      }
+    );
+  }
+
+  getPjAddresses(addresses) {
+    this.addressService.indexPj().subscribe(
+      addresses => this.addresses = addresses,
+      _ => {
+        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+        this.loading = false;
+      },
+      () => this.createArraysOfAddresses(this.addresses, addresses)
+    );
+  }
 }
+
