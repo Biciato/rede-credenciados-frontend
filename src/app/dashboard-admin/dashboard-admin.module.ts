@@ -22,6 +22,7 @@ import { FluxComponent } from './financial/flux/flux.component';
 import { PayedUsedComponent } from './financial/payed-used/payed-used.component';
 import { DetailsDialog } from './financial/payed-used/details.dialog';
 import { NewActivityDialog } from './especialidades/new-activity.dialog';
+import { ActivitiesTableComponent } from './resume/activities-table/activities-table.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { NewActivityDialog } from './especialidades/new-activity.dialog';
     FluxComponent,
     PayedUsedComponent,
     DetailsDialog,
-    NewActivityDialog
+    NewActivityDialog,
+    ActivitiesTableComponent
   ],
   exports: [
     CredenciadosComponent,

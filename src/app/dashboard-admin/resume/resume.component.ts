@@ -5,6 +5,7 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label, MultiDataSet } from 'ng2-charts';
 import { AddressService } from 'src/app/services/address/address.service';
 import { Router } from '@angular/router';
+import { ActivityService } from 'src/app/services/activity/activity.service';
 
 @Component({
   selector: 'app-resume',
@@ -12,11 +13,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./resume.component.scss']
 })
 export class ResumeComponent implements OnInit {
+  activitiesTableData = [];
   addresses = [];
   cities = [];
-  displayedColumns: string[] = ['state', 'stateQty',
+  displayedColumnsState: string[] = ['state', 'stateQty',
     'city', 'cityQty'];
-  dataSource: MatTableDataSource<any>;
+  dataSourceState: MatTableDataSource<any>;
+  displayedColumnsActivities: string[] = ['name', 'total'];
+  dataSourceActivities: MatTableDataSource<any>;
   loading = false;
   periods = [
     'Ontem',
@@ -89,27 +93,44 @@ export class ResumeComponent implements OnInit {
   resultsLength = 1;
   states = [];
   statesTableData = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginatorState: MatPaginator;
+  @ViewChild(MatPaginator) paginatorActivities: MatPaginator;
+  @ViewChild(MatSort) sortState: MatSort;
+  @ViewChild(MatSort) sortActivities: MatSort;
   constructor(private addressService: AddressService,
-    private router: Router) {}
+    private router: Router, private actService: ActivityService) {}
 
   ngOnInit() {
     this.getPfAddresses();
+    this.getActivitiesPf();
   }
 
-  applyPaginator() {
+  applyPaginatorState() {
     this.loading = false;
-    this.dataSource = new MatTableDataSource(this.statesTableData)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSourceState = new MatTableDataSource(this.statesTableData)
+    this.dataSourceState.paginator = this.paginatorState;
+    this.dataSourceState.sort = this.sortState;
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilterState(filterValue: string) {
+    this.dataSourceState.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.dataSourceState.paginator) {
+      this.dataSourceState.paginator.firstPage();
+    }
+  }
+
+  applyPaginatorActivities() {
+    this.loading = false;
+    this.dataSourceActivities.paginator = this.paginatorActivities;
+    this.dataSourceActivities.sort = this.sortActivities;
+  }
+
+  applyFilterActivities(filterValue: string) {
+    this.dataSourceActivities.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceActivities.paginator) {
+      this.dataSourceActivities.paginator.firstPage();
     }
   }
 
@@ -122,7 +143,7 @@ export class ResumeComponent implements OnInit {
     this.states.sort();
     this.cities.sort();
     this.createStatesObjs();
-    this.applyPaginator();
+    this.applyPaginatorState();
   }
 
   createCitiesObjs() {
@@ -148,7 +169,7 @@ export class ResumeComponent implements OnInit {
         });
       }
     });
-    this.applyPaginator();
+    this.applyPaginatorState();
   }
 
   createStatesObjs() {
@@ -170,6 +191,38 @@ export class ResumeComponent implements OnInit {
       }
     );
     this.createCitiesObjs();
+  }
+
+  concatActObjs(activitiesPf, activitiesPj) {
+    for (let prop in activitiesPf) {
+      if (activitiesPj.hasOwnProperty(prop)) {
+        activitiesPf[prop] = activitiesPf[prop] + activitiesPj[prop];
+      }
+      const obj = {
+        name: prop,
+        qty: activitiesPf[prop]
+      }
+      this.activitiesTableData.push(obj);
+    }
+    for (let prop in activitiesPj) {
+      if (!activitiesPf.hasOwnProperty(prop)) {
+        const obj = {
+          name: prop,
+          qty: activitiesPj[prop]
+        }
+        this.activitiesTableData.push(obj);
+      }
+    }
+    this.dataSourceActivities = new MatTableDataSource(this.activitiesTableData);
+    this.applyPaginatorActivities();
+  }
+
+  getActivitiesPf() {
+    this.actService.activitiesPfCount().subscribe(activitiesPf => this.getActivitiesPJ(activitiesPf));
+  }
+
+  getActivitiesPJ(activitiesPf) {
+    this.actService.activitiesPjCount().subscribe(activitiesPj => this.concatActObjs(activitiesPf, activitiesPj));
   }
 
   getPfAddresses() {

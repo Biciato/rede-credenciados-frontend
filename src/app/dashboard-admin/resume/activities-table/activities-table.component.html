@@ -1,0 +1,37 @@
+<!--Card da tabela da Porcentagem dos Bairros-->
+<mat-card>
+  <mat-card-content>
+    <!--Tabela Bairros-->
+    <table mat-table [dataSource]="dataSourceActivities" class="mat-elevation-z8"
+      multiTemplateDataRows
+      matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef> Por Estado </th>
+        <td mat-cell *matCellDef="let row"> {{row.state}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalState">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let row"> {{row.stateQty}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef> Por cidade </th>
+        <td mat-cell *matCellDef="let row"> {{row.city}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalCity">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let row"> {{row.cityQty}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsActivities"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsActivities;"></tr>
+    </table>
+
+    <br>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </mat-card-content>
+</mat-card>
+<!--Card da tabela da Porcentagem dos Bairros-->
