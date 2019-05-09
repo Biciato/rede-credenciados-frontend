@@ -187,10 +187,9 @@
     <section class="tela-inicial-section">
       <div class="row">
         <div class="col-md-6" id="table">
-          <!--Card da tabela da Porcentagem dos Bairros-->
           <mat-card>
             <mat-card-content>
-              <!--Tabela Bairros-->
+              <!--Locals Table-->
               <table mat-table [dataSource]="dataSourceState" class="mat-elevation-z8"
                 multiTemplateDataRows
                 matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
@@ -223,7 +222,6 @@
               <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
             </mat-card-content>
           </mat-card>
-          <!--Card da tabela da Porcentagem dos Bairros-->
         </div>
         <div class="col-md-6" id="canvas-rosca">
           <!--Card do Gráfico das idades-->
@@ -250,20 +248,20 @@
           <app-activities-table></app-activities-table>
         </div>
         <div class="col-md-6" id="canvas-rosca">
-          <!--Card do Gráfico das idades-->
+          <!--Card do Gráfico do Sexo-->
           <mat-card>
             <mat-card-content>
               <mat-card-header>
                 <mat-card-title class="title">Sexo dos Usuários</mat-card-title>
               </mat-card-header>
               <canvas baseChart width="572" height="305"
-                  [data]="doughnutChartData"
-                  [labels]="doughnutChartLabels"
-                  [chartType]="doughnutChartType">
+                  [data]="doughnutChartGenderData"
+                  [labels]="doughnutChartGenderLabels"
+                  [chartType]="doughnutChartGenderType">
                 </canvas>
             </mat-card-content>
           </mat-card>
-          <!--Card do Gráfico das idades-->
+          <!--Card do Gráfico do Sexo-->
         </div>
       </div>
     </section>

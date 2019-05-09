@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 import { ModalService } from 'src/app/services/modal/modal.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './messages-admin.component.html',
   styleUrls: ['./messages-admin.component.scss']
 })
-export class MessagesAdminComponent implements OnInit {
+export class MessagesAdminComponent {
   jobsFull = [];
   jobTags = [];
   loading = false;
@@ -29,20 +29,17 @@ export class MessagesAdminComponent implements OnInit {
   ) {
     this.actService.all()
       .subscribe(
-          activityList => activityList.map(
-            atividade => this.jobsFull.push(atividade)),
-          _ => {
-            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-            this.loading = false;
-          },
-          () => this.loading = false
+        activityList => activityList.map(
+          atividade => this.jobsFull.push(atividade)),
+        _ => {
+          this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+          this.loading = false;
+        },
+        () => this.loading = false
       );
   }
 
   get f() { return this.messageForm.controls; }
-
-  ngOnInit() {
-  }
 
   closeModal(id) {
     this.modalService.close(id);

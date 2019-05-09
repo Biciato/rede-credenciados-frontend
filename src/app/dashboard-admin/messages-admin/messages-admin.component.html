@@ -1,65 +1,65 @@
 <div id="cardPriceTab" class="card-dash">
-    <!-- Card  Header -->
-    <div id="cardPriceTabHeader" class="card-header-dash"><h3>Enviar Mensagens</h3></div>
-    <!-- Card  Header -->
-    <!-- Card  Body -->
-    <div id="cardPriceTabBody" class="card-body-dash">
-        <form [formGroup]="messageForm">
-            <div class="group">
-                <input type="text" formControlName="title">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label [className]="f.title.value === '' ? 'input-empty' : 'input-not-empty'">
-                    Título
-                </label>
-                <div *ngIf="f.title.invalid && (f.title.dirty || f.title.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="f.title.errors.required">
-                        *campo obrigatório.
-                    </div>
-                </div>
-            </div>
-            <div class="group">
-                <textarea type="text" formControlName="message"></textarea>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label [className]="f.message.value === '' ? 'input-empty' : 'input-not-empty'">
-                    Mensagem
-                </label>
-                <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="f.message.errors.required">
-                        *campo obrigatório.
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        <div id="tags">
-            <span *ngFor="let jobTag of jobTags; let i = index">
-                {{ jobTag }}
-                <i class="fas fa-times" (click)="removeJob(i)"></i>
-            </span>
+  <!-- Card  Header -->
+  <div id="cardPriceTabHeader" class="card-header-dash"><h3>Enviar Mensagens</h3></div>
+  <!-- Card  Header -->
+  <!-- Card  Body -->
+  <div id="cardPriceTabBody" class="card-body-dash">
+    <form [formGroup]="messageForm">
+      <div class="group">
+        <input type="text" formControlName="title">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label [className]="f.title.value === '' ? 'input-empty' : 'input-not-empty'">
+          Título
+        </label>
+        <div *ngIf="f.title.invalid && (f.title.dirty || f.title.touched)"
+          class="alert alert-danger">
+          <div *ngIf="f.title.errors.required">
+            *campo obrigatório.
+          </div>
         </div>
-        <mat-chip-list style="margin: 1rem auto">
-            <mat-chip color="primary" selected (click)="openModal('modal-atividades')"
-                style="cursor: pointer">
-                Filtrar Especialidades
-            </mat-chip>
-        </mat-chip-list>
-        <button mat-raised-button color="warn" (click)="sendMessage()">ENVIAR</button>
+      </div>
+      <div class="group">
+        <textarea type="text" formControlName="message"></textarea>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label [className]="f.message.value === '' ? 'input-empty' : 'input-not-empty'">
+          Mensagem
+        </label>
+        <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)"
+          class="alert alert-danger">
+          <div *ngIf="f.message.errors.required">
+            *campo obrigatório.
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div id="tags">
+      <span *ngFor="let jobTag of jobTags; let i = index">
+        {{ jobTag }}
+        <i class="fas fa-times" (click)="removeJob(i)"></i>
+      </span>
     </div>
+    <mat-chip-list style="margin: 1rem auto">
+      <mat-chip color="primary" selected (click)="openModal('modal-atividades')"
+        style="cursor: pointer">
+        Filtrar Especialidades
+      </mat-chip>
+    </mat-chip-list>
+    <button mat-raised-button color="warn" (click)="sendMessage()">ENVIAR</button>
+  </div>
 </div>
 
 <!-- Loading Status  -->
 <div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+    </div>
+  </ng-template>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
-        [template]="customLoadingTemplate"></ngx-loading>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"></ngx-loading>
 </div>
 <!-- Loading Status -->
 <app-modal id="modal-atividades">

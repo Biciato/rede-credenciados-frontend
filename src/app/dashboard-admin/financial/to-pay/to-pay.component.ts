@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { TO_PAY_MOCK_DATA } from './to-pay-mock-data';
@@ -19,7 +19,7 @@ export interface ToPayData {
   templateUrl: './to-pay.component.html',
   styleUrls: ['./to-pay.component.scss']
 })
-export class ToPayComponent implements OnInit {
+export class ToPayComponent {
   displayedColumns: string[] = ['nTitulo', 'sacado', 'situacao', 'vencimento', 'pagamento',
       'referente', 'indicacoes', 'individual', 'total'];
   dataSource: MatTableDataSource<ToPayData>;
@@ -28,10 +28,6 @@ export class ToPayComponent implements OnInit {
 
   constructor() {
     this.applyPaginator();
-  }
-
-  ngOnInit() {
-
   }
 
   applyPaginator() {

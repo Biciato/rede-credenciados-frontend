@@ -1,4 +1,5 @@
 <div class="card-dash">
+  <!-- Card Title -->
   <div class="card-header-dash"><h3>Especialidades</h3></div>
   <div class="card-body-dash">
     <div>
@@ -11,13 +12,13 @@
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
 
-        <!-- ID Column -->
+        <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
           <td mat-cell *matCellDef="let row"> {{row.atividade}} </td>
         </ng-container>
 
-        <!-- Progress Column -->
+        <!-- Delete Column -->
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Excluir </th>
           <td mat-cell *matCellDef="let row"  style="text-align: center">
@@ -33,6 +34,7 @@
         </tr>
       </table>
     </div>
+    <!-- paginator -->
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <button mat-raised-button color="primary" (click)="openDialog()">
       <i class="fas fa-plus-square"></i>ESPECIALIDADE

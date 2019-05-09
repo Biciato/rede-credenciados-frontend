@@ -1,7 +1,9 @@
 <div class="card-dash">
+  <!-- Card Title -->
   <div class="card-header-dash"><h3>À Pagar</h3></div>
   <div class="card-body-dash">
     <div>
+      <!-- Search Input -->
       <mat-form-field style="width: 20%">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
@@ -11,13 +13,13 @@
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
 
-        <!-- ID Column -->
+        <!-- Title Number Column -->
         <ng-container matColumnDef="nTitulo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Nº Título </th>
           <td mat-cell *matCellDef="let row"> {{row.nTitulo}} </td>
         </ng-container>
 
-        <!-- Progress Column -->
+        <!-- Status Column -->
         <ng-container matColumnDef="situacao">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Situação </th>
           <td mat-cell *matCellDef="let row"> {{row.situacao}} </td>
@@ -29,37 +31,37 @@
           <td mat-cell *matCellDef="let row"> {{row.sacado}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- PayDay Column -->
         <ng-container matColumnDef="vencimento">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Vencimento </th>
           <td mat-cell *matCellDef="let row"> {{row.vencimento | date: 'dd/MM/yyyy'}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Payment Column -->
         <ng-container matColumnDef="pagamento">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Pagamento </th>
           <td mat-cell *matCellDef="let row"> {{row.pagamento | date: 'dd/MM/yyyy'}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Reference Column -->
         <ng-container matColumnDef="referente">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Referente </th>
           <td mat-cell *matCellDef="let row"> {{row.referente}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Indications Column -->
         <ng-container matColumnDef="indicacoes">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Indicacões </th>
           <td mat-cell *matCellDef="let row"> {{row.indicacoes}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Individual Column -->
         <ng-container matColumnDef="individual">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Individual </th>
           <td mat-cell *matCellDef="let row"> {{row.individual | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Total Column -->
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
           <td mat-cell *matCellDef="let row"> {{getTotalRow(row) | currencyformat}} </td>
@@ -90,7 +92,7 @@
         <tr mat-footer-row *matFooterRowDef="['total-to-pay']"></tr>
         <tr mat-footer-row *matFooterRowDef="['referencia']"></tr>
       </table>
-
+      <!-- Paginator -->
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </div>

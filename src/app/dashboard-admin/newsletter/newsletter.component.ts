@@ -13,9 +13,9 @@ export interface NewsletterData {
 }
 
 @Component({
-    selector: 'app-newsletter',
-    templateUrl: 'newsletter.component.html',
-    styleUrls: ['./newsletter.component.scss']
+  selector: 'app-newsletter',
+  templateUrl: 'newsletter.component.html',
+  styleUrls: ['./newsletter.component.scss']
 })
 export class NewsletterComponent implements OnInit {
     displayedColumns: string[] = ['name', 'email', 'date',
@@ -37,7 +37,7 @@ export class NewsletterComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      // getting token from route parameters and pj and activities from server
+      // getting token from local storage
       this.token = JSON.parse(window.localStorage.getItem('user_rede_credenciados')).token;
       this.getNewsletter();
     }
@@ -57,19 +57,6 @@ export class NewsletterComponent implements OnInit {
       }
     }
 
-    getNewsletter() {
-      this.loading = true;
-      this.newService.index(this.token).subscribe(
-        news => {
-          this.applyPaginator(news);
-          this.loading = false;
-        },
-        () => {
-          this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-          this.loading = false;
-        });
-    }
-
     deleteNewsletter(newsletter) {
       this.loading = true;
       this.newService.delete(newsletter.id, this.token).subscribe(
@@ -82,6 +69,19 @@ export class NewsletterComponent implements OnInit {
           this.loading = false;
         }
       );
+    }
+
+    getNewsletter() {
+      this.loading = true;
+      this.newService.index(this.token).subscribe(
+        news => {
+          this.applyPaginator(news);
+          this.loading = false;
+        },
+        () => {
+          this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+          this.loading = false;
+        });
     }
 
 }

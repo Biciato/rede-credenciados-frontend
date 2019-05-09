@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -22,7 +22,7 @@ export interface ToReceiveData {
   templateUrl: './to-receive.component.html',
   styleUrls: ['./to-receive.component.scss']
 })
-export class ToReceiveComponent implements OnInit {
+export class ToReceiveComponent {
   displayedColumns: string[] = ['nTitulo', 'situacao', 'formPgto', 'titular',
     'vencimento', 'pagamento', 'referente', 'original', 'acrescimo',
     'decrescimo', 'total'];
@@ -36,10 +36,6 @@ export class ToReceiveComponent implements OnInit {
   ) {
     this.loading = true;
     this.applyPaginator();
-  }
-
-  ngOnInit() {
-
   }
 
   applyPaginator() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SimpleUserService } from 'src/app/services/simple-user/simple-user.service';
 
@@ -22,7 +22,7 @@ export interface FluxData {
   templateUrl: './flux.component.html',
   styleUrls: ['./flux.component.scss']
 })
-export class FluxComponent implements OnInit {
+export class FluxComponent {
   displayedColumns: string[] = ['operacao', 'jan', 'fev', 'mar', 'abr', 'mai',
     'jun', 'jul', 'ago', 'set', 'out','nov', 'dez', 'total'];
   dataSource: MatTableDataSource<FluxData>;
@@ -61,10 +61,6 @@ export class FluxComponent implements OnInit {
 
   constructor(private simpleUserService: SimpleUserService) {
     this.applyPaginator();
-  }
-
-  ngOnInit() {
-
   }
 
   applyPaginator() {

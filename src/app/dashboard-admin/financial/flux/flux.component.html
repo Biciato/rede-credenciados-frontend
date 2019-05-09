@@ -1,4 +1,5 @@
 <div class="card-dash">
+  <!-- Card Title -->
   <div class="card-header-dash"><h3>Clientes</h3></div>
   <div class="card-body-dash">
     <div>
@@ -11,70 +12,70 @@
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 
-        <!-- ID Column -->
+        <!-- Operation Column -->
         <ng-container matColumnDef="operacao">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Operação </th>
           <td mat-cell *matCellDef="let index = index"> {{ index === 0 ? 'Crédito' : 'Débito' }} </td>
           <td mat-footer-cell *matFooterCellDef> Total </td>
         </ng-container>
 
-        <!-- Progress Column -->
+        <!-- Jan Column -->
         <ng-container matColumnDef="jan">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Jan/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.jan | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalFev() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- fev Column -->
         <ng-container matColumnDef="fev">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Fev/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.fev | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalMar() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- mar Column -->
         <ng-container matColumnDef="mar">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Mar/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.mar | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalMar() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Abr Column -->
         <ng-container matColumnDef="abr">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Abr/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.abr | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalAbr() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Mai Column -->
         <ng-container matColumnDef="mai">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Mai/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.mai | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalMai() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Jun Column -->
         <ng-container matColumnDef="jun">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Jun/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.jun | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalJun() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Jul Column -->
         <ng-container matColumnDef="jul">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Jul/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.jul | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalJul() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Ago Column -->
         <ng-container matColumnDef="ago">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Ago/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.ago | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalAgo() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Set Column -->
         <ng-container matColumnDef="set">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Set/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.set | currencyformat}} </td>
@@ -88,21 +89,21 @@
           <td mat-footer-cell *matFooterCellDef> {{getTotalOut() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Nov Column -->
         <ng-container matColumnDef="nov">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Nov/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.nov | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalNov() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Dez Column -->
         <ng-container matColumnDef="dez">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Dez/19 </th>
           <td mat-cell *matCellDef="let row"> {{row.dez | currencyformat}} </td>
           <td mat-footer-cell *matFooterCellDef> {{getTotalDez() | currencyformat}} </td>
         </ng-container>
 
-        <!-- Color Column -->
+        <!-- Total Column -->
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
           <td mat-cell *matCellDef="let index = index">
@@ -117,7 +118,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
       </table>
-
+      <!-- Paginator -->
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </div>

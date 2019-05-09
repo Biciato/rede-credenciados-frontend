@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SimpleUserService } from 'src/app/services/simple-user/simple-user.service';
+import { Router } from '@angular/router';
 
 export interface ClientData {
   nome: string;
@@ -16,25 +17,31 @@ export interface ClientData {
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })
-export class ClientsComponent implements OnInit {
+export class ClientsComponent {
   displayedColumns: string[] = ['nome', 'email', 'tel', 'cidade', 'estado',
-      'pagamento_status'];
+    'pagamento_status'];
   dataSource: MatTableDataSource<ClientData>;
+  loading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private simpleUserService: SimpleUserService) {
-    this.simpleUserService.index().subscribe((clients: Array<ClientData>) => this.applyPaginator(clients));
-  }
-
-  ngOnInit() {
-
+  constructor(private simpleUserService: SimpleUserService,
+    private router: Router) {
+    this.loading = true;
+    this.simpleUserService.index().subscribe(
+      (clients: Array<ClientData>) => this.applyPaginator(clients),
+      () => {
+        this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+        this.loading = false;
+      }
+    );
   }
 
   applyPaginator(clients) {
     this.dataSource = new MatTableDataSource(clients)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.loading = false;
   }
 
   applyFilter(filterValue: string) {

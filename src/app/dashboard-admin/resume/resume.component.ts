@@ -7,6 +7,8 @@ import { AddressService } from 'src/app/services/address/address.service';
 import { Router } from '@angular/router';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 
+import { GENDER_CHART_DATA } from './gender-chart-data';
+
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html',
@@ -38,10 +40,13 @@ export class ResumeComponent implements OnInit {
     '71-80',
     '80+'
   ];
+  public doughnutChartGenderLabels = GENDER_CHART_DATA.doughnutChartLabels;
   public doughnutChartData: MultiDataSet = [
     [10, 10, 10, 10, 10, 10, 10],
   ];
+  public doughnutChartGenderData = GENDER_CHART_DATA.doughnutChartData;
   public doughnutChartType: ChartType = 'doughnut';
+  public doughnutChartGenderType = GENDER_CHART_DATA.doughnutChartType;
   // Line Chart
   public lineChartData: ChartDataSets[] = [
     { data: [0, 10, 5, 2, 20, 30, 45], label: 'VENDAS' },

@@ -11,38 +11,35 @@ import { MessagesComponent } from './messages/messages.component';
 import { MyAdsComponent } from './my-ads/my-ads.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { UnityInformationComponent } from './unity-information/unity-information.component';
-import { UnityRegisterComponent } from './unity-information/unity-register.component';
 import { UserInformationComponent } from './user-information/user-information.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        SharedModule,
-        ReactiveFormsModule
-    ],
-    exports: [
-        CotationsComponent,
-        DashboardComponent,
-        FriendIndicationComponent,
-        MessagesComponent,
-        MyAdsComponent,
-        SidenavComponent,
-        UnityInformationComponent,
-        UnityRegisterComponent,
-        UserInformationComponent
-    ],
-    declarations: [
-        CotationsComponent,
-        DashboardComponent,
-        FriendIndicationComponent,
-        MessagesComponent,
-        MyAdsComponent,
-        SidenavComponent,
-        UnityInformationComponent,
-        UnityRegisterComponent,
-        UserInformationComponent
-    ],
-    providers: [],
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    CotationsComponent,
+    DashboardComponent,
+    FriendIndicationComponent,
+    MessagesComponent,
+    MyAdsComponent,
+    SidenavComponent,
+    UnityInformationComponent,
+    UserInformationComponent
+  ],
+  declarations: [
+    CotationsComponent,
+    DashboardComponent,
+    FriendIndicationComponent,
+    MessagesComponent,
+    MyAdsComponent,
+    SidenavComponent,
+    UnityInformationComponent,
+    UserInformationComponent
+  ],
+  providers: [],
 })
 export class DashboardModule { }

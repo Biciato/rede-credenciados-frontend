@@ -1,87 +1,87 @@
 <section>
-    <div id="avatarCol" >
-        <!-- Card Avatar -->
-        <div id="cardAvatar" class="card-dash">
-            <!-- Card Header -->
-            <div id="cardAvatarHeader" class="card-header-dash"><h3>Foto Perfil</h3></div>
-            <!-- Card Header -->
-            <!-- Card Body -->
-            <div id="cardAvatarBody" class="card-body-dash">
-                <img [src]="imageToShow" alt="User Photo">
-                <p><small>A foto do perfil será mudada automaticamente</small></p>
-                <div>
-                    <input type="file" name="avatar" id="avatar" style="display: none" (change)="uploadAvatar()">
-                    <button (click)="chooseAvatar()" class="rd-button-dash"
-                        style="background-color: #33b5e5">UPLOAD NOVA FOTO</button>
-                    <button (click)="deleteAvatar()" class="rd-button-dash">DELETAR</button>
-                </div>
-            </div>
-            <!-- Card Body -->
+  <div id="avatarCol" >
+    <!-- Card Avatar -->
+    <div id="cardAvatar" class="card-dash">
+      <!-- Card Header -->
+      <div id="cardAvatarHeader" class="card-header-dash"><h3>Foto Perfil</h3></div>
+      <!-- Card Header -->
+      <!-- Card Body -->
+      <div id="cardAvatarBody" class="card-body-dash">
+        <img [src]="imageToShow" alt="User Photo">
+        <p><small>A foto do perfil será mudada automaticamente</small></p>
+        <div>
+          <input type="file" name="avatar" id="avatar" style="display: none" (change)="uploadAvatar()">
+          <button (click)="chooseAvatar()" class="rd-button-dash"
+            style="background-color: #33b5e5">UPLOAD NOVA FOTO</button>
+          <button (click)="deleteAvatar()" class="rd-button-dash">DELETAR</button>
         </div>
-        <!-- Card Avatar -->
+      </div>
+      <!-- Card Body -->
     </div>
-    <app-user-data-forms></app-user-data-forms>
+    <!-- Card Avatar -->
+  </div>
+  <app-user-data-forms></app-user-data-forms>
 </section>
 <app-modal id="modal-pdf">
-    <embed [src]="fileToShow" type="application/pdf"
-        style="width: 90vw; height: 45vw;">
+  <embed [src]="fileToShow" type="application/pdf"
+    style="width: 90vw; height: 45vw;">
 </app-modal>
 <!-- Modal -->
 <app-modal id="modal-aviso-imagem">
-    <div class="confirm-modal">
-      <div id="modal">
-        <p>O formato de arquivo deve ser jpg e de tamanho inferior a 1 mb</p>
-        <button (click)="closeModal('modal-aviso-imagem')"><i class="fas fa-times"></i>Fechar</button>
-      </div>
+  <div class="confirm-modal">
+    <div id="modal">
+      <p>O formato de arquivo deve ser jpg e de tamanho inferior a 1 mb</p>
+      <button (click)="closeModal('modal-aviso-imagem')"><i class="fas fa-times"></i>Fechar</button>
     </div>
+  </div>
 </app-modal>
 <!-- Modal -->
 <app-modal id="modal-aviso-arquivo">
-    <div class="confirm-modal">
-      <div id="modal">
-        <p>O formato de arquivo deve ser pdf ou jpg.</p>
-        <button (click)="closeModal('modal-aviso-arquivo')"><i class="fas fa-times"></i>Fechar</button>
-      </div>
+  <div class="confirm-modal">
+    <div id="modal">
+      <p>O formato de arquivo deve ser pdf ou jpg.</p>
+      <button (click)="closeModal('modal-aviso-arquivo')"><i class="fas fa-times"></i>Fechar</button>
     </div>
+  </div>
 </app-modal>
 <!-- Modal -->
 <app-modal id="modal-sem-arquivo">
-    <div class="confirm-modal">
-      <div id="modal">
-        <p>Você não possui nenhum pdf salvo.</p>
-        <button (click)="closeModal('modal-sem-arquivo')"><i class="fas fa-times"></i>Fechar</button>
-      </div>
+  <div class="confirm-modal">
+    <div id="modal">
+      <p>Você não possui nenhum pdf salvo.</p>
+      <button (click)="closeModal('modal-sem-arquivo')"><i class="fas fa-times"></i>Fechar</button>
     </div>
+  </div>
 </app-modal>
 <!-- Modal -->
 <app-modal id="modal-delete-arquivo">
-    <div id="modalHeader">
-        <h2>SELECIONE OS ARQUIVOS PARA REMOVER</h2>
+  <div id="modalHeader">
+      <h2>SELECIONE OS ARQUIVOS PARA REMOVER</h2>
+  </div>
+  <div id="modalBody">
+    <div class="col-1">
+      <div *ngFor="let arquivo of arquivos; let i = index">
+        <label [for]="i">
+          <input type="checkbox" [name]="arquivo"
+          class="checkbox" (click)="addOrRemove($event)" [checked]="arquivosSelected.includes(arquivo)">
+          {{ arquivo }}
+        </label>
+      </div>
     </div>
-    <div id="modalBody">
-        <div class="col-1">
-            <div *ngFor="let arquivo of arquivos; let i = index">
-                <label [for]="i">
-                    <input type="checkbox" [name]="arquivo"
-                    class="checkbox" (click)="addOrRemove($event)" [checked]="arquivosSelected.includes(arquivo)">
-                    {{ arquivo }}
-                </label>
-            </div>
-        </div>
-        <div class="col-2">
-            <button (click)="removeArquivo()" class="rd-button-dash">SALVAR</button>
-            <button (click)="closeModal('modal-delete-arquivo')" class="rd-button-dash">FECHAR</button>
-        </div>
+    <div class="col-2">
+      <button (click)="removeArquivo()" class="rd-button-dash">SALVAR</button>
+      <button (click)="closeModal('modal-delete-arquivo')" class="rd-button-dash">FECHAR</button>
     </div>
+  </div>
 </app-modal>
 <!-- Loading Status -->
 <div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+    </div>
+  </ng-template>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" [template]="customLoadingTemplate"></ngx-loading>
 </div>
 <!-- Loading Status -->
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 
@@ -20,7 +20,7 @@ export interface PayedUsedData {
   templateUrl: './payed-used.component.html',
   styleUrls: ['./payed-used.component.scss']
 })
-export class PayedUsedComponent implements OnInit {
+export class PayedUsedComponent {
   displayedColumns: string[] = ['situacao', 'formPgto', 'titular', 'vencimento', 'valor',
       'saldo', 'detalhes'];
   dataSource: MatTableDataSource<PayedUsedData>;
@@ -29,10 +29,6 @@ export class PayedUsedComponent implements OnInit {
 
   constructor(public dialog: MatDialog) {
     this.applyPaginator();
-  }
-
-  ngOnInit() {
-
   }
 
   applyPaginator() {
