@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import { AddressService } from 'src/app/services/address/address.service';
 import { Router } from '@angular/router';
 import { ActivityService } from 'src/app/services/activity/activity.service';
 
@@ -40,7 +39,6 @@ export class ActivitiesTableComponent implements OnInit {
   }
 
   createDataTableSource(report) {
-    console.log(report);
     for (let i = 0; i < report[0].length; i++) {
       this.activitiesTableData.push(
         {
