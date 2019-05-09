@@ -23,6 +23,12 @@ import { PayedUsedComponent } from './financial/payed-used/payed-used.component'
 import { DetailsDialog } from './financial/payed-used/details.dialog';
 import { NewActivityDialog } from './especialidades/new-activity.dialog';
 import { ActivitiesTableComponent } from './resume/activities-table/activities-table.component';
+import { ShippingProcessingComponent } from './communication/shipping-processing/shipping-processing.component';
+import { ShippingReportComponent } from './communication/shipping-report/shipping-report.component';
+import { FeedbackProcessingComponent } from './communication/feedback-processing/feedback-processing.component';
+import { FeedbackReportComponent } from './communication/feedback-report/feedback-report.component';
+import { RpsProcessingComponent } from './communication/rps-processing/rps-processing.component';
+import { RpsReportComponent } from './communication/rps-report/rps-report.component';
 
 @NgModule({
   imports: [
@@ -50,7 +56,13 @@ import { ActivitiesTableComponent } from './resume/activities-table/activities-t
     PayedUsedComponent,
     DetailsDialog,
     NewActivityDialog,
-    ActivitiesTableComponent
+    ActivitiesTableComponent,
+    ShippingProcessingComponent,
+    ShippingReportComponent,
+    FeedbackProcessingComponent,
+    FeedbackReportComponent,
+    RpsProcessingComponent,
+    RpsReportComponent
   ],
   exports: [
     CredenciadosComponent,

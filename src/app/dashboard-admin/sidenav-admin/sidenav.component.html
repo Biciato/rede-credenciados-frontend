@@ -25,10 +25,11 @@
     <li [routerLink]="['/dashboard-admin/resumo-indicação']" (click)="toggleMenu(false)">
       <i class="far fa-hand-point-up"></i>Resumo Indicações
     </li>
-    <li (click)="toggleMenu(true)">
-      <i class="fas fa-dollar-sign"></i>Financeiro<i [ngClass]="isToggled ? 'fas fa-angle-down' : 'fas fa-angle-right'"></i>
+    <li (click)="toggleMenu('financial')">
+      <i class="fas fa-dollar-sign"></i>Financeiro<i [ngClass]="isToggledFinancial ?
+        'fas fa-angle-down' : 'fas fa-angle-right'"></i>
     </li>
-    <ul *ngIf="isToggled">
+    <ul *ngIf="isToggledFinancial">
       <li [routerLink]="['/dashboard-admin/financeiro-a-receber']">À Receber</li>
       <li [routerLink]="['/dashboard-admin/financeiro-a-pagar']">À pagar</li>
       <li [routerLink]="['/dashboard-admin/financeiro-fluxo-caixa']">Fluxo Caixa Direto</li>
@@ -37,8 +38,17 @@
     <li [routerLink]="['/dashboard-admin/mensagens']" (click)="toggleMenu(false)">
       <i class="fas fa-comments"></i>Mensagens
     </li>
-    <li [routerLink]="['/dashboard-admin/comunicação']" (click)="toggleMenu(false)">
-      <i class="fas fa-phone-volume"></i>Comunicação
+    <li (click)="toggleMenu('com')">
+      <i class="fas fa-phone-volume"></i>Comunicação<i [ngClass]="isToggledCom ?
+        'fas fa-angle-down' : 'fas fa-angle-right'"></i>
     </li>
+    <ul *ngIf="isToggledCom">
+      <li [routerLink]="['/dashboard-admin/financeiro-a-receber']">Gerar Remessa</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-a-pagar']">Histórico Remessa</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-fluxo-caixa']">Processar Retorno</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-pagou-utilizou']">Histórico Retorno</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-fluxo-caixa']">Processar Lote RPS</li>
+      <li [routerLink]="['/dashboard-admin/financeiro-pagou-utilizou']">Histórico Lote RPS</li>
+    </ul>
   </ul>
 </section>

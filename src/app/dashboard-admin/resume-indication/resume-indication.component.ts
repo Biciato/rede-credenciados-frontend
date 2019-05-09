@@ -63,7 +63,14 @@ export class ResumeIndicationComponent implements OnInit {
 
   resend(indication) {
     this.loading = true;
-    this.friendIndService.sendEmail(indication)
+    this.friendIndService.sendEmail(
+        {
+          nome: indication.quem_indicou,
+          email: indication.forma_indicacao,
+          nome_indicado: indication.indicado,
+          mensagem: indication.mensagem
+        }
+      )
       .subscribe(
         _ => {
           this.update(indication.id);

@@ -7,12 +7,22 @@ import { Component } from '@angular/core';
 })
 
 export class SidenavAdminComponent {
-  isToggled = false;
+  isToggledFinancial = false;
+  isToggledCom = false;
 
   constructor() {}
 
   toggleMenu(menuTarget) {
-    menuTarget === true ? this.isToggled = !this.isToggled : this.isToggled = false;
+    if (menuTarget === 'com') {
+      this.isToggledFinancial = false;
+      this.isToggledCom = !this.isToggledCom
+    } else if (menuTarget === 'financial') {
+      this.isToggledCom = false;
+      this.isToggledFinancial = !this.isToggledFinancial
+    } else {
+      this.isToggledCom = false;
+      this.isToggledFinancial = false;
+    }
   }
 
 }

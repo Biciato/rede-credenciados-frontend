@@ -102,7 +102,6 @@ export class ResumeComponent implements OnInit {
 
   ngOnInit() {
     this.getPfAddresses();
-    this.getActivitiesPf();
   }
 
   applyPaginatorState() {
@@ -215,14 +214,6 @@ export class ResumeComponent implements OnInit {
     }
     this.dataSourceActivities = new MatTableDataSource(this.activitiesTableData);
     this.applyPaginatorActivities();
-  }
-
-  getActivitiesPf() {
-    this.actService.activitiesPfCount().subscribe(activitiesPf => this.getActivitiesPJ(activitiesPf));
-  }
-
-  getActivitiesPJ(activitiesPf) {
-    this.actService.activitiesPjCount().subscribe(activitiesPj => this.concatActObjs(activitiesPf, activitiesPj));
   }
 
   getPfAddresses() {
