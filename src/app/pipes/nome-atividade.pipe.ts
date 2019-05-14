@@ -8,8 +8,8 @@ export class NomeAtividadePipe implements PipeTransform {
   constructor() { }
 
   transform(string: string): string {
-      const newString = string.replace(/,/, ' | ');
+    const newString = string.replace(/,/, ' | ');
 
-      return newString;
+    return newString;
   }
 }

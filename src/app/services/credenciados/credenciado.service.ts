@@ -7,19 +7,19 @@ import { Credenciado } from '../../models/credenciado';
 
 @Injectable({providedIn: 'root'})
 export class CredenciadosService {
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    index() {
-        return this.http.get<Credenciado[]>(this.baseUrl + '/credenciados');
-    }
+  index() {
+    return this.http.get<Credenciado[]>(this.baseUrl + '/credenciados');
+  }
 
-    delete(id, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.delete(this.baseUrl + '/user/' + id, httpOptions);
-    }
+  delete(id, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    })};
+    return this.http.delete(this.baseUrl + '/user/' + id, httpOptions);
+  }
 }

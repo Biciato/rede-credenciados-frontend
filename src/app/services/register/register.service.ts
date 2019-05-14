@@ -14,42 +14,41 @@ const httpOptions = {
 @Injectable({providedIn: 'root'})
 export class RegisterService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    registerUser(user: User) {
-        return this.http.post<User>(this.baseUrl + '/register', user, httpOptions);
-    }
+  registerUser(user: User) {
+    return this.http.post<User>(this.baseUrl + '/register', user, httpOptions);
+  }
 
-    registerUserPropaganda(user) {
-        return this.http.post(this.baseUrl + '/user-propaganda-register', user);
-    }
+  registerUserPropaganda(user) {
+    return this.http.post(this.baseUrl + '/user-propaganda-register', user);
+  }
 
-    verifyEmail(user) {
-        return this.http.post(this.baseUrl + '/verify-email', user, httpOptions);
-    }
+  verifyEmail(user) {
+    return this.http.post(this.baseUrl + '/verify-email', user, httpOptions);
+  }
 
-    emailValidation(email) {
-        return this.http.post(this.baseUrl + '/email-validation', email);
-    }
+  emailValidation(email) {
+    return this.http.post(this.baseUrl + '/email-validation', email);
+  }
 
-    confirmEmail(id) {
+  confirmEmail(id) {
+    const date = new Date().toISOString().substr(0, 19).replace('T', ' ');
 
-        const date = new Date().toISOString().substr(0, 19).replace('T', ' ');
+    return this.http.post(this.baseUrl + '/confirm-email/' + id, {date}, httpOptions);
+  }
 
-        return this.http.post(this.baseUrl + '/confirm-email/' + id, {date}, httpOptions);
-    }
+  checkUserEmail(email) {
+    return this.http.get<any>(this.baseUrl + '/check-email/' + email, httpOptions);
+  }
 
-    checkUserEmail(email) {
-        return this.http.get<any>(this.baseUrl + '/check-email/' + email, httpOptions);
-    }
+  checkCpf(cpf) {
+    return this.http.post<any>(this.baseUrl + '/check-cpf', {cpf}, httpOptions);
+  }
 
-    checkCpf(cpf) {
-        return this.http.post<any>(this.baseUrl + '/check-cpf', {cpf}, httpOptions);
-    }
-
-    checkCnpj(cnpj) {
-        return this.http.post(this.baseUrl + '/check-cnpj', {cnpj}, httpOptions);
-    }
+  checkCnpj(cnpj) {
+    return this.http.post(this.baseUrl + '/check-cnpj', {cnpj}, httpOptions);
+  }
 }

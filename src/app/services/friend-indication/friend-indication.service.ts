@@ -6,28 +6,28 @@ import { environment } from 'src/environments/environment';
 @Injectable({providedIn: 'root'})
 export class FriendIndicationService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    create(indication) {
-        return this.http.post(this.baseUrl + '/friend-indication', indication);
-    }
+  create(indication) {
+    return this.http.post(this.baseUrl + '/friend-indication', indication);
+  }
 
-    update(id, date) {
-        return this.http.put(this.baseUrl + '/friend-indication/' + id, {date});
-    }
+  update(id, date) {
+    return this.http.put(this.baseUrl + '/friend-indication/' + id, {date});
+  }
 
-    index() {
-        return this.http.get(this.baseUrl + '/friend-indications');
-    }
+  index() {
+    return this.http.get(this.baseUrl + '/friend-indications');
+  }
 
-    sendEmail(dados) {
-        return this.http.post(this.baseUrl + '/friend-indication-email', dados);
-    }
+  sendEmail(dados) {
+    return this.http.post(this.baseUrl + '/friend-indication-email', dados);
+  }
 
-    sendSMS(dados) {
-        return this.http.post(this.baseUrl + '/friend-indication-sms', dados);
-    }
+  sendSMS(dados) {
+    return this.http.post(this.baseUrl + '/friend-indication-sms', dados);
+  }
 
 }

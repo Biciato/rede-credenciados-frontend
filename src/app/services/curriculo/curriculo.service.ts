@@ -6,15 +6,15 @@ import { environment } from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class CurriculoService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    store(curriculo, directory, filename) {
-        return this.http.post(`${this.baseUrl}/store-curriculo/${directory}/${filename}`, curriculo);
-    }
+  store(curriculo, directory, filename) {
+    return this.http.post(`${this.baseUrl}/store-curriculo/${directory}/${filename}`, curriculo);
+  }
 
-    create(curriculo) {
-        return this.http.post<any>(this.baseUrl + '/curriculo', curriculo);
-    }
+  create(curriculo) {
+    return this.http.post<any>(this.baseUrl + '/curriculo', curriculo);
+  }
 }

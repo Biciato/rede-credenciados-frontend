@@ -1,4 +1,1 @@
-export interface Atividade {
-    id?: number;
-    atividade: string;
-}
+export interface Atividade { atividade: string; }

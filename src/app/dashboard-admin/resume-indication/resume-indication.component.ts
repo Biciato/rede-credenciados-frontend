@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { FriendIndicationService } from 'src/app/services/friend-indication/friend-indication.service';
 import { Router } from '@angular/router';
@@ -18,9 +18,9 @@ export interface ResumeIndicationData {
   templateUrl: 'resume-indication.component.html',
   styleUrls: ['resume-indication.component.scss']
 })
-export class ResumeIndicationComponent implements OnInit {
-  displayedColumns: string[] = ['indicator', 'indicated', 'resend', 'dateInd', 'indForm',
-      'city', 'district', 'state'];
+export class ResumeIndicationComponent {
+  displayedColumns: string[] = ['indicator', 'indicated', 'resend', 'dateInd',
+    'indForm', 'city', 'district', 'state'];
   dataSource: MatTableDataSource<ResumeIndicationData>;
   loading = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,10 +30,6 @@ export class ResumeIndicationComponent implements OnInit {
     private router: Router) {
       this.loading = true;
       this.getindications();
-  }
-
-  ngOnInit() {
-
   }
 
   applyPaginator(indications) {
@@ -61,6 +57,7 @@ export class ResumeIndicationComponent implements OnInit {
     );
   }
 
+  // Resend Email to Friend Indication
   resend(indication) {
     this.loading = true;
     this.friendIndService.sendEmail(

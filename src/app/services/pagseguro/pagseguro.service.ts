@@ -5,11 +5,11 @@ import { environment } from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PagseguroService {
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    checkout(data) {
-        return this.http.post(this.baseUrl + '/pagseguro-checkout', data, data);
-    }
+  checkout(data) {
+    return this.http.post(this.baseUrl + '/pagseguro-checkout', data, data);
+  }
 }

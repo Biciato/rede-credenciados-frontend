@@ -6,7 +6,7 @@
   <!-- Card Body -->
   <div id="cardMessagesBody">
     <div>
-      <h3 style="color: black" *ngIf="mensagensLida">Você tem <b>{{mensagensLida.length}}</b> avisos não lidos</h3>
+      <h3 style="color: black">Você tem <b>{{countMensagensLida}}</b> avisos não lidos</h3>
       <button (click)="setAsReadCol()">Marcar como lido</button>
       <button (click)="setAsUnreadCol()">Marcar como não lido</button>
     </div>
@@ -31,7 +31,7 @@
                 <span class="checkmark"></span>
               </label>
             </th>
-            <th [style.color]="mensagem.mensagem_lida === '0' || mensagem.mensagem_lida === 0 ? 'blue': 'gray'" (click)="openMensagem(i)"
+            <th [style.color]="mensagem.mensagem_lida.includes(user.id) ? 'gray': 'blue'" (click)="openMensagem(i)"
               *ngIf="mensagem.titulo"
               ><strong>{{ mensagem.titulo ? mensagem.titulo : ''}}</strong></th>
             <th><strong>{{ mensagem.created_at }}</strong></th>

@@ -8,47 +8,49 @@ import { environment } from 'src/environments/environment';
 @Injectable({providedIn: 'root'})
 export class MensagemService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    create(message, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.post(this.baseUrl + '/mensagem', message, httpOptions);
-    }
+  create(message, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    })};
+    return this.http.post(this.baseUrl + '/mensagem', message, httpOptions);
+  }
 
-    mensagensUser(id, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.get<Mensagem[]>(this.baseUrl + `/mensagens/${id}`, httpOptions);
-    }
+  mensagensUser(user) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + user.token
+    })};
+    return this.http.get<Mensagem[]>(
+      this.baseUrl + `/mensagens/${user.id}/${user.personType}`, httpOptions
+    );
+  }
 
-    setAsRead(id, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.put(this.baseUrl + `/mensagens/${id}`, {mensagem_lida: 1}, httpOptions);
-    }
+  setAsRead(id, user) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + user.token
+    })};
+    return this.http.put(this.baseUrl + `/mensagens/${id}`, {mensagem_lida: user.id}, httpOptions);
+  }
 
-    setAsReadCol(ids, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.put(this.baseUrl + `/mensagens`, {mensagem_ids: ids}, httpOptions);
-    }
+  setAsReadCol(ids, user) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + user.token
+    })};
+    return this.http.put(this.baseUrl + `/mensagens/${user.id}`, {mensagem_ids: ids}, httpOptions);
+  }
 
-    setAsUnreadCol(ids, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
-        return this.http.put(this.baseUrl + `/mensagens-unread`, {mensagem_ids: ids}, httpOptions);
-    }
+  setAsUnreadCol(ids, user) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + user.token
+    })};
+    return this.http.put(this.baseUrl + `/mensagens-unread/${user.id}`, {mensagem_ids: ids}, httpOptions);
+  }
 }

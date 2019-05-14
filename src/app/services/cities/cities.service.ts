@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CitiesService {
 
-    constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-    getCities(id) {
-        const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`;
+  getCities(id) {
+    const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`;
 
-        return this.httpClient.get<Array<any>>(url);
-    }
+    return this.httpClient.get<Array<any>>(url);
+  }
 }

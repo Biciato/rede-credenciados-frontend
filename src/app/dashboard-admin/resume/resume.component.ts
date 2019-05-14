@@ -138,6 +138,7 @@ export class ResumeComponent implements OnInit {
     }
   }
 
+  // Here , we get 2 arrays from server and then, we merge both to set dataTable
   createArraysOfAddresses(addressesPf, addressesPj) {
     const addresses = addressesPf.concat(addressesPj);
     addresses.forEach(element => {
@@ -150,6 +151,7 @@ export class ResumeComponent implements OnInit {
     this.applyPaginatorState();
   }
 
+  // Create Objs from addresses arrays
   createCitiesObjs() {
     let prev, a = [], b = [];
     for (let i = 0; i < this.cities.length; i++ ) {
@@ -176,6 +178,7 @@ export class ResumeComponent implements OnInit {
     this.applyPaginatorState();
   }
 
+  // Create Objs from addresses arrays
   createStatesObjs() {
     let prev, a = [], b = [];
     for (let i = 0; i < this.states.length; i++ ) {
@@ -195,30 +198,6 @@ export class ResumeComponent implements OnInit {
       }
     );
     this.createCitiesObjs();
-  }
-
-  concatActObjs(activitiesPf, activitiesPj) {
-    for (let prop in activitiesPf) {
-      if (activitiesPj.hasOwnProperty(prop)) {
-        activitiesPf[prop] = activitiesPf[prop] + activitiesPj[prop];
-      }
-      const obj = {
-        name: prop,
-        qty: activitiesPf[prop]
-      }
-      this.activitiesTableData.push(obj);
-    }
-    for (let prop in activitiesPj) {
-      if (!activitiesPf.hasOwnProperty(prop)) {
-        const obj = {
-          name: prop,
-          qty: activitiesPj[prop]
-        }
-        this.activitiesTableData.push(obj);
-      }
-    }
-    this.dataSourceActivities = new MatTableDataSource(this.activitiesTableData);
-    this.applyPaginatorActivities();
   }
 
   getPfAddresses() {

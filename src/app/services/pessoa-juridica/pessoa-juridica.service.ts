@@ -9,49 +9,49 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PessoaJuridicaService {
-    private pjId = new Subject<number>();
+  private pjId = new Subject<number>();
 
-    pjId$ = this.pjId.asObservable();
+  pjId$ = this.pjId.asObservable();
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    passPjId(id: number) {
-        this.pjId.next(id);
-    }
+  passPjId(id: number) {
+    this.pjId.next(id);
+  }
 
-    register(pessoaJuridica: PessoaJuridica) {
+  register(pessoaJuridica: PessoaJuridica) {
 
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json'
-        })};
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })};
 
-        return this.http.post<PessoaJuridica>(this.baseUrl + '/register-pj', pessoaJuridica, httpOptions);
-    }
+    return this.http.post<PessoaJuridica>(this.baseUrl + '/register-pj', pessoaJuridica, httpOptions);
+  }
 
-    getPessoaJuridica(id, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + token
-        })};
+  getPessoaJuridica(id, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Bearer ' + token
+    })};
 
-        return this.http.get<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, httpOptions);
-    }
+    return this.http.get<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, httpOptions);
+  }
 
-    getPessoaJuridicaResumo(id) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json'
-        })};
-        return this.http.get(this.baseUrl + `/pessoa-juridica-resumo/${id}`, httpOptions);
-    }
+  getPessoaJuridicaResumo(id) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })};
+    return this.http.get(this.baseUrl + `/pessoa-juridica-resumo/${id}`, httpOptions);
+  }
 
-    update(id, dados, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            Authorization: 'Bearer ' + token
-        })};
+  update(id, dados, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Bearer ' + token
+    })};
 
-        return this.http.put<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, dados, httpOptions);
-    }
+    return this.http.put<PessoaJuridica>(this.baseUrl + `/pessoa-juridica/${id}`, dados, httpOptions);
+  }
 }

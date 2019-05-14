@@ -12,6 +12,7 @@ export class SidenavAdminComponent {
 
   constructor() {}
 
+  // Menu Communication and Financial Appearence and desapearence
   toggleMenu(menuTarget) {
     if (menuTarget === 'com') {
       this.isToggledFinancial = false;

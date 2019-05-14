@@ -6,11 +6,11 @@ import { environment } from 'src/environments/environment';
 @Injectable({providedIn: 'root'})
 export class ContatoEmailService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    contatoEmail(dados) {
-        return this.http.post(this.baseUrl + '/contato-email', dados);
-    }
+  contatoEmail(dados) {
+    return this.http.post(this.baseUrl + '/contato-email', dados);
+  }
 }

@@ -17,35 +17,35 @@ import { environment } from 'src/environments/environment';
 
 export class UnityService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {
 
-    }
+  }
 
-    list(id, token): Observable<Unidade[]> {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
+  list(id, token): Observable<Unidade[]> {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    })};
 
-        return this.http.get<Unidade[]>(this.baseUrl + `/unidades/${id}`, httpOptions);
-    }
+    return this.http.get<Unidade[]>(this.baseUrl + `/unidades/${id}`, httpOptions);
+  }
 
-    update(id, dados, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        })};
+  update(id, dados, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    })};
 
-        return this.http.put<Unidade>(this.baseUrl + `/unidade/${id}`, dados, httpOptions);
-    }
+    return this.http.put<Unidade>(this.baseUrl + `/unidade/${id}`, dados, httpOptions);
+  }
 
-    checkCnpj(cnpj) {
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json'
-        })};
+  checkCnpj(cnpj) {
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })};
 
-        return this.http.post<Unidade>(this.baseUrl + '/check-cnpj-unidade', {cnpj: cnpj}, httpOptions);
-    }
+    return this.http.post<Unidade>(this.baseUrl + '/check-cnpj-unidade', {cnpj: cnpj}, httpOptions);
+  }
 }

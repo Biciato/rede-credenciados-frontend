@@ -8,7 +8,7 @@ export class TipoPessoaPipe implements PipeTransform {
   constructor() { }
 
   transform(string: string): string {
-      const newStr = string.replace('pessoa_', '');
-      return newStr.charAt(0).toUpperCase() + newStr.slice(1);
+    const newStr = string.replace('pessoa_', '');
+    return newStr.charAt(0).toUpperCase() + newStr.slice(1);
   }
 }

@@ -1,699 +1,697 @@
 <div id="infoCol" >
-    <!-- Card Info -->
-    <div id="cardInfo" class="card-dash">
-        <!-- Card Header -->
-        <div id="cardInfoHeader" class="card-header-dash"><h3>Cadastro</h3></div>
-        <!-- Card Header -->
-        <!-- Card Body -->
-        <div id="cardInfoBody" class="card-body-dash">
-            <h3 *ngIf="user.personType === 'pessoa_juridica'">Dados da Unidade</h3>
-            <!-- Pj data form -->
-            <form *ngIf="user.personType === 'pessoa_juridica'" [formGroup]="pessoaJuridicaForm">
-
-                <div class="group" style="width: 47%;">
-                    <input type="text" formControlName="razao_social">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="razao_social.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Razão Social
-                    </label>
-                    <div *ngIf="razao_social.invalid && (razao_social.dirty || razao_social.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!razao_social.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="group" style="width: 45%;">
-                    <input type="text" formControlName="nome_fantasia">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="nome_fantasia.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Nome Fantasia
-                    </label>
-                    <div *ngIf="nome_fantasia.invalid && (nome_fantasia.dirty || nome_fantasia.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!nome_fantasia.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 24%;">
-                    <input type="text" formControlName="cnpj" (keyup)="onKeyCNPJ($event)" maxlength="18">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cnpj.value === '' ? 'input-empty' : 'input-not-empty'">CNPJ</label>
-                    <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cnpj.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!cnpj.errors.minlength">
-                            *CNPJ inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 47%;">
-                    <input type="text" formControlName="nome_contato">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="nome_contato.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Nome para Contato
-                    </label>
-                    <div *ngIf="nome_contato.invalid && (nome_contato.dirty || nome_contato.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!nome_contato.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 47%;">
-                    <input type="text" formControlName="email">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="email.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Email Principal
-                    </label>
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!email.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!email.errors.email">
-                            *formato de e-mail inválido
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 45%;">
-                    <input type="text" formControlName="email2">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="email2.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Email Secundário
-                    </label>
-                    <div *ngIf="email2.invalid && (email2.dirty || email2.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!email2.errors.email">
-                            *formato de e-mail inválido
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="tel.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Telefone 1
-                    </label>
-                    <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!tel.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!tel.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%;">
-                    <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="tel2.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Telefone 2
-                    </label>
-                    <div *ngIf="tel2.invalid && (tel2.dirty || tel2.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!tel2.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Celular 1
-                    </label>
-                    <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cel.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Celular 2
-                    </label>
-                    <div *ngIf="cel2.invalid && (cel2.dirty || cel2.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cel2.errors.minlength">
-                            *numero de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- Pj data form -->
-            <!-- Pf data form -->
-            <h3 *ngIf="user.personType === 'pessoa_fisica'">Dados Pessoais</h3>
-            <form *ngIf="user.personType === 'pessoa_fisica'" id="pessoaFisicaForm" [formGroup]="pessoaFisicaForm">
-
-                <div class="group" style="width: 23%;">
-                    <input type="text" formControlName="cpf" (keyup)="onKeyCPF($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cpf.value === '' ? 'input-empty' : 'input-not-empty'">
-                        CPF
-                    </label>
-                    <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cpf.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!cpf.errors.minlength">
-                            *CPF inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 20%;">
-                    <input type="text" formControlName="rg" (keyup)="onKeyRG($event)" maxlength="12">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="rg.value === '' ? 'input-empty' : 'input-not-empty'">RG</label>
-                    <div *ngIf="rg.invalid && (rg.dirty || rg.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!rg.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!rg.errors.rgInvalid">
-                            *número de rg inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 18%;">
-                    <input type="text" formControlName="nascimento" (keyup)="onKeyDate($event)" maxlength="10">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="nascimento.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Data de Nascimento
-                    </label>
-                    <div *ngIf="nascimento.invalid && (nascimento.dirty || nascimento.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!nascimento.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!nascimento.errors.minlength">
-                            *data de nascimento inválida.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 5%;">
-                    <input type="text" id="idade" formControlName="idade">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="idade.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Idade
-                    </label>
-                </div>
-
-                <div class="group" style="width: 15%;">
-                    <input type="text" formControlName="sexo">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="sexo.value === '' ? 'input-empty' : 'input-not-empty'">Sexo</label>
-                    <div *ngIf="sexo.invalid && (sexo.dirty || sexo.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!sexo.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 47%;">
-                    <input type="text" formControlName="nome">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="nome.value === '' ? 'input-empty' : 'input-not-empty'">Nome</label>
-                    <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!nome.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 47%;">
-                    <input type="text" formControlName="email">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="emailPf.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Email Principal
-                    </label>
-                    <div *ngIf="emailPf.invalid && (emailPf.dirty || emailPf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!emailPf.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!emailPf.errors.email">
-                            *formato de e-mail inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 45%;">
-                    <input type="text" formControlName="email2">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="email2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Email Secundário
-                    </label>
-                    <div *ngIf="email2Pf.invalid && (email2Pf.dirty || email2Pf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!email2Pf.errors.email">
-                            *formato de e-mail inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="telPf.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Telefone 1
-                    </label>
-                    <div *ngIf="telPf.invalid && (telPf.dirty || telPf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!telPf.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!telPf.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%;">
-                    <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="tel2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Telefone 2
-                    </label>
-                    <div *ngIf="tel2Pf.invalid && (tel2Pf.dirty || tel2Pf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!tel2Pf.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Celular 1
-                    </label>
-                    <div *ngIf="celPf.invalid && (celPf.dirty || celPf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!celPf.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 21%">
-                    <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Celular 2
-                    </label>
-                    <div *ngIf="cel2Pf.invalid && (cel2Pf.dirty || cel2Pf.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cel2Pf.errors.minlength">
-                            *número de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- Pf data form -->
-            <h3 style="margin: 1em 0 1em 2em;">Endereço</h3>
-            <!-- Address form -->
-            <form [formGroup]="addressForm">
-
-                <div class="group" style="width: 12%">
-                    <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cep.value === '' ? 'input-empty' : 'input-not-empty'">
-                        CEP
-                    </label>
-                    <div *ngIf="cep.invalid && (cep.dirty || cep.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cep.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!cep.errors.minlength">
-                            *número de CEP inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 40%">
-                    <input type="text" formControlName="rua">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="rua.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Logradouro
-                    </label>
-                    <div *ngIf="rua.invalid && (rua.dirty || rua.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!rua.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 9%">
-                    <input type="text" formControlName="numero">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="numero.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Número
-                    </label>
-                    <div *ngIf="numero.invalid && (numero.dirty || numero.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!numero.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 23%">
-                    <input type="text" formControlName="complemento">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="complemento.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Complemento
-                    </label>
-                </div>
-
-                <div class="group" style="width: 34%">
-                    <input type="text" formControlName="bairro">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="bairro.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Bairro
-                    </label>
-                    <div *ngIf="bairro.invalid && (bairro.dirty || bairro.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!bairro.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 34%">
-                    <input type="text" formControlName="cidade">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cidade.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Cidade
-                    </label>
-                    <div *ngIf="cidade.invalid && (cidade.dirty || cidade.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cidade.errors.required">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 20%">
-                    <input type="text" formControlName="estado"
-                        (click)="showStates = true"
-                        (clickOutside)="showStates = false">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="estado.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Estado
-                    </label>
-                    <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
-                        <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
-                    </div>
-                    <div *ngIf="estado.invalid && (estado.dirty || estado.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!estado.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!estado.errors.stateInvalid">
-                            *estado inválido.
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <h3 style="margin: 1em 0 1em 2em;" *ngIf="isAdmin">Login</h3>
-
-            <form [formGroup]="loginForm" *ngIf="isAdmin" id="loginForm">
-                <div class="group" style="width: 20%">
-                    <input type="text" formControlName="login"
-                        (click)="showStates = true"
-                        (clickOutside)="showStates = false">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="login.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Login
-                    </label>
-                    <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
-                        <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
-                    </div>
-                    <div *ngIf="login.invalid && (login.dirty || login.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!login.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!login.errors.stateInvalid">
-                            *estado inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group" style="width: 20%; margin-right: 0;">
-                    <input type="text" formControlName="password"
-                        [type]="passwordTypeInput"
-                        (click)="showStates = true"
-                        (clickOutside)="showStates = false">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-
-                    <label [className]="password.value === '' ? 'input-empty' : 'input-not-empty'">
-                        Senha
-                    </label>
-
-                    <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
-                        <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
-                    </div>
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!password.errors.required">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!password.errors.stateInvalid">
-                            *estado inválido.
-                        </div>
-                    </div>
-                </div>
-                <i class="fas fa-eye" *ngIf="passwordTypeInput === 'password'"
-                    (click)="changePasswordInputType('text')"></i>
-                <i class="fas fa-eye-slash" *ngIf="passwordTypeInput === 'text'"
-                    (click)="changePasswordInputType('password')"></i>
-            </form>
-            <!-- Address form -->
-            <button *ngIf="saveAddressBtn" style="background-color: #5cb85c" class="rd-button-dash"
-                (click)="checkEmail()">SALVAR</button>
-            <button (click)="editAddressForm()" *ngIf="editAddressBtn" style="background-color: #33b5e5;"
-                class="rd-button-dash">EDITAR</button>
-        </div>
-    </div>
-    <!-- Card Services  -->
-    <div id="cardServices" class="card-dash" *ngIf="!isAdmin">
-        <div id="cardServicesHeader" class="card-header-dash">
-            <h3>Serviços Prestados {{ user.personType === 'pessoa_fisica' ? 'pelo profissional' : 'pela Empresa' }} </h3>
-        </div>
-        <div id="cardServicesBody" class="card-body-dash">
-            <div id="tags">
-                <span *ngFor="let jobTag of jobTags; let i = index">
-                    {{ jobTag }}
-                    <i class="fas fa-times" (click)="removeJob(i)" *ngIf="saveServicesBtn"></i>
-                </span>
+  <!-- Card Info -->
+  <div id="cardInfo" class="card-dash">
+    <!-- Card Header -->
+    <div id="cardInfoHeader" class="card-header-dash"><h3>Cadastro</h3></div>
+    <!-- Card Header -->
+    <!-- Card Body -->
+    <div id="cardInfoBody" class="card-body-dash">
+      <h3 *ngIf="user.personType === 'pessoa_juridica'">Dados da Unidade</h3>
+      <!-- Pj data form -->
+      <form *ngIf="user.personType === 'pessoa_juridica'" [formGroup]="pessoaJuridicaForm">
+        <div class="group" style="width: 47%;">
+          <input type="text" formControlName="razao_social">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="razao_social.value === '' ? 'input-empty' : 'input-not-empty'">
+            Razão Social
+          </label>
+          <div *ngIf="razao_social.invalid && (razao_social.dirty || razao_social.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!razao_social.errors.required">
+              *campo obrigatório.
             </div>
-            <button *ngIf="saveServicesBtn" (click)="onAtividadesSubmit()" class="rd-button-dash" style="background-color: #5cb85c">SALVAR</button>
-            <button (click)="editServicesForm()" style="background-color: #33b5e5;" class="rd-button-dash" *ngIf="editServicesBtn">EDITAR</button>
+          </div>
         </div>
-    </div>
-    <!-- Card Services  -->
-    <!-- Card Resume  -->
-    <div id="cardResume" class="card-dash"  *ngIf="!isAdmin">
-        <div id="cardResumeHeader" class="card-header-dash"><h3>Resumo, Informações Gerais, Apresentação, Descrição</h3></div>
-        <div id="cardResumeBody" class="card-body-dash">
-            <div class="group">
-                <textarea [formControl]="resumeForm"></textarea>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label [className]="resumeForm.value === '' ? 'input-empty' : 'input-not-empty'">
-                    Resumo, Informações Gerais, Apresentação, Descrição
-                </label>
-                <div *ngIf="resumeForm.invalid && (resumeForm.dirty || resumeForm.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="!!resumeForm.errors.required">
-                        *campo obrigatório.
-                    </div>
+
+        <div class="group" style="width: 45%;">
+          <input type="text" formControlName="nome_fantasia">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="nome_fantasia.value === '' ? 'input-empty' : 'input-not-empty'">
+            Nome Fantasia
+          </label>
+          <div *ngIf="nome_fantasia.invalid && (nome_fantasia.dirty || nome_fantasia.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!nome_fantasia.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 24%;">
+          <input type="text" formControlName="cnpj" (keyup)="onKeyCNPJ($event)" maxlength="18">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cnpj.value === '' ? 'input-empty' : 'input-not-empty'">CNPJ</label>
+          <div *ngIf="cnpj.invalid && (cnpj.dirty || cnpj.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cnpj.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!cnpj.errors.minlength">
+              *CNPJ inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 47%;">
+          <input type="text" formControlName="nome_contato">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="nome_contato.value === '' ? 'input-empty' : 'input-not-empty'">
+            Nome para Contato
+          </label>
+          <div *ngIf="nome_contato.invalid && (nome_contato.dirty || nome_contato.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!nome_contato.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 47%;">
+          <input type="text" formControlName="email">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="email.value === '' ? 'input-empty' : 'input-not-empty'">
+            Email Principal
+          </label>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!email.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!email.errors.email">
+              *formato de e-mail inválido
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 45%;">
+          <input type="text" formControlName="email2">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="email2.value === '' ? 'input-empty' : 'input-not-empty'">
+            Email Secundário
+          </label>
+          <div *ngIf="email2.invalid && (email2.dirty || email2.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!email2.errors.email">
+              *formato de e-mail inválido
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="tel.value === '' ? 'input-empty' : 'input-not-empty'">
+            Telefone 1
+          </label>
+          <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!tel.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!tel.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%;">
+          <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="tel2.value === '' ? 'input-empty' : 'input-not-empty'">
+            Telefone 2
+          </label>
+          <div *ngIf="tel2.invalid && (tel2.dirty || tel2.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!tel2.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
+            Celular 1
+          </label>
+          <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cel.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
+            Celular 2
+          </label>
+          <div *ngIf="cel2.invalid && (cel2.dirty || cel2.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cel2.errors.minlength">
+              *numero de telefone inválido.
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Pj data form -->
+      <!-- Pf data form -->
+      <h3 *ngIf="user.personType === 'pessoa_fisica'">Dados Pessoais</h3>
+      <form *ngIf="user.personType === 'pessoa_fisica'" id="pessoaFisicaForm" [formGroup]="pessoaFisicaForm">
+
+        <div class="group" style="width: 23%;">
+          <input type="text" formControlName="cpf" (keyup)="onKeyCPF($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cpf.value === '' ? 'input-empty' : 'input-not-empty'">
+            CPF
+          </label>
+          <div *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cpf.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!cpf.errors.minlength">
+              *CPF inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 20%;">
+          <input type="text" formControlName="rg" (keyup)="onKeyRG($event)" maxlength="12">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="rg.value === '' ? 'input-empty' : 'input-not-empty'">RG</label>
+          <div *ngIf="rg.invalid && (rg.dirty || rg.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!rg.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!rg.errors.rgInvalid">
+              *número de rg inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 18%;">
+          <input type="text" formControlName="nascimento" (keyup)="onKeyDate($event)" maxlength="10">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="nascimento.value === '' ? 'input-empty' : 'input-not-empty'">
+            Data de Nascimento
+          </label>
+          <div *ngIf="nascimento.invalid && (nascimento.dirty || nascimento.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!nascimento.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!nascimento.errors.minlength">
+              *data de nascimento inválida.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 5%;">
+          <input type="text" id="idade" formControlName="idade">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="idade.value === '' ? 'input-empty' : 'input-not-empty'">
+            Idade
+          </label>
+        </div>
+
+        <div class="group" style="width: 15%;">
+          <input type="text" formControlName="sexo">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="sexo.value === '' ? 'input-empty' : 'input-not-empty'">Sexo</label>
+          <div *ngIf="sexo.invalid && (sexo.dirty || sexo.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!sexo.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 47%;">
+          <input type="text" formControlName="nome">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="nome.value === '' ? 'input-empty' : 'input-not-empty'">Nome</label>
+          <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!nome.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 47%;">
+          <input type="text" formControlName="email">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="emailPf.value === '' ? 'input-empty' : 'input-not-empty'">
+            Email Principal
+          </label>
+          <div *ngIf="emailPf.invalid && (emailPf.dirty || emailPf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!emailPf.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!emailPf.errors.email">
+              *formato de e-mail inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 45%;">
+          <input type="text" formControlName="email2">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="email2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
+            Email Secundário
+          </label>
+          <div *ngIf="email2Pf.invalid && (email2Pf.dirty || email2Pf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!email2Pf.errors.email">
+              *formato de e-mail inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="telPf.value === '' ? 'input-empty' : 'input-not-empty'">
+            Telefone 1
+          </label>
+          <div *ngIf="telPf.invalid && (telPf.dirty || telPf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!telPf.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!telPf.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%;">
+          <input type="text" formControlName="tel2" (keyup)="onKeyTel($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="tel2Pf.value === '' ? 'input-empty' : 'input-not-empty'">
+            Telefone 2
+          </label>
+          <div *ngIf="tel2Pf.invalid && (tel2Pf.dirty || tel2Pf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!tel2Pf.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cel.value === '' ? 'input-empty' : 'input-not-empty'">
+            Celular 1
+          </label>
+          <div *ngIf="celPf.invalid && (celPf.dirty || celPf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!celPf.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 21%">
+          <input type="text" formControlName="cel2" (keyup)="onKeyCel($event)" maxlength="15">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cel2.value === '' ? 'input-empty' : 'input-not-empty'">
+            Celular 2
+          </label>
+          <div *ngIf="cel2Pf.invalid && (cel2Pf.dirty || cel2Pf.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cel2Pf.errors.minlength">
+              *número de telefone inválido.
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Pf data form -->
+      <h3 style="margin: 1em 0 1em 2em;">Endereço</h3>
+      <!-- Address form -->
+      <form [formGroup]="addressForm">
+
+        <div class="group" style="width: 12%">
+            <input type="text" formControlName="cep" (keyup)="onKeyCep($event)" maxlength="9">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label [className]="cep.value === '' ? 'input-empty' : 'input-not-empty'">
+                CEP
+            </label>
+            <div *ngIf="cep.invalid && (cep.dirty || cep.touched)"
+                class="alert alert-danger">
+                <div *ngIf="!!cep.errors.required">
+                    *campo obrigatório.
+                </div>
+                <div *ngIf="!!cep.errors.minlength">
+                    *número de CEP inválido.
                 </div>
             </div>
-            <button *ngIf="saveResumeBtn" (click)="onResumeSubmit()" class="rd-button-dash" style="background-color: #5cb85c">SALVAR</button>
-            <button (click)="editResumeForm()" *ngIf="editResumeBtn" style="background-color: #33b5e5;"
-                class="rd-button-dash">EDITAR</button>
         </div>
+
+        <div class="group" style="width: 40%">
+          <input type="text" formControlName="rua">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="rua.value === '' ? 'input-empty' : 'input-not-empty'">
+            Logradouro
+          </label>
+          <div *ngIf="rua.invalid && (rua.dirty || rua.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!rua.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 9%">
+          <input type="text" formControlName="numero">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="numero.value === '' ? 'input-empty' : 'input-not-empty'">
+            Número
+          </label>
+          <div *ngIf="numero.invalid && (numero.dirty || numero.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!numero.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 23%">
+          <input type="text" formControlName="complemento">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="complemento.value === '' ? 'input-empty' : 'input-not-empty'">
+            Complemento
+          </label>
+        </div>
+
+        <div class="group" style="width: 34%">
+          <input type="text" formControlName="bairro">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="bairro.value === '' ? 'input-empty' : 'input-not-empty'">
+            Bairro
+          </label>
+          <div *ngIf="bairro.invalid && (bairro.dirty || bairro.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!bairro.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 34%">
+          <input type="text" formControlName="cidade">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cidade.value === '' ? 'input-empty' : 'input-not-empty'">
+            Cidade
+          </label>
+          <div *ngIf="cidade.invalid && (cidade.dirty || cidade.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cidade.errors.required">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 20%">
+          <input type="text" formControlName="estado"
+            (click)="showStates = true"
+            (clickOutside)="showStates = false">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="estado.value === '' ? 'input-empty' : 'input-not-empty'">
+            Estado
+          </label>
+          <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
+            <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
+          </div>
+          <div *ngIf="estado.invalid && (estado.dirty || estado.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!estado.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!estado.errors.stateInvalid">
+              *estado inválido.
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <h3 style="margin: 1em 0 1em 2em;" *ngIf="isAdmin">Login</h3>
+
+      <form [formGroup]="loginForm" *ngIf="isAdmin" id="loginForm">
+        <div class="group" style="width: 20%">
+          <input type="text" formControlName="login"
+            (click)="showStates = true"
+            (clickOutside)="showStates = false">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="login.value === '' ? 'input-empty' : 'input-not-empty'">
+            Login
+          </label>
+          <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
+            <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
+          </div>
+          <div *ngIf="login.invalid && (login.dirty || login.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!login.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!login.errors.stateInvalid">
+              *estado inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group" style="width: 20%; margin-right: 0;">
+          <input type="text" formControlName="password"
+            [type]="passwordTypeInput"
+            (click)="showStates = true"
+            (clickOutside)="showStates = false">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+
+          <label [className]="password.value === '' ? 'input-empty' : 'input-not-empty'">
+            Senha
+          </label>
+
+          <div *ngIf="showStates" class="dropdown" (mouseleave)="showStates = false">
+            <span *ngFor="let state of brStates" (click)="selectState(state)">{{state}}</span>
+          </div>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!password.errors.required">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!password.errors.stateInvalid">
+              *estado inválido.
+            </div>
+          </div>
+        </div>
+        <i class="fas fa-eye" *ngIf="passwordTypeInput === 'password'"
+            (click)="changePasswordInputType('text')"></i>
+        <i class="fas fa-eye-slash" *ngIf="passwordTypeInput === 'text'"
+            (click)="changePasswordInputType('password')"></i>
+      </form>
+      <!-- Address form -->
+      <button *ngIf="saveAddressBtn" style="background-color: #5cb85c" class="rd-button-dash"
+        (click)="checkEmail()">SALVAR</button>
+      <button (click)="editAddressForm()" *ngIf="editAddressBtn" style="background-color: #33b5e5;"
+        class="rd-button-dash">EDITAR</button>
     </div>
-    <!-- Card Resume  -->
+  </div>
+  <!-- Card Services  -->
+  <div id="cardServices" class="card-dash" *ngIf="!isAdmin">
+    <div id="cardServicesHeader" class="card-header-dash">
+      <h3>Serviços Prestados {{ user.personType === 'pessoa_fisica' ? 'pelo profissional' : 'pela Empresa' }} </h3>
+    </div>
+    <div id="cardServicesBody" class="card-body-dash">
+      <div id="tags">
+        <span *ngFor="let jobTag of jobTags; let i = index">
+          {{ jobTag }}
+          <i class="fas fa-times" (click)="removeJob(i)" *ngIf="saveServicesBtn"></i>
+        </span>
+      </div>
+      <button *ngIf="saveServicesBtn" (click)="onAtividadesSubmit()" class="rd-button-dash" style="background-color: #5cb85c">SALVAR</button>
+      <button (click)="editServicesForm()" style="background-color: #33b5e5;" class="rd-button-dash" *ngIf="editServicesBtn">EDITAR</button>
+    </div>
+  </div>
+  <!-- Card Services  -->
+  <!-- Card Resume  -->
+  <div id="cardResume" class="card-dash"  *ngIf="!isAdmin">
+    <div id="cardResumeHeader" class="card-header-dash"><h3>Resumo, Informações Gerais, Apresentação, Descrição</h3></div>
+    <div id="cardResumeBody" class="card-body-dash">
+      <div class="group">
+        <textarea [formControl]="resumeForm"></textarea>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label [className]="resumeForm.value === '' ? 'input-empty' : 'input-not-empty'">
+          Resumo, Informações Gerais, Apresentação, Descrição
+        </label>
+        <div *ngIf="resumeForm.invalid && (resumeForm.dirty || resumeForm.touched)"
+          class="alert alert-danger">
+          <div *ngIf="!!resumeForm.errors.required">
+            *campo obrigatório.
+          </div>
+        </div>
+      </div>
+      <button *ngIf="saveResumeBtn" (click)="onResumeSubmit()" class="rd-button-dash" style="background-color: #5cb85c">SALVAR</button>
+      <button (click)="editResumeForm()" *ngIf="editResumeBtn" style="background-color: #33b5e5;"
+        class="rd-button-dash">EDITAR</button>
+    </div>
+  </div>
+  <!-- Card Resume  -->
 </div>
 <!-- Modal Atividades  -->
 <app-modal id="modal-atividades">
-    <app-atividades></app-atividades>
+  <app-atividades></app-atividades>
 </app-modal>
 <!-- Modal Atividades  -->
 <app-modal id="modal-empty-activities">
-    <div id="modalHeader">
-        <span>MENSAGEM</span>
+  <div id="modalHeader">
+    <span>MENSAGEM</span>
+  </div>
+  <div id="modalBody">
+    <div>
+      <h3>Favor selecionar pelo menos uma especialidade</h3>
+      <div id="simFooter">
+        <a (click)="closeModal('modal-empty-activities')"><i class="fas fa-times"></i>FECHAR</a>
+      </div>
     </div>
-    <div id="modalBody">
-        <div>
-            <h3>Favor selecionar pelo menos uma especialidade</h3>
-            <div id="simFooter">
-                <a (click)="closeModal('modal-empty-activities')"><i class="fas fa-times"></i>FECHAR</a>
-            </div>
-        </div>
-    </div>
+  </div>
 </app-modal>
 <app-modal id="modal-validator">
-    <div id="modalHeader">
-        <span>MENSAGEM</span>
+  <div id="modalHeader">
+    <span>MENSAGEM</span>
+  </div>
+  <div id="modalBody">
+    <div>
+      <h3>Campos pendentes:</h3>
+      <ul>
+        <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail Principal:</strong> campo obrigatório</li>
+        <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail Principal:</strong> formato inválido</li>
+        <li *ngIf="!!email2.errors && !!email2.errors.email"><strong>E-mail Secundário:</strong> formato inválido</li>
+        <li *ngIf="!!emailPf.errors && !!emailPf.errors.required"><strong>E-mail Principal:</strong> campo obrigatório</li>
+        <li *ngIf="!!emailPf.errors && !!emailPf.errors.email"><strong>E-mail Principal:</strong> formato inválido</li>
+        <li *ngIf="!!email2Pf.errors && !!email2Pf.errors.email"><strong>E-mail Secundário:</strong> formato inválido</li>
+        <li *ngIf="!!razao_social.errors && !!razao_social.errors.required">
+          <strong>Razão Social:</strong> campo obrigatório
+        </li>
+        <li *ngIf="!!nome_fantasia.errors && !!nome_fantasia.errors.required">
+          <strong>Nome Fantasia:</strong> campo obrigatório
+        </li>
+        <li *ngIf="!!nome_contato.errors && !!nome_contato.errors.required">
+          <strong>Nome Contato:</strong> campo obrigatório
+        </li>
+        <li *ngIf="!!tel.errors && !!tel.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
+        <li *ngIf="!!tel.errors && !!tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
+        <li *ngIf="!!tel2.errors && !!tel2.errors.minlength"><strong>Telefone 2:</strong> campo obrigatório</li>
+        <li *ngIf="!!cel.errors && !!cel.errors.minlength"><strong>Celular:</strong> formato inválido</li>
+        <li *ngIf="!!cel2.errors && !!cel2.errors.minlength"><strong>Celular 2:</strong> formato inválido</li>
+        <li *ngIf="!!telPf.errors && !!telPf.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
+        <li *ngIf="!!telPf.errors && !!telPf.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
+        <li *ngIf="!!tel2Pf.errors && !!tel2Pf.errors.minlength"><strong>Telefone 2:</strong> formato inválido</li>
+        <li *ngIf="!!celPf.errors && !!celPf.errors.minlength"><strong>Celular:</strong> formato inválido</li>
+        <li *ngIf="!!cel2Pf.errors && !!cel2Pf.errors.minlength"><strong>Celular 2:</strong> formato inválido</li>
+        <li *ngIf="!!cnpj.errors && !!cnpj.errors.required"><strong>CNPJ:</strong> campo obrigatório</li>
+        <li *ngIf="!!cnpj.errors && !!cnpj.errors.minlength"><strong>CNPJ:</strong> formato inválido</li>
+        <li *ngIf="!!cpf.errors && !!cpf.errors.required"><strong>CPF:</strong> campo obrigatório</li>
+        <li *ngIf="!!cpf.errors && !!cpf.errors.minlength"><strong>CPF:</strong> formato inválido</li>
+        <li *ngIf="!!rg.errors && !!rg.errors.required"><strong>RG:</strong> campo obrigatório</li>
+        <li *ngIf="!!rg.errors && !!rg.errors.rgInvalid"><strong>RG:</strong> formato inválido</li>
+        <li *ngIf="!!sexo.errors && !!sexo.errors.required"><strong>Sexo:</strong> campo obrigatório</li>
+        <li *ngIf="!!nascimento.errors && !!nascimento.errors.required"><strong>Nascimento:</strong> campo obrigatório</li>
+        <li *ngIf="!!nascimento.errors && !!nascimento.errors.minlength"><strong>Nascimento:</strong> formato inválido</li>
+        <li *ngIf="!!cep.errors && !!cep.errors.minlength"><strong>CEP:</strong> formato inválido</li>
+        <li *ngIf="!!cep.errors && !!cep.errors.required"><strong>CEP:</strong> campo obrigatório</li>
+        <li *ngIf="!!rua.errors && !!rua.errors.required"><strong>Rua:</strong> campo obrigatório</li>
+        <li *ngIf="!!numero.errors && !!numero.errors.required"><strong>Número:</strong> campo obrigatório</li>
+        <li *ngIf="!!bairro.errors && !!bairro.errors.required"><strong>Bairro:</strong> campo obrigatório</li>
+        <li *ngIf="!!cidade.errors && !!cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
+        <li *ngIf="!!estado.errors && !!estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
+        <li *ngIf="!!estado.errors && !!estado.errors.stateInvalid"><strong>Estado:</strong> inválido</li>
+        <li *ngIf="!!login.errors && !!login.errors.required"><strong>Login:</strong> campo obrigatório</li>
+        <li *ngIf="!!login.errors && !!login.errors.email"><strong>Login:</strong> formato inválido</li>
+        <li *ngIf="!!password.errors && !!password.errors.required"><strong>Password:</strong> campo obrigatório</li>
+        <li *ngIf="!!password.errors && !!password.errors.minlength"><strong>Password:</strong> mínimo 6 characteres</li>
+        <li *ngIf="!!resumeForm.errors && !!resumeForm.errors.required">
+            <strong>Apresentação:</strong> campo obrigatório
+        </li>
+      </ul>
+      <div id="simFooter">
+        <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
+      </div>
     </div>
-    <div id="modalBody">
-        <div>
-            <h3>Campos pendentes:</h3>
-            <ul>
-                <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail Principal:</strong> campo obrigatório</li>
-                <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail Principal:</strong> formato inválido</li>
-                <li *ngIf="!!email2.errors && !!email2.errors.email"><strong>E-mail Secundário:</strong> formato inválido</li>
-                <li *ngIf="!!emailPf.errors && !!emailPf.errors.required"><strong>E-mail Principal:</strong> campo obrigatório</li>
-                <li *ngIf="!!emailPf.errors && !!emailPf.errors.email"><strong>E-mail Principal:</strong> formato inválido</li>
-                <li *ngIf="!!email2Pf.errors && !!email2Pf.errors.email"><strong>E-mail Secundário:</strong> formato inválido</li>
-                <li *ngIf="!!razao_social.errors && !!razao_social.errors.required">
-                    <strong>Razão Social:</strong> campo obrigatório
-                </li>
-                <li *ngIf="!!nome_fantasia.errors && !!nome_fantasia.errors.required">
-                    <strong>Nome Fantasia:</strong> campo obrigatório
-                </li>
-                <li *ngIf="!!nome_contato.errors && !!nome_contato.errors.required">
-                    <strong>Nome Contato:</strong> campo obrigatório
-                </li>
-                <li *ngIf="!!tel.errors && !!tel.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
-                <li *ngIf="!!tel.errors && !!tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
-                <li *ngIf="!!tel2.errors && !!tel2.errors.minlength"><strong>Telefone 2:</strong> campo obrigatório</li>
-                <li *ngIf="!!cel.errors && !!cel.errors.minlength"><strong>Celular:</strong> formato inválido</li>
-                <li *ngIf="!!cel2.errors && !!cel2.errors.minlength"><strong>Celular 2:</strong> formato inválido</li>
-                <li *ngIf="!!telPf.errors && !!telPf.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
-                <li *ngIf="!!telPf.errors && !!telPf.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
-                <li *ngIf="!!tel2Pf.errors && !!tel2Pf.errors.minlength"><strong>Telefone 2:</strong> formato inválido</li>
-                <li *ngIf="!!celPf.errors && !!celPf.errors.minlength"><strong>Celular:</strong> formato inválido</li>
-                <li *ngIf="!!cel2Pf.errors && !!cel2Pf.errors.minlength"><strong>Celular 2:</strong> formato inválido</li>
-                <li *ngIf="!!cnpj.errors && !!cnpj.errors.required"><strong>CNPJ:</strong> campo obrigatório</li>
-                <li *ngIf="!!cnpj.errors && !!cnpj.errors.minlength"><strong>CNPJ:</strong> formato inválido</li>
-                <li *ngIf="!!cpf.errors && !!cpf.errors.required"><strong>CPF:</strong> campo obrigatório</li>
-                <li *ngIf="!!cpf.errors && !!cpf.errors.minlength"><strong>CPF:</strong> formato inválido</li>
-                <li *ngIf="!!rg.errors && !!rg.errors.required"><strong>RG:</strong> campo obrigatório</li>
-                <li *ngIf="!!rg.errors && !!rg.errors.rgInvalid"><strong>RG:</strong> formato inválido</li>
-                <li *ngIf="!!sexo.errors && !!sexo.errors.required"><strong>Sexo:</strong> campo obrigatório</li>
-                <li *ngIf="!!nascimento.errors && !!nascimento.errors.required"><strong>Nascimento:</strong> campo obrigatório</li>
-                <li *ngIf="!!nascimento.errors && !!nascimento.errors.minlength"><strong>Nascimento:</strong> formato inválido</li>
-                <li *ngIf="!!cep.errors && !!cep.errors.minlength"><strong>CEP:</strong> formato inválido</li>
-                <li *ngIf="!!cep.errors && !!cep.errors.required"><strong>CEP:</strong> campo obrigatório</li>
-                <li *ngIf="!!rua.errors && !!rua.errors.required"><strong>Rua:</strong> campo obrigatório</li>
-                <li *ngIf="!!numero.errors && !!numero.errors.required"><strong>Número:</strong> campo obrigatório</li>
-                <li *ngIf="!!bairro.errors && !!bairro.errors.required"><strong>Bairro:</strong> campo obrigatório</li>
-                <li *ngIf="!!cidade.errors && !!cidade.errors.required"><strong>Cidade:</strong> campo obrigatório</li>
-                <li *ngIf="!!estado.errors && !!estado.errors.required"><strong>Estado:</strong> campo obrigatório</li>
-                <li *ngIf="!!estado.errors && !!estado.errors.stateInvalid"><strong>Estado:</strong> inválido</li>
-                <li *ngIf="!!login.errors && !!login.errors.required"><strong>Login:</strong> campo obrigatório</li>
-                <li *ngIf="!!login.errors && !!login.errors.email"><strong>Login:</strong> formato inválido</li>
-                <li *ngIf="!!password.errors && !!password.errors.required"><strong>Password:</strong> campo obrigatório</li>
-                <li *ngIf="!!password.errors && !!password.errors.minlength"><strong>Password:</strong> mínimo 6 characteres</li>
-                <li *ngIf="!!resumeForm.errors && !!resumeForm.errors.required">
-                    <strong>Apresentação:</strong> campo obrigatório
-                </li>
-            </ul>
-            <div id="simFooter">
-                <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
-            </div>
-        </div>
-    </div>
+  </div>
 </app-modal>
 <app-modal id="modal-validator-cpf-cnpj">
-    <div id="modalHeader">
-        <span>MENSAGEM</span>
+  <div id="modalHeader">
+    <span>MENSAGEM</span>
+  </div>
+  <div id="modalBody">
+    <div>
+      <h3>Esse {{ cpfCnpj }} já existe em nossos cadastros</h3>
+      <div id="simFooter">
+        <a (click)="closeModal('modal-validator-cpf-cnpj')"><i class="fas fa-times"></i>FECHAR</a>
+      </div>
     </div>
-    <div id="modalBody">
-        <div>
-            <h3>Esse {{ cpfCnpj }} já existe em nossos cadastros</h3>
-            <div id="simFooter">
-                <a (click)="closeModal('modal-validator-cpf-cnpj')"><i class="fas fa-times"></i>FECHAR</a>
-            </div>
-        </div>
-    </div>
+  </div>
 </app-modal>
 <app-modal id="modal-invalid-email">
-    <div id="modalHeader">
-        <span>MENSAGEM</span>
+  <div id="modalHeader">
+    <span>MENSAGEM</span>
+  </div>
+  <div id="modalBody">
+    <div>
+      <h3>Email inválido</h3>
+      <div id="simFooter">
+        <a (click)="closeModal('modal-invalid-email')"><i class="fas fa-times"></i>FECHAR</a>
+      </div>
     </div>
-    <div id="modalBody">
-        <div>
-            <h3>Email inválido</h3>
-            <div id="simFooter">
-                <a (click)="closeModal('modal-invalid-email')"><i class="fas fa-times"></i>FECHAR</a>
-            </div>
-        </div>
-    </div>
+  </div>
 </app-modal>
 <!-- Loading Status  -->
 <div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+    </div>
+  </ng-template>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
-        [template]="customLoadingTemplate"></ngx-loading>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"></ngx-loading>
 </div>
 <!-- Loading Status -->
 

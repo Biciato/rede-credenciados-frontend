@@ -9,23 +9,23 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PesquisaClientesService {
-    private pesquisaClienteSource = new Subject<PesquisaCliente>();
+  private pesquisaClienteSource = new Subject<PesquisaCliente>();
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    pesquisaCliente$ = this.pesquisaClienteSource.asObservable();
+  pesquisaCliente$ = this.pesquisaClienteSource.asObservable();
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    pesquisa(local) {
+  pesquisa(local) {
 
-        const httpOptions = { headers: new HttpHeaders({
-            'Content-type': 'application/json'
-        })};
-        return this.http.post<PesquisaCliente>(this.baseUrl + '/pesquisa-clientes', local, httpOptions);
-    }
+    const httpOptions = { headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })};
+    return this.http.post<PesquisaCliente>(this.baseUrl + '/pesquisa-clientes', local, httpOptions);
+  }
 
-    sendPesqClt(dados: PesquisaCliente) {
-        this.pesquisaClienteSource.next(dados);
-    }
+  sendPesqClt(dados: PesquisaCliente) {
+    this.pesquisaClienteSource.next(dados);
+  }
 }

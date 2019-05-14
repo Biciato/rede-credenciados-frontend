@@ -6,15 +6,15 @@ import { environment } from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class SimpleUserService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    show(id) {
-        return this.http.get(this.baseUrl + '/user-propaganda/' + id);
-    }
+  show(id) {
+    return this.http.get(this.baseUrl + '/user-propaganda/' + id);
+  }
 
-    index() {
-        return this.http.get(this.baseUrl + '/user-propagandas');
-    }
+  index() {
+    return this.http.get(this.baseUrl + '/user-propagandas');
+  }
 }

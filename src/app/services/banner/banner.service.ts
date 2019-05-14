@@ -8,35 +8,35 @@ export interface Img {nome_imagem: string; }
 @Injectable({providedIn: 'root'})
 export class BannerService {
 
-    baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    store(banner, id, filename, local, token) {
-        const httpOptions = { headers: new HttpHeaders({
-            Authorization: 'Bearer ' + token
-        })};
+  store(banner, id, filename, local, token) {
+    const httpOptions = { headers: new HttpHeaders({
+      Authorization: 'Bearer ' + token
+    })};
 
-        return this.http.post(this.baseUrl + `/banner/${id}/${local}/${filename}`, banner, httpOptions);
-    }
+    return this.http.post(this.baseUrl + `/banner/${id}/${local}/${filename}`, banner, httpOptions);
+  }
 
-    showTop(id) {
-        return this.http.get<any>(this.baseUrl + `/banner/${id}/top`);
-    }
+  showTop(id) {
+    return this.http.get<any>(this.baseUrl + `/banner/${id}/top`);
+  }
 
-    showSide(id) {
-        return this.http.get<any>(this.baseUrl + `/banner/${id}/side`);
-    }
+  showSide(id) {
+    return this.http.get<any>(this.baseUrl + `/banner/${id}/side`);
+  }
 
-    storeSimpleUserBanner(banner, id, filename, local) {
-        return this.http.post(this.baseUrl + `/banner-simple-user/${id}/${local}/${filename}`, banner);
-    }
+  storeSimpleUserBanner(banner, id, filename, local) {
+    return this.http.post(this.baseUrl + `/banner-simple-user/${id}/${local}/${filename}`, banner);
+  }
 
-    showTopSimpleUserBanner(id) {
-        return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/top`);
-    }
+  showTopSimpleUserBanner(id) {
+    return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/top`);
+  }
 
-    showSideSimpleUserBanner(id) {
-        return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/side`);
-    }
+  showSideSimpleUserBanner(id) {
+    return this.http.get<any>(this.baseUrl + `/banner-simple-user/${id}/side`);
+  }
 }

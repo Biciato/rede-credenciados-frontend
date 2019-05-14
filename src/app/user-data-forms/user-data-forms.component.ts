@@ -36,47 +36,47 @@ export class UserDataFormsComponent implements OnInit {
     private ativComp: AtividadesComponent;
     // Initiating Pf form group
     pessoaFisicaForm = new FormGroup({
-        cpf: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.minLength(14)], updateOn: 'blur' }),
-        rg: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            rgValidator()], updateOn: 'blur' }),
-        nascimento: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.minLength(10)], updateOn: 'blur' }),
-        idade: new FormControl({ value: '', disable: true}),
-        sexo: new FormControl({ value: '', disabled: true}, Validators.required),
-        nome: new FormControl({ value: '', disabled: true}, Validators.required),
-        email: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.email], updateOn: 'blur' }),
-        email2: new FormControl({ value: '', disabled: true}, { validators: Validators.email,
-            updateOn: 'blur' }),
-        tel: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.minLength(14)], updateOn: 'blur' }),
-        tel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(14),
-            updateOn: 'blur' }),
-        cel: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
-            updateOn: 'blur' }),
-        cel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
-            updateOn: 'blur' }),
+    cpf: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.minLength(14)], updateOn: 'blur' }),
+    rg: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        rgValidator()], updateOn: 'blur' }),
+    nascimento: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.minLength(10)], updateOn: 'blur' }),
+    idade: new FormControl({ value: '', disable: true}),
+    sexo: new FormControl({ value: '', disabled: true}, Validators.required),
+    nome: new FormControl({ value: '', disabled: true}, Validators.required),
+    email: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.email], updateOn: 'blur' }),
+    email2: new FormControl({ value: '', disabled: true}, { validators: Validators.email,
+        updateOn: 'blur' }),
+    tel: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.minLength(14)], updateOn: 'blur' }),
+    tel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(14),
+        updateOn: 'blur' }),
+    cel: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
+        updateOn: 'blur' }),
+    cel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
+        updateOn: 'blur' }),
     });
 
     // Initiating Pj form group
     pessoaJuridicaForm = new FormGroup({
         razao_social: new FormControl({ value: '', disabled: true}, Validators.required),
         nome_fantasia: new FormControl({ value: '', disabled: true}, Validators.required),
-        cnpj: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.minLength(18)], updateOn: 'blur' }),
-        nome_contato: new FormControl({ value: '', disabled: true}, Validators.required),
-        email: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.email], updateOn: 'blur' }),
-        email2: new FormControl({ value: '', disabled: true}, { validators: Validators.email, updateOn: 'blur' }),
-        tel: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
-            Validators.minLength(14)], updateOn: 'blur' }),
-        tel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(14),
-            updateOn: 'blur' }),
-        cel: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
-            updateOn: 'blur' }),
-        cel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
-            updateOn: 'blur' }),
+    cnpj: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.minLength(18)], updateOn: 'blur' }),
+    nome_contato: new FormControl({ value: '', disabled: true}, Validators.required),
+    email: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.email], updateOn: 'blur' }),
+    email2: new FormControl({ value: '', disabled: true}, { validators: Validators.email, updateOn: 'blur' }),
+    tel: new FormControl({ value: '', disabled: true}, { validators: [Validators.required,
+        Validators.minLength(14)], updateOn: 'blur' }),
+    tel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(14),
+        updateOn: 'blur' }),
+    cel: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
+        updateOn: 'blur' }),
+    cel2: new FormControl({ value: '', disabled: true}, { validators: Validators.minLength(15),
+        updateOn: 'blur' }),
     });
 
     // Initiating address form group
@@ -623,6 +623,7 @@ export class UserDataFormsComponent implements OnInit {
         }
     }
 
+    // shows cpf/cnpj invalid message modal
     onCpfCnpjInvalid(tipo) {
         this.cpfCnpj = tipo;
         this.openModal('modal-validator-cpf-cnpj');

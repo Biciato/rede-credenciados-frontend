@@ -1,188 +1,188 @@
 <!-- Unity Data Div -->
-<div id="dados">    
-    <!-- main data div -->
-    <div id="pesquisa">
-        <div class="pesquisa">
-            <div class="pesquisa-img">
-                <img [src]="avatar">
-                <a (click)="showArquivo()">Apresentação</a>
-            </div>
-            <div class="pesquisa-dados" *ngIf="dadosPesquisa">
-                <h3>{{ dadosPesquisa.nome }}</h3>
-                <label>Especialidade(s):</label>
-                <span *ngIf="dadosPesquisa.atividades">{{ dadosPesquisa.atividades | nomeAtividade }}  </span>
-                <label>Endereço:</label>
-                <p>
-                    {{ dadosPesquisa.rua }},
-                    {{ dadosPesquisa.numero + ','}}
-                    {{ dadosPesquisa.complemento }}
-                    {{ dadosPesquisa.cidade + ' -' | uppercase }} 
-                    {{ dadosPesquisa.bairro }} <br>
-                    {{ dadosPesquisa.tel + ' | '}}  
-                    {{ dadosPesquisa.tel2 }}
-                </p>
-                <label>Contato:</label>
-                <span>{{ dadosPesquisa.email }}</span>
-            </div>
-        </div>
-    </div>
-    <!-- main data div -->
-    <div id="resumo">
-        <h3><span>Resumo</span></h3>
+<div id="dados">
+  <!-- main data div -->
+  <div id="pesquisa">
+    <div class="pesquisa">
+      <div class="pesquisa-img">
+        <img [src]="avatar">
+        <a (click)="showArquivo()">Apresentação</a>
+      </div>
+      <div class="pesquisa-dados" *ngIf="dadosPesquisa">
+        <h3>{{ dadosPesquisa.nome }}</h3>
+        <label>Especialidade(s):</label>
+        <span *ngIf="dadosPesquisa.atividades">{{ dadosPesquisa.atividades | nomeAtividade }}  </span>
+        <label>Endereço:</label>
         <p>
-            {{ resumo ? resumo.apresentacao : '' }}
+          {{ dadosPesquisa.rua }},
+          {{ dadosPesquisa.numero + ','}}
+          {{ dadosPesquisa.complemento }}
+          {{ dadosPesquisa.cidade + ' -' | uppercase }}
+          {{ dadosPesquisa.bairro }} <br>
+          {{ dadosPesquisa.tel + ' | '}}
+          {{ dadosPesquisa.tel2 }}
         </p>
+        <label>Contato:</label>
+        <span>{{ dadosPesquisa.email }}</span>
+      </div>
     </div>
-    <div id="empresaImgs">
-        <img *ngFor="let img of empresaImgs" [src]="img" (click)="zoom(img)">
-    </div>
-    <!-- google map div -->
-    <div #gmap style='width:100%;height:200px'></div>
-    <!-- google map div -->
+  </div>
+  <!-- main data div -->
+  <div id="resumo">
+    <h3><span>Resumo</span></h3>
+    <p>
+      {{ resumo ? resumo.apresentacao : '' }}
+    </p>
+  </div>
+  <div id="empresaImgs">
+    <img *ngFor="let img of empresaImgs" [src]="img" (click)="zoom(img)">
+  </div>
+  <!-- google map div -->
+  <div #gmap style='width:100%;height:200px'></div>
+  <!-- google map div -->
 </div>
 <!-- Unity Data Div -->
 <!-- Unity Contact Div -->
 <div id="contato" class="card-dash">
-    <div class="card-header-dash"><h3>Entre em contato com a empresa</h3></div>
-    <div class="card-body-dash">
-        <!-- Unity Contact form -->
-        <form [formGroup]="contatoForm" (ngSubmit)="onContatoFormSubmit()">
-            <div id="personalData">
-                <div class="group">
-                    <input type="text" formControlName="nome">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="nome.value === null ? 'input-empty' : 'input-not-empty'">
-                        Nome
-                    </label>
-                    <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!nome.errors.required" style="color: red">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="group">
-                    <input type="text" formControlName="email">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">
-                        E-mail
-                    </label>
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!email.errors.required" style="color: red">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!email.errors.email" style="color: red">
-                            *formato de e-mail inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="tel.value === null ? 'input-empty' : 'input-not-empty'">
-                        Telefone
-                    </label>
-                    <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!tel.errors.required" style="color: red">
-                            *campo obrigatório.
-                        </div>
-                        <div *ngIf="!!tel.errors.minlength" style="color: red">
-                            *formato de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">
-                        Celular
-                    </label>
-                    <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!cel.errors.minlength" style="color: red">
-                            *formato de telefone inválido.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <input type="text" formControlName="mensagem">
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label [className]="mensagem.value === null ? 'input-empty' : 'input-not-empty'">
-                        Mensagem
-                    </label>
-                    <div *ngIf="mensagem.invalid && (mensagem.dirty || mensagem.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="!!mensagem.errors.required" style="color: red">
-                            *campo obrigatório.
-                        </div>
-                    </div>
-                </div>
-                <p>Declaro que li e aceito os termos de uso</p>  
-                <button type="submit" class="rd-button-dash">ENVIAR MENSAGEM</button>
+  <div class="card-header-dash"><h3>Entre em contato com a empresa</h3></div>
+  <div class="card-body-dash">
+    <!-- Unity Contact form -->
+    <form [formGroup]="contatoForm" (ngSubmit)="onContatoFormSubmit()">
+      <div id="personalData">
+        <div class="group">
+          <input type="text" formControlName="nome">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="nome.value === null ? 'input-empty' : 'input-not-empty'">
+              Nome
+          </label>
+          <div *ngIf="nome.invalid && (nome.dirty || nome.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!nome.errors.required" style="color: red">
+              *campo obrigatório.
             </div>
-        </form>
-        <!-- Unity Contact form -->
-    </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <input type="text" formControlName="email">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="email.value === null ? 'input-empty' : 'input-not-empty'">
+            E-mail
+          </label>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!email.errors.required" style="color: red">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!email.errors.email" style="color: red">
+              *formato de e-mail inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <input type="text" formControlName="tel" (keyup)="onKeyTel($event)" maxlength="14">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="tel.value === null ? 'input-empty' : 'input-not-empty'">
+            Telefone
+          </label>
+          <div *ngIf="tel.invalid && (tel.dirty || tel.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!tel.errors.required" style="color: red">
+              *campo obrigatório.
+            </div>
+            <div *ngIf="!!tel.errors.minlength" style="color: red">
+              *formato de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <input type="text" formControlName="cel" (keyup)="onKeyCel($event)" maxlength="15">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="cel.value === null ? 'input-empty' : 'input-not-empty'">
+            Celular
+          </label>
+          <div *ngIf="cel.invalid && (cel.dirty || cel.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!cel.errors.minlength" style="color: red">
+              *formato de telefone inválido.
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <input type="text" formControlName="mensagem">
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label [className]="mensagem.value === null ? 'input-empty' : 'input-not-empty'">
+            Mensagem
+          </label>
+          <div *ngIf="mensagem.invalid && (mensagem.dirty || mensagem.touched)"
+            class="alert alert-danger">
+            <div *ngIf="!!mensagem.errors.required" style="color: red">
+              *campo obrigatório.
+            </div>
+          </div>
+        </div>
+        <p>Declaro que li e aceito os termos de uso</p>
+        <button type="submit" class="rd-button-dash">ENVIAR MENSAGEM</button>
+      </div>
+    </form>
+    <!-- Unity Contact form -->
+  </div>
 </div>
 <!-- Unity Contact Div -->
 <app-modal id="modal-pdf">
-    <embed [src]="fileToShow" width="900" height="600" 
-                type="application/pdf">
+  <embed [src]="fileToShow" width="900" height="600"
+    type="application/pdf">
 </app-modal>
 <!-- Modal -->
 <app-modal id="modal-validator">
-    <div id="modalHeader">
-        <span>MENSAGEM</span>
-    </div>
-    <div id="modalBody">
-        <div>
-            <h3>Campos pendentes:</h3>
-            <ul>
-                <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail:</strong> campo obrigatório</li>
-                <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail:</strong> formato inválido</li>
-                <li *ngIf="!!tel.errors && !!tel.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
-                <li *ngIf="!!tel.errors && !!tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
-                <li *ngIf="!!cel.errors && !!cel.errors.minlength"><strong>Celular:</strong> formato inválido</li>
-                <li *ngIf="!!mensagem.errors && !!mensagem.errors.required"><strong>Mensagem:</strong> 
-                    campo obrigatório
-                </li>
-                <li *ngIf="!!nome.errors && !!nome.errors.required"><strong>Nome:</strong> campo obrigatório</li>
-            </ul>
-            <div id="simFooter">
-                <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
-            </div>
-        </div>
-    </div>
-</app-modal>
-<app-modal id="modal-sem-arquivo">
-    <div class="confirm-modal">
-      <div id="modal">
-        <p>A Empresa não possui nenhuma apresentação cadastrada.</p>
-        <button (click)="closeModal('modal-sem-arquivo')"><i class="fas fa-times"></i>Fechar</button>
+  <div id="modalHeader">
+    <span>MENSAGEM</span>
+  </div>
+  <div id="modalBody">
+    <div>
+      <h3>Campos pendentes:</h3>
+      <ul>
+        <li *ngIf="!!email.errors && !!email.errors.required"><strong>E-mail:</strong> campo obrigatório</li>
+        <li *ngIf="!!email.errors && !!email.errors.email"><strong>E-mail:</strong> formato inválido</li>
+        <li *ngIf="!!tel.errors && !!tel.errors.minlength"><strong>Telefone:</strong> formato inválido</li>
+        <li *ngIf="!!tel.errors && !!tel.errors.required"><strong>Telefone:</strong> campo obrigatório</li>
+        <li *ngIf="!!cel.errors && !!cel.errors.minlength"><strong>Celular:</strong> formato inválido</li>
+        <li *ngIf="!!mensagem.errors && !!mensagem.errors.required"><strong>Mensagem:</strong>
+          campo obrigatório
+        </li>
+        <li *ngIf="!!nome.errors && !!nome.errors.required"><strong>Nome:</strong> campo obrigatório</li>
+      </ul>
+      <div id="simFooter">
+        <a (click)="closeModal('modal-validator')"><i class="fas fa-times"></i>FECHAR</a>
       </div>
     </div>
+  </div>
+</app-modal>
+<app-modal id="modal-sem-arquivo">
+  <div class="confirm-modal">
+    <div id="modal">
+      <p>A Empresa não possui nenhuma apresentação cadastrada.</p>
+      <button (click)="closeModal('modal-sem-arquivo')"><i class="fas fa-times"></i>Fechar</button>
+    </div>
+  </div>
 </app-modal>
 <app-modal id="modal-zoom">
-    <img [src]="imageClicked" alt="" width="500" height="500">
+  <img [src]="imageClicked" alt="" width="500" height="500">
 </app-modal>
 <!-- Modal -->
 <div class="my-container">
-    <ng-template #customLoadingTemplate>
-        <div class="custom-class">
-        </div>
-    </ng-template>
+  <ng-template #customLoadingTemplate>
+    <div class="custom-class">
+    </div>
+  </ng-template>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }" 
-        [template]="customLoadingTemplate"></ngx-loading>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"
+    [template]="customLoadingTemplate"></ngx-loading>
 </div>
