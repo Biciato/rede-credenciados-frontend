@@ -49,7 +49,12 @@ export class MessagesComponent implements OnInit {
   checkMsgsRead(item) {
     if (item.mensagem_lida !== null) {
       if (!item.mensagem_lida.includes(this.user.id)) { this.countMensagensLida++; }
+    } else if (item.mensagem_lida === null) {
+      this.countMensagensLida++;
+      // set mensagem_lida prop as array for avoid template check error
+      item.mensagem_lida = [];
     } else {
+      // set mensagem_lida prop as array for avoid template check error
       item.mensagem_lida = [];
     }
   }

@@ -35,7 +35,7 @@ export class MensagemService {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + user.token
     })};
-    return this.http.put(this.baseUrl + `/mensagens/${id}`, {mensagem_lida: user.id}, httpOptions);
+    return this.http.put(this.baseUrl + `/mensagem/${id}`, {mensagem_lida: user.id}, httpOptions);
   }
 
   setAsReadCol(ids, user) {

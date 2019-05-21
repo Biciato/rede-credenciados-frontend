@@ -172,12 +172,12 @@ export class SectionComponent {
     // setting state label with initial value
     this.stateClicked = 'Selecione o Estado: ';
     this.activityService.all().subscribe(
-        activityList => {
-          this.jobsFull = activityList;
-          this.loading = false;
-        },
-        () => this.loading = false
-      );
+      activityList => {
+      this.jobsFull = activityList;
+      this.loading = false;
+      },
+      () => this.loading = false
+    );
     this.googleService.locationLatLong().subscribe(latLong => this.getCityState(latLong));
   }
 
@@ -274,10 +274,11 @@ export class SectionComponent {
         data.results[0].address_components[3].long_name,
         data.results[0].address_components[4].long_name
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      ));
+    ));
   }
 
   getPropIdx(cidade, estado) {
+    console.log(cidade);
     this.propService.index(cidade, estado).subscribe(data => this.getBanners(data));
     this.propService.indexSimpleUsers(cidade, estado).subscribe(data => this.getSimpleUserIds(data));
   }
@@ -312,8 +313,8 @@ export class SectionComponent {
       .subscribe(
         (user: any) => {
           for(var key in user) {
-              if(user.hasOwnProperty(key))
-                  this.simpleUserTopIds.push(user.id);
+            if(user.hasOwnProperty(key))
+              this.simpleUserTopIds.push(user.id);
           }
         },
         () => {
@@ -327,8 +328,8 @@ export class SectionComponent {
       .subscribe(
         (user: any) => {
           for(var key in user) {
-              if(user.hasOwnProperty(key))
-                  this.simpleUserSideIds.push(user.id);
+            if(user.hasOwnProperty(key))
+              this.simpleUserSideIds.push(user.id);
           }
         },
         () => {
@@ -374,21 +375,25 @@ export class SectionComponent {
       this.tipoPessoa = 'unidade';
     }
     this.router.navigate([`informacoes`],
-      {queryParams: {
-        id: pesquisa.pessoa_fisica_id || pesquisa.pessoa_juridica_id || pesquisa.unidade_id,
-        nome: pesquisa.nome || pesquisa.nome_fantasia,
-        rua: pesquisa.rua,
-        numero: pesquisa.numero,
-        complemento: pesquisa.complemento || '',
-        atividades: pesquisa.atividades,
-        tel: pesquisa.tel,
-        tel2: pesquisa.tel2,
-        cidade: pesquisa.cidade,
-        bairro: pesquisa.bairro,
-        email: pesquisa.email,
-        tipoPessoa: this.tipoPessoa,
-        user_id: pesquisa.user_id
-    }});
+      {
+        queryParams:
+          {
+            id: pesquisa.pessoa_fisica_id || pesquisa.pessoa_juridica_id || pesquisa.unidade_id,
+            nome: pesquisa.nome || pesquisa.nome_fantasia,
+            rua: pesquisa.rua,
+            numero: pesquisa.numero,
+            complemento: pesquisa.complemento || '',
+            atividades: pesquisa.atividades,
+            tel: pesquisa.tel,
+            tel2: pesquisa.tel2,
+            cidade: pesquisa.cidade,
+            bairro: pesquisa.bairro,
+            email: pesquisa.email,
+            tipoPessoa: this.tipoPessoa,
+            user_id: pesquisa.user_id
+          }
+      }
+    );
   }
 
   newSearch() {

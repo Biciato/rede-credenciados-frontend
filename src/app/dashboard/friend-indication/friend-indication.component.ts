@@ -23,25 +23,25 @@ export class FriendIndicationComponent implements OnInit {
 
   // Initiating form Groups
   viaEmailForm = new FormGroup({
-      nome: new FormControl(null, { validators: Validators.required }),
-      email: new FormControl(null, { validators: [Validators.required,
-          Validators.email], updateOn: 'blur' }),
-      mensagem: new FormControl(null, { validators: Validators.required }),
-      nome_indicado: new FormControl(null, { validators: Validators.required }),
+    nome: new FormControl(null, { validators: Validators.required }),
+    email: new FormControl(null, { validators: [Validators.required,
+        Validators.email], updateOn: 'blur' }),
+    mensagem: new FormControl(null, { validators: Validators.required }),
+    nome_indicado: new FormControl(null, { validators: Validators.required }),
   });
   viaWhatForm = new FormGroup({
-      indicatedName: new FormControl(null, { validators: Validators.required }),
-      whatsapp: new FormControl(null, { validators: [Validators.required,
-          Validators.minLength(15)], updateOn: 'blur' }),
-      message: new FormControl(null, { validators: Validators.required }),
-      indicator: new FormControl(null, { validators: Validators.required }),
+    indicatedName: new FormControl(null, { validators: Validators.required }),
+    whatsapp: new FormControl(null, { validators: [Validators.required,
+        Validators.minLength(15)], updateOn: 'blur' }),
+    message: new FormControl(null, { validators: Validators.required }),
+    indicator: new FormControl(null, { validators: Validators.required }),
   });
   viaSMSForm = new FormGroup({
-      indicatedName: new FormControl(null, { validators: Validators.required }),
-      cel: new FormControl(null, { validators: [Validators.required,
-          Validators.minLength(15)], updateOn: 'blur' }),
-      message: new FormControl(null, { validators: Validators.required }),
-      indicator: new FormControl(null, { validators: Validators.required }),
+    indicatedName: new FormControl(null, { validators: Validators.required }),
+    cel: new FormControl(null, { validators: [Validators.required,
+        Validators.minLength(15)], updateOn: 'blur' }),
+    message: new FormControl(null, { validators: Validators.required }),
+    indicator: new FormControl(null, { validators: Validators.required }),
   });
 
   smsFormFlag = false;
@@ -69,27 +69,27 @@ export class FriendIndicationComponent implements OnInit {
       this.loading = true;
       this.pfService.getPessoaFisica(this.user.id, this.user.token)
         .subscribe(
-            pf => {
-              this.getUserAddress(pf.id);
-              this.loading = false;
-            },
-            () => {
-              this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-              this.loading = false;
-            }
+          pf => {
+            this.getUserAddress(pf.id);
+            this.loading = false;
+          },
+          () => {
+            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+            this.loading = false;
+          }
         );
     } else {
       this.loading = true;
       this.pjService.getPessoaJuridica(this.user.id, this.user.token)
         .subscribe(
-            pj => {
-              this.getUserAddress(pj.id);
-              this.loading = false;
-            },
-            () => {
-              this.router.navigate([{ outlets: { error: ['error-message'] }}]);
-              this.loading = false;
-            }
+          pj => {
+            this.getUserAddress(pj.id);
+            this.loading = false;
+          },
+          () => {
+            this.router.navigate([{ outlets: { error: ['error-message'] }}]);
+            this.loading = false;
+          }
         );
     }
   }
@@ -201,7 +201,7 @@ export class FriendIndicationComponent implements OnInit {
   onViaSMSSubmit() {
     if (this.viaSMSForm.valid) {
       this.loading = true;
-      const telString = this.viaSMSForm.value.tel.replace(/[^a-zA-Z0-9]/g, '');
+      const telString = this.viaSMSForm.value.cel.replace(/[^a-zA-Z0-9]/g, '');
       this.frieIndService
         .sendSMS({tel: telString, message: this.viaSMSForm.value.message})
         .subscribe(
